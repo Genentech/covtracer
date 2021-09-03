@@ -1,0 +1,30 @@
+navbar:
+  structure:
+    left: [home, intro, reference, articles, tutorials, news]
+    right: [gitlab, coverage]
+  components:
+    gitlab:
+      icon: fa fa-gitlab fa-lg
+      href: !expr Sys.getenv("CI_PROJECT_URL")
+    coverage:
+      icon: fa fa-layer-group
+      href: "coverage.html"
+
+reference:
+  - title: "Mapping Tests to Documentation"
+    contents:
+      - test_trace_df
+  - title: "Working with `srcrefs`"
+  - contents:
+      - pkg_srcrefs
+      - test_srcrefs
+      - trace_srcrefs
+      - srcref_key
+      - as.data.frame.list_of_srcrefs
+      - join_srcref_within
+  - title: "Working with R Documentation"
+  - contents:
+      - Rd_df
+  - title: "Extracting Unit Test Descriptions"
+  - contents:
+      - test_description

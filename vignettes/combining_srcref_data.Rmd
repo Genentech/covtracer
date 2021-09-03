@@ -1,0 +1,151 @@
+---
+title: "Combining srcref Data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{combining_srcref_data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+options(width = 120L)
+```
+
+```{r setup}
+library(covtracer)
+```
+
+There are two key relationships that we will explore. The first is a
+relationship of `srcref` objects, and the second is the relationship between
+namespace object definitions and their associated documentation.
+
+# Setup
+
+Before we begin, we'll set up a demo coverage object and package namespace that
+we can use to showcase these relationships:
+
+
+```{r, message = FALSE, warning = FALSE}
+library(withr)
+library(covr)
+library(remotes)
+
+withr::with_temp_libpaths({
+  options(keep.source = TRUE, keep.source.pkg = TRUE, covr.record_tests = TRUE)
+  examplepkg_source_path <- system.file("examplepkg", package = "covtracer")
+  remotes::install_local(examplepkg_source_path, force = TRUE, quiet = TRUE,
+    INSTALL_opts = c("--with-keep.source", "--install-tests"))
+  examplepkg_cov <- covr::package_coverage(examplepkg_source_path)
+  examplepkg_ns <- getNamespace("examplepkg")
+})
+```
+
+# Relational `srcref` data
+
+First and foremost, we want to be able to associate `srcref` objects. These
+relationships are define the location of code. A `srecref` describes a region of
+code where the expression was pulled from, and we can compare these to determine
+whether a `srcref` is within, containing or independent of another.
+
+This vignette will gloss over each of these tables. For more details see
+the _Working with `srcref`s_ vignette.
+
+## Linking `covr` traces to package object `srcref`s
+
+It's important to note that coverage traces always sit within a package
+namespace object. Where a namespace object might have a `srcref` to the full
+code for a function, coverage traces trace individual expressions within that
+function.
+
+To associate `srcref`s by this relation, we provide a special joining function
+to combine `data.frames` by `srcref` columns.
+
+```{r}
+traces_df <- trace_srcrefs_df(examplepkg_cov)
+pkg_ns_df <- pkg_srcrefs_df(examplepkg_ns)
+```
+
+Just looking at these two `data.frames`, we can use the first trace and package
+object to illustrate the relationship:
+
+```{r}
+cat("pkg  : ", format(pkg_ns_df$srcref["s3_example_func.list"]), "\n")
+cat("trace: ", format(traces_df$srcref[1L]), "\n")
+```
+
+Although still a little arcane, you can see that the package object code
+contains the coverage trace. The package code spans lines 19-21, whereas the
+coverage trace lies in line 20. With this information, we can couple each
+package object with the coverage traces contained within each.
+
+```{r}
+head(join_on_containing_srcrefs(traces_df, pkg_ns_df))
+```
+
+As expected, we can see that this test trace (now with the `".x"` suffix) is
+mapped to the expected corresponding package namespace object.
+
+## Linking unit tests to evaluated `covr` traces
+
+Although this relationship doesn't require any fancy `srcref` joining, we can
+associate tests and traces by a simple mapping of indices. FOr this, the
+`test_trace_mapping()` function is provided which will reshape a `covr` object
+(produced using `options(covr.record_tests = TRUE)`) to create a unified table
+across all `covr` traces:
+
+```{r}
+head(test_trace_mapping(examplepkg_cov))
+```
+
+The `test` and `trace` columns contain the row indices in the respective
+`test_srcrefs_df()` and `trace_srcrefs_df()` `data.frame`s, allowing for this
+data to be joined. However, since it is easy for a testing suite to cause the
+evaluation of an enormous number of traces, this matrix can become extremely
+long. It is recommended to do some aggregation or subsetting of this matrix
+before trying to use it to join more data-rich data.
+
+You can also see that the evaluation order is stored (`i`), as well as the stack
+depth when it was evaluated (`depth`). With this added info, you might consider
+first filtering for only the first trace evaluated by each test, or to count all
+the times that a line of code was evaluated by each test by aggregating rows.
+
+# Relational documentation data
+
+On the other side of the process, we also need to associate package objects with
+documentation. In many cases, this is trivial, and the name of the exported
+object can be used directly to find documentation as you have come to expect
+using `?<object>`. This holds for simple functions. However, some objects are
+aliased to different documentation files or are built at package build time into
+internal representations, as is with `S4` classes, and `R6` classes.
+
+To handle these cases, we can use the `Rd_df()` function to associate any
+available source code with a documentation file.
+
+```{r}
+# filter for interesting columns for display
+cols <- c("file", "alias", "doctype")
+Rd_df(examplepkg_source_path)[, cols]
+```
+
+These aliases are also used when we use `pkg_srcrefs_df()` and can be used to
+associate `srcrefs` with `.Rd` files.
+
+```{r}
+pkg_srcrefs_df(examplepkg_ns)
+```
+
+You'll see that we don't have any `srcref`s associated with the `"data"` and
+`"class"` doctype documentation because these objects do not themselves have
+source code, even if there is source code in that was used to create them at
+bulid time.
+
+# Summary
+
+With these relationships, we can build some really deep understandings of
+exactly what code a test evaluates and tie that test together with the
+documented behaviors.
