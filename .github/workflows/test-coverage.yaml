@@ -13,7 +13,7 @@ jobs:
     name: Coverage
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/insightsengineering/tidyverse_4.1.1_bioc_3.13:latest
+      image: ghcr.io/insightsengineering/rstudio_4.1.1_bioc_3.13:latest
 
     steps:
       - name: Checkout repo
