@@ -1,0 +1,43 @@
+name: Roxygen
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  man-pages:
+    name: Manual pages check
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/insightsengineering/tidyverse_4.1.1_bioc_3.13:latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Generate man pages
+        run: roxygen2::roxygenize('.', roclets = c('rd', 'collate', 'namespace'))
+        shell: Rscript {0}
+
+      - name: Check if man pages are up-to-date
+        run: |
+          if [[ -z $(git status -s) ]]
+          then
+            echo "🙈 Manuals are not upto date with roxygen comments!"
+            echo "💻 Please rerun the following command on your workstation and push your changes"
+            echo "--------------------------------------------------------------------"
+            echo "roxygen2::roxygenize('.', roclets = c('rd', 'collate', 'namespace'))"
+            echo "--------------------------------------------------------------------"
+            echo "💡 Or, if you have an open PR, run the following command as PR comments to auto-commit man page updates:"
+            echo "-----------------"
+            echo "/command /roxygen"
+            echo "-----------------"
+            set -o errexit
+          else
+            echo "💚 Manuals are upto date with roxygen comments"
+          fi
+        shell: bash

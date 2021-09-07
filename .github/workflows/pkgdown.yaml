@@ -1,0 +1,45 @@
+name: Docs
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  pkgdown:
+    name: Generate
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/insightsengineering/tidyverse_4.1.1_bioc_3.13:latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: remotes::install_deps(dependencies = TRUE, upgrade = "never")
+        shell: Rscript {0}
+
+      - name: Install package
+        run: R CMD INSTALL .
+        shell: bash
+
+      - name: Build docs
+        run: pkgdown::build_site(".", devel = TRUE)
+        shell: Rscript {0}
+
+      - name: Upload docs for review
+        if: github.ref != 'refs/heads/main' # Only during PR
+        uses: actions/upload-artifact@v2
+        with:
+          name: docs
+          path: docs/
+
+      - name: Publish docs
+        if: github.ref == 'refs/heads/main' # Only after merge or push to master
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE)'

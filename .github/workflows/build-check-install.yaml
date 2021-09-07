@@ -1,0 +1,56 @@
+name: R CMD Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-install-check:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {image: ghcr.io/insightsengineering/tidyverse_4.1.1_bioc_3.13, tag: latest}
+    container:
+      image: ${{ matrix.config.image }}:${{ matrix.config.tag }}
+    name: ${{ matrix.config.image }}:${{ matrix.config.tag }}
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          path: ${{ github.event.repository.name }}
+
+      - name: Install dependencies
+        run: |
+            setwd("${{ github.event.repository.name }}")
+            options(repos = c(CRAN = "https://cloud.r-project.org/"))
+            remotes::install_deps(dependencies = TRUE, upgrade = "never")
+        shell: Rscript {0}
+
+      - name: Build R package
+        run: |
+          R CMD build ${{ github.event.repository.name }}
+          echo "PKGBUILD=$(echo *.tar.gz)" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Run R CMD CHECK
+        run: R CMD check --no-manual ${{ env.PKGBUILD }}
+        shell: bash
+        env:
+          _R_CHECK_TESTS_NLINES_: 0
+
+      - name: Upload check results
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.config.tag }}-results
+          path: ${{ github.event.repository.name }}.Rcheck/00check.log
+
+      - name: Test package installation
+        run: R CMD INSTALL ${{ env.PKGBUILD }}
+        shell: bash

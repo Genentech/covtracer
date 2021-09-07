@@ -1,0 +1,35 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    name: Lint codebase
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/insightsengineering/tidyverse_4.1.1_bioc_3.13:latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+            options(repos = c(CRAN = "https://cloud.r-project.org/"))
+            remotes::install_deps(dependencies = TRUE, upgrade = "never")
+        shell: Rscript {0}
+
+      - name: Install package
+        if: hashFiles('.lintr') != ''
+        run: R CMD INSTALL .
+        shell: bash
+
+      - name: Run lintr
+        if: hashFiles('.lintr') != ''
+        run: lintr::lint_package()
+        shell: Rscript {0}
