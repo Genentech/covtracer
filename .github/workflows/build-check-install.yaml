@@ -20,6 +20,7 @@ jobs:
       image: ${{ matrix.config.image }}:${{ matrix.config.tag }}
     name: ${{ matrix.config.image }}:${{ matrix.config.tag }}
 
+    steps:
       - name: Checkout repo
         uses: actions/checkout@v2
         with:
