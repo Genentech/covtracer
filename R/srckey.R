@@ -13,10 +13,15 @@
 format.list_of_srcref <- function(x, ..., full.names = FALSE, full.num = FALSE) {
   out <- rep_len(NA_character_, length(x))
   if (!length(x)) return(out)
-  isnull <- vapply(x, is.null, logical(1L))
+  xnull <- vapply(x, is.null, logical(1L))
+  srcnull <- vapply(x, function(i) is.null(getSrcref(i)), logical(1L))
+  isnull <- xnull | srcnull
+  if (all(isnull)) return(out)
   fps <- if (full.names) getSrcFilepath(x[!isnull]) else vapply(x[!isnull], getSrcFilename, character(1L))
   nums <- t(vapply(x[!isnull], as.numeric, numeric(length(as.numeric(x[[1]])))))
-  nums <- if (full.num) nums else nums[, c(1L, 5L, 3L, 6L), drop = FALSE]
+  cols <- c(1L, 5L, 3L, 6L)
+  cols <- cols[which(cols < ncol(nums))]
+  nums <- if (full.num) nums else nums[, cols, drop = FALSE]
   out[!isnull] <- apply(cbind(fps, nums), 1L, paste0, collapse = ":")
   out
 }
@@ -36,11 +41,12 @@ format.list_of_srcref <- function(x, ..., full.names = FALSE, full.num = FALSE) 
 #' like `srcref`s when included as a `list_of_srcref` `data.frame` column.
 #'
 #' @param call Any code object, most often a `call` object
-#' @param srcfile A `srcref`-like `srcfile` object
+#' @param file A filepath to bind as a `srcfile` object
 #' @param lloc A `srcef`-like `lloc` numeric vector
 #'
-with_pseudo_srcref <- function(call, srcfile, lloc) {
-  attr(call, "srcref") <- structure(lloc, srcfile = srcfile, class = "pseudo_srcref")
+with_pseudo_srcref <- function(call, file, lloc) {
+  if (!is.null(srcfile) && !is.null(lloc))
+    attr(call, "srcref") <- structure(lloc, srcfile = srcfile(file), class = "pseudo_srcref")
   structure(call, class = c("with_pseudo_srcref", class(call)))
 }
 

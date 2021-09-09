@@ -4,12 +4,12 @@
 \alias{with_pseudo_srcref}
 \title{For consistency, stub calls with srcref-like attributes}
 \usage{
-with_pseudo_srcref(call, srcfile, lloc)
+with_pseudo_srcref(call, file, lloc)
 }
 \arguments{
 \item{call}{Any code object, most often a \code{call} object}
 
-\item{srcfile}{A \code{srcref}-like \code{srcfile} object}
+\item{file}{A filepath to bind as a \code{srcfile} object}
 
 \item{lloc}{A \code{srcef}-like \code{lloc} numeric vector}
 }

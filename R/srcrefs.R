@@ -241,11 +241,14 @@ test_srcrefs <- function(x) {
 test_srcrefs.coverage <- function(x) {
   cov_tests <- attr(x, "tests")
   test_calls <- lapply(cov_tests, function(i) tail(i, 1L)[[1L]])
-  test_files <- gsub("(:\\d+){8}$", "", names(test_calls))
-  test_llocs <- strsplit(gsub("^.*:((\\d+:){7}\\d+)$", "\\1", names(test_calls)), ":")
+  test_srckeys <- names(test_calls) %||% rep_len("", length(test_calls))
+  test_files <- as.list(gsub("(:\\d+){8}$", "", test_srckeys))
+  test_llocs <- strsplit(gsub("^.*:((\\d+:){7}\\d+)$", "\\1", test_srckeys), ":")
   test_llocs <- lapply(test_llocs, as.numeric)
+  test_files[test_srckeys == ""] <- list(NULL)
+  test_llocs[test_srckeys == ""] <- list(NULL)
   as_list_of_srcref(mapply(
-    function(call, file, lloc) with_pseudo_srcref(call, srcfile(file), lloc),
+    function(call, file, lloc) with_pseudo_srcref(call, file, lloc),
     test_calls,
     test_files,
     test_llocs,
