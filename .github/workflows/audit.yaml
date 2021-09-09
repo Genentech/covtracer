@@ -1,0 +1,32 @@
+name: Audit Dependencies
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/insightsengineering/rstudio_4.1.1_bioc_3.13:latest
+    name: oysteR scan
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Run oysteR scan on dependencies
+        run: |
+          dependencies_scan = oysteR::audit_description(
+            dir = ".",
+            fields = c("Depends", "Imports", "Suggests"),
+            verbose = TRUE
+          )
+          print(as.data.frame(dependencies_scan[c("package", "version", "vulnerabilities", "no_of_vulnerabilities")]))
+        shell: Rscript {0}
