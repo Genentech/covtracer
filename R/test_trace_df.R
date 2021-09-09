@@ -1,11 +1,11 @@
 #' Build a traceability matrix that links documented behaviors to unit tests
-#' 
+#'
 #' Intercept unit test coverage reports and process results to link evaluated
 #' functions to the unit tests which trigger their evaluation. In doing so,
 #' we can then link the associated function documentation of each object to
 #' the tests that triggered their evaluation as a way of reusing existing
-#' documentation to generate specifications. 
-#' 
+#' documentation to generate specifications.
+#'
 #' @param x A package object, name, source code path or coverage result to use
 #'   as the bases of tracing tests. Coverage results must have been produced
 #'   using `options(covr.record_tests = TRUE)`.
@@ -19,13 +19,13 @@ test_trace_df <- function(x, ...) {
 
 #' @param pkg A `package` object as produced by `as.package`, if a specific
 #'   package object is to be used for inspecting the package namespace.
-#' 
+#'
 #' @importFrom stats aggregate
 #' @export
 #' @rdname test_trace_df
 test_trace_df.coverage <- function(x, ...,
   pkg = as.package(attr(x, "package")$path)) {
-  
+
   coverage_check_has_recorded_tests(x)
   pkgname <- pkg$package
 
@@ -46,12 +46,12 @@ test_trace_df.coverage <- function(x, ...,
   # I.1 build test traces
   tests_df <- test_srcrefs_df(x)
   names(tests_df) <- paste("test", names(tests_df), sep = "_")
-  
+
   # I.2 build namespace srcref data.frame
   pkg_df <- pkg_srcrefs_df(pkgname)
   names(pkg_df) <- c("alias", "srcref")
 
-  # I.3 build coverage traces 
+  # I.3 build coverage traces
   trace_df <- trace_srcrefs_df(x)
   names(trace_df) <- paste("trace", names(trace_df), sep = "_")
 
@@ -92,8 +92,8 @@ test_trace_df.coverage <- function(x, ...,
 
 #' Retrieve test traces from a coverage object
 #'
-#' Assumes the coverage object was produced while 
-#' \code{option(covr.record_tests = TRUE)}. 
+#' Assumes the coverage object was produced while
+#' \code{option(covr.record_tests = TRUE)}.
 #'
 #' @param coverage a \code{\link[covr]{covr}} coverage object
 #' @family coverage_tests
@@ -116,8 +116,8 @@ coverage_check_has_recorded_tests <- function(coverage) {
   has_rec_tests <- !vapply(
     coverage,
     function(i) is.null(i[["tests"]]),
-    logical(1L))  
-  
+    logical(1L))
+
   if (!any(has_rec_tests)) {
     stop(
       "Coverage object does not include recorded test information.\n\n",
@@ -127,4 +127,3 @@ coverage_check_has_recorded_tests <- function(coverage) {
     )
   }
 }
-

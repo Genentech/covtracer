@@ -167,6 +167,7 @@ pkg_srcrefs <- function(x) {
 #' @rdname pkg_srcrefs
 #' @export
 pkg_srcrefs.environment <- function(x) {
+  package_check_has_keep_source(x)
   as_list_of_srcref(srcrefs(x))
 }
 
@@ -187,6 +188,28 @@ pkg_srcrefs.character <- function(x) {
 pkg_srcrefs.coverage <- function(x) {
   pkg <- attr(x, "package")
   pkg_srcrefs(pkg$package)
+}
+
+
+
+#' Verify that the package collection contains srcref information
+#'
+#' Test whether the package object collection contains srcref attributes.
+#'
+#' @param a package namespace environment or iterable collection of package
+#'   objects
+#'
+package_check_has_keep_source <- function(env) {
+  has_srcref <- function(x) !is.null(getSrcref(x))
+  obj_has_srcref <- vapply(env, has_srcref, logical(1L))
+  if (length(obj_has_srcref) > 0L && !any(obj_has_srcref)) {
+    stop(
+      "Package was not installed using `--with-keep.source`. Reinstall using:\n\n",
+      "    `R_KEEP_PKG_SOURCE=yes` environment variable or \n",
+      "    `R CMD INSTALL --with-keep.source ... `  or \n",
+      "    `install.packages(..., INSTALL_opts = \"--with-keep.source\")`\n\n"
+    )
+  }
 }
 
 
