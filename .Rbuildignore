@@ -1,7 +1,6 @@
-^\.gitlab-ci\.yml$
+^\.github
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^pkgdown/*
 ^README\.Rmd$
-
 ^LICENSE\.md$

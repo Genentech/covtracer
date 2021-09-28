@@ -23,8 +23,14 @@ the name of the package used is extracted.}
 Extract all the srcref objects of objects within a package namespace
 }
 \examples{
-# requires package to have been installed with --with-keep.source flag
-pkg_srcrefs("covtracer")
+pkg <- system.file("examplepkg", package = "covtracer")
+remotes::install_local(
+  pkg, 
+  force = TRUE, 
+  quiet = TRUE, 
+  INSTALL_opts = "--with-keep.source"
+)
+pkg_srcrefs("examplepkg")
 
 }
 \seealso{

@@ -149,8 +149,14 @@ flat_map_srcrefs <- function(xs) {
 #'   namespace available in the current environment is used.
 #'
 #' @examples
-#' # requires package to have been installed with --with-keep.source flag
-#' pkg_srcrefs("covtracer")
+#' pkg <- system.file("examplepkg", package = "covtracer")
+#' remotes::install_local(
+#'   pkg, 
+#'   force = TRUE, 
+#'   quiet = TRUE, 
+#'   INSTALL_opts = "--with-keep.source"
+#' )
+#' pkg_srcrefs("examplepkg")
 #'
 #' @family srcrefs
 #' @seealso as.data.frame.list_of_srcref
@@ -196,7 +202,7 @@ pkg_srcrefs.coverage <- function(x) {
 #'
 #' Test whether the package object collection contains srcref attributes.
 #'
-#' @param a package namespace environment or iterable collection of package
+#' @param env A package namespace environment or iterable collection of package
 #'   objects
 #'
 package_check_has_keep_source <- function(env) {

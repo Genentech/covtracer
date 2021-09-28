@@ -20,8 +20,14 @@
 #' }
 #'
 #' @examples
-#' as.data.frame(pkg_srcrefs("covtracer"))
-#'
+#' pkg <- system.file("examplepkg", package = "covtracer")
+#' remotes::install_local(
+#'   pkg, 
+#'   force = TRUE, 
+#'   quiet = TRUE, 
+#'   INSTALL_opts = "--with-keep.source"
+#' )
+#' as.data.frame(pkg_srcrefs("examplepkg"))
 #' @export
 as.data.frame.list_of_srcref <- function(x, ..., use.names = TRUE,
     expand.srcref = FALSE, row.names = NULL) {
@@ -67,7 +73,14 @@ as.data.frame.list_of_srcref <- function(x, ..., use.names = TRUE,
 #' }
 #'
 #' @examples
-#' pkg_srcrefs_df("covtracer")
+#' pkg <- system.file("examplepkg", package = "covtracer")
+#' remotes::install_local(
+#'   pkg, 
+#'   force = TRUE, 
+#'   quiet = TRUE, 
+#'   INSTALL_opts = "--with-keep.source"
+#' )
+#' pkg_srcrefs_df("examplepkg")
 #'
 #' @family srcrefs_df
 #' @seealso srcrefs test_trace_mapping
