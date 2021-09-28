@@ -55,9 +55,13 @@ library(covr)
 library(remotes)
 
 withr::with_temp_libpaths({
-  options(keep.source = TRUE, keep.source.pkg = TRUE)
   pkg <- system.file("examplepkg", package = "covtracer")
-  remotes::install_local(pkg, force = TRUE, quiet = TRUE)
+  remotes::install_local(
+    pkg, 
+    force = TRUE, 
+    quiet = TRUE, 
+    INSTALL_opts = "--with-keep.source"
+  )
 
   options(covr.record_tests = TRUE)
   cov <- covr::package_coverage(pkg)
