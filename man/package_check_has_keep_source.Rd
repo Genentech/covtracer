@@ -7,7 +7,7 @@
 package_check_has_keep_source(env)
 }
 \arguments{
-\item{a}{package namespace environment or iterable collection of package
+\item{env}{A package namespace environment or iterable collection of package
 objects}
 }
 \description{
