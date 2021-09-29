@@ -1,11 +1,15 @@
 Package: covtracer
 Title: Tools for contextualizing tests
 Version: 0.0.0.9000
-Authors@R: 
+Authors@R: c(
     person(given = "Doug",
            family = "Kelkhoff",
            role = c("aut", "cre"),
-           email = "kelkhofd@gene.com")
+           email = "kelkhofd@gene.com"),
+    person(given = "Andrew",
+           family = "McNeil",
+           role = c("aut"),
+           email = "andrew.richard.mcneil@gmail.com"))
 Description: 
     Provides tools for dissecting a package namespace or "covr" coverage object
     in order to cross reference tested code with the lines that are evaluated, as
