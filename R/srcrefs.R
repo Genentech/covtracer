@@ -123,14 +123,14 @@ flat_map_srcrefs <- function(xs) {
   srcs <- mapply(
     function(i, ...) srcrefs(i, ...),
     xs,
-    srcref_names = names(xs),
+    srcref_names = names(xs) %||% rep_len("", length(xs)),
     SIMPLIFY = FALSE
   )
 
   srcnames <- mapply(
     function(new, old) names(new) %||% rep_len(old, length(new)),
     srcs,
-    names(srcs),
+    names(srcs) %||% rep_len("", length(srcs)),
     SIMPLIFY = FALSE
   )
 
