@@ -4,3 +4,4 @@
 ^pkgdown/*
 ^README\.Rmd$
 ^LICENSE\.md$
+^\.github$

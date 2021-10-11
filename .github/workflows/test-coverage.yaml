@@ -1,30 +1,30 @@
-name: Coverage
-
+# Workflow derived from https://github.com/r-lib/actions/tree/master/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches:
-      - main
+    branches: [main, master]
   pull_request:
-    branches:
-      - main
+    branches: [main, master]
+
+name: test-coverage
 
 jobs:
   test-coverage:
-    name: Coverage
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/insightsengineering/rstudio_4.1.1_bioc_3.13:latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: install.packages("covr", repos="http://cran.rstudio.com/")
-        shell: Rscript {0}
+      - uses: r-lib/actions/setup-r@v1
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v1
+        with:
+          extra-packages: covr
 
       - name: Test coverage
-        run: covr::package_coverage()
+        run: covr::codecov()
         shell: Rscript {0}
