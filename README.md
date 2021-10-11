@@ -3,6 +3,8 @@
 
 # covtracer
 
+[![R-CMD-check](https://github.com/Genentech/covtracer/workflows/R-CMD-check/badge.svg)](https://github.com/Genentech/covtracer/actions)
+
 Tools for contextualizing tests, built using `covr` test traces. This
 package provides utilities for linking an assortment of test and package
 information to paint a more complete picture of how a test was
@@ -89,8 +91,8 @@ traceability_matrix <- ttdf %>%
 
 traceability_matrix
 #>                                                    test_name                       file
-#> 1            Example R6 Accumulator class methods are traced             Accumulator.Rd
-#> 2         Example R6 Accumulator class constructor is traced             Accumulator.Rd
+#> 1         Example R6 Accumulator class constructor is traced             Accumulator.Rd
+#> 2            Example R6 Accumulator class methods are traced             Accumulator.Rd
 #> 3                         hypotenuse is calculated correctly              hypotenuse.Rd
 #> 4  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd
 #> 5                               S4Example names method works  names-S4Example-method.Rd
@@ -123,8 +125,8 @@ ttdf %>%
   filter(!duplicated(.)) %>%
   arrange(file)
 #>                                                    test_name                       file
-#> 1            Example R6 Accumulator class methods are traced             Accumulator.Rd
-#> 2         Example R6 Accumulator class constructor is traced             Accumulator.Rd
+#> 1         Example R6 Accumulator class constructor is traced             Accumulator.Rd
+#> 2            Example R6 Accumulator class methods are traced             Accumulator.Rd
 #> 3                         hypotenuse is calculated correctly              hypotenuse.Rd
 #> 4  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd
 #> 5                               S4Example names method works  names-S4Example-method.Rd
