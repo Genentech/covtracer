@@ -105,7 +105,7 @@
 <span class="co">#&gt; function(a, b) {</span>
 <span class="co">#&gt;   return(sqrt(a^2 + b^2))</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x55bb0dcac460&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x563d11597668&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:examplepkg&gt;</span></code></pre></div>
 <div id="what-are-srcref-objects" class="section level1">
 <h1 class="hasAnchor">
@@ -193,7 +193,7 @@
 <p>Note that the original source files will no longer exist, as <code>covr</code> will install the package into a temporary location for testing. Because of this, test “srcrefs” are actually <code>call</code> objects with a <code>with_pseudo_srcref</code>, allowing them to be treated like a <code>srcref</code>s for consistency.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/test_srcrefs.html">test_srcrefs</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
-<span class="co">#&gt; $`/tmp/Rtmp9EQPsU/R_LIBS38cf552217cd/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:2:3:2:35:3:35:2:2`</span>
+<span class="co">#&gt; $`/tmp/RtmpdChwTA/R_LIBS38b19cba467/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:2:3:2:35:3:35:2:2`</span>
 <span class="co">#&gt; hypotenuse(3, 4)</span></code></pre></div>
 <p>Despite not having a valid <code>srcfile</code>, we can still use all of our favorite <code>srcref</code> functions because of the <code>with_pseudo_scref</code> subclass:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
