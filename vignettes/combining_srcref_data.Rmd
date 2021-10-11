@@ -2,7 +2,7 @@
 title: "Combining srcref Data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{combining_srcref_data}
+  %\VignetteIndexEntry{Combining srcref Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

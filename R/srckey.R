@@ -18,7 +18,8 @@ format.list_of_srcref <- function(x, ..., full.names = FALSE, full.num = FALSE) 
   isnull <- xnull | srcnull
   if (all(isnull)) return(out)
   fps <- if (full.names) getSrcFilepath(x[!isnull]) else vapply(x[!isnull], getSrcFilename, character(1L))
-  nums <- t(vapply(x[!isnull], as.numeric, numeric(length(as.numeric(x[[1]])))))
+  srcref_num_rep_len <- length(as.numeric(x[!isnull][[1]]))
+  nums <- t(vapply(x[!isnull], as.numeric, numeric(srcref_num_rep_len)))
   cols <- c(1L, 5L, 3L, 6L)
   cols <- cols[which(cols < ncol(nums))]
   nums <- if (full.num) nums else nums[, cols, drop = FALSE]

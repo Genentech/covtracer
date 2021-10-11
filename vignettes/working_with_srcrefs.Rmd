@@ -2,7 +2,7 @@
 title: "Working with srcrefs"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{working_with_srcrefs}
+  %\VignetteIndexEntry{Working with srcrefs}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
