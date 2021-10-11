@@ -23,6 +23,8 @@ suppressPackageStartupMessages(library(dplyr))
 
 # covtracer
 
+[![R-CMD-check](https://github.com/Genentech/covtracer/workflows/R-CMD-check/badge.svg)](https://github.com/Genentech/covtracer/actions)
+
 Tools for contextualizing tests, built using `covr` test traces. This 
 package provides utilities for linking an assortment of test and 
 package information to paint a more complete picture of how a test

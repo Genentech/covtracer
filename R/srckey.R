@@ -18,7 +18,8 @@ format.list_of_srcref <- function(x, ..., full.names = FALSE, full.num = FALSE) 
   isnull <- xnull | srcnull
   if (all(isnull)) return(out)
   fps <- if (full.names) getSrcFilepath(x[!isnull]) else vapply(x[!isnull], getSrcFilename, character(1L))
-  nums <- t(vapply(x[!isnull], as.numeric, numeric(length(as.numeric(x[[1]])))))
+  srcref_num_rep_len <- length(as.numeric(x[!isnull][[1]]))
+  nums <- t(vapply(x[!isnull], as.numeric, numeric(srcref_num_rep_len)))
   cols <- c(1L, 5L, 3L, 6L)
   cols <- cols[which(cols < ncol(nums))]
   nums <- if (full.num) nums else nums[, cols, drop = FALSE]
@@ -26,6 +27,24 @@ format.list_of_srcref <- function(x, ..., full.names = FALSE, full.num = FALSE) 
   out
 }
 
+#' @export
+print.list_of_srcref <- function(x, ...) {
+  if (is.null(names(x))) names(x) <- rep_len("", length(x))
+  xnames <- ifelse(
+    names(x) == "",
+    sprintf("[[%d]]", seq_along(x)),
+    sprintf("$%s", ifelse(
+      grepl("^[a-zA-Z0-9_.]*$", names(x)),
+      names(x),
+      sprintf("`%s`", names(x))))
+  )
+  xfmt <- sprintf(
+    "%s\n%s\n\n",
+    xnames,
+    lapply(x, function(xi) paste0(collapse = "\n", format(xi)))
+  )
+  cat(paste0(collapse = "", xfmt))
+}
 
 
 
@@ -53,6 +72,11 @@ with_pseudo_srcref <- function(call, file, lloc) {
 #' @export
 as.double.with_pseudo_srcref <- function(x, ...) {
   as.numeric(getSrcref(x))
+}
+
+#' @export
+format.with_pseudo_srcref <- function(x, ...) {
+  format(unclass(x), ...)
 }
 
 
