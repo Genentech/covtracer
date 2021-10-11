@@ -3,7 +3,7 @@
 
 # covtracer
 
-[![R-CMD-check](https://github.com/Genentech/covtracer/workflows/R-CMD-check/badge.svg)](https://github.com/Genentech/covtracer/actions)
+[![CRAN](https://img.shields.io/cran/v/ggpackets.svg)](https://cran.r-project.org/package=ggpackets) [![R-CMD-check](https://github.com/Genentech/covtracer/workflows/R-CMD-check/badge.svg)](https://github.com/Genentech/covtracer/actions) [![Code Coverage](https://img.shields.io/codecov/c/github/genentech/covtracer/main.svg)](https://codecov.io/gh/genentech/covtracer)
 
 Tools for contextualizing tests, built using `covr` test traces. This
 package provides utilities for linking an assortment of test and package
