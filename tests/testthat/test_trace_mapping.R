@@ -5,6 +5,7 @@ test_that("test trace mapping", {
     "produces an empty matrix from no traces" = examplepkg_cov[c()])
 
   for (i in seq_along(cases)) {
+    expect_true(nchar(names(cases)[[i]]) > 0L)
     test_that(names(cases)[[i]], {
       cov_data <- cases[[i]]
       expect_silent(ttmat <- test_trace_mapping(cov_data))
