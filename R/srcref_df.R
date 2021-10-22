@@ -22,9 +22,9 @@
 #' @examples
 #' pkg <- system.file("examplepkg", package = "covtracer")
 #' remotes::install_local(
-#'   pkg, 
-#'   force = TRUE, 
-#'   quiet = TRUE, 
+#'   pkg,
+#'   force = TRUE,
+#'   quiet = TRUE,
 #'   INSTALL_opts = "--with-keep.source"
 #' )
 #' as.data.frame(pkg_srcrefs("examplepkg"))
@@ -75,9 +75,9 @@ as.data.frame.list_of_srcref <- function(x, ..., use.names = TRUE,
 #' @examples
 #' pkg <- system.file("examplepkg", package = "covtracer")
 #' remotes::install_local(
-#'   pkg, 
-#'   force = TRUE, 
-#'   quiet = TRUE, 
+#'   pkg,
+#'   force = TRUE,
+#'   quiet = TRUE,
 #'   INSTALL_opts = "--with-keep.source"
 #' )
 #' pkg_srcrefs_df("examplepkg")
@@ -322,6 +322,7 @@ join_on_containing_srcrefs <- function(x, y, by = c("srcref" = "srcref")) {
     names(x) <- paste(names(x), "x", sep = ".")
     names(y) <- paste(names(y), "y", sep = ".")
   }
+
   x[names(y)] <- y[idx, ]
   x
 }

@@ -14,11 +14,28 @@
 #'
 get_namespace_object_names <- function(ns) {
   out <- getNamespaceExports(ns)
-  # filter private S4 methods tables
-  out <- out[!grepl("^.__T__", out)]
-  # substitute S4 class definitions
-  out <- sub("^.__C__", "", out)
-  out
+  # filter private S4 methods tables and class definitions
+  out[!grepl("^\\.__(T|C)__", out)]
+}
+
+
+
+#' Get namespace export namespace name
+#'
+#' For most objects, this will be identical to the namespace name provided, but
+#' reexports will retain their originating package's namespace name. This helper
+#' function helps to expose this name to determine which exports are reexports.
+#'
+#' @inheritParams base::getExportedValue
+#'
+get_obj_namespace_name <- function(ns, name) {
+  is_exported <- name %in% getNamespaceExports(ns)
+  is_valid_name <- name %in% names(getNamespace(ns)) || is_exported
+  if (!is_valid_name) return(NA_character_)
+  obj <- .Internal(getNamespaceValue(ns, name, is_exported))
+  env <- environment(obj)
+  if (is.null(env) || !isNamespace(env)) return(NA_character_)
+  unname(getNamespaceName(env))
 }
 
 
@@ -35,8 +52,8 @@ get_namespace_object_names <- function(ns) {
 #'
 as.package <- function(x) {
   if (inherits(x, "package")) return(x)
-  info <- read.dcf(file.path(x, "DESCRIPTION"))[1L,]
-  Encoding(info) <- 'UTF-8'
+  info <- read.dcf(file.path(x, "DESCRIPTION"))[1L, ]
+  Encoding(info) <- "UTF-8"
   desc <- as.list(info)
   names(desc) <- tolower(names(desc))
   desc$path <- x

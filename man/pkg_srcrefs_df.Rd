@@ -25,9 +25,9 @@ Create a data.frame of package srcref objects
 \examples{
 pkg <- system.file("examplepkg", package = "covtracer")
 remotes::install_local(
-  pkg, 
-  force = TRUE, 
-  quiet = TRUE, 
+  pkg,
+  force = TRUE,
+  quiet = TRUE,
   INSTALL_opts = "--with-keep.source"
 )
 pkg_srcrefs_df("examplepkg")

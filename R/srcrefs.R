@@ -151,9 +151,9 @@ flat_map_srcrefs <- function(xs) {
 #' @examples
 #' pkg <- system.file("examplepkg", package = "covtracer")
 #' remotes::install_local(
-#'   pkg, 
-#'   force = TRUE, 
-#'   quiet = TRUE, 
+#'   pkg,
+#'   force = TRUE,
+#'   quiet = TRUE,
 #'   INSTALL_opts = "--with-keep.source"
 #' )
 #' pkg_srcrefs("examplepkg")
@@ -174,7 +174,12 @@ pkg_srcrefs <- function(x) {
 #' @export
 pkg_srcrefs.environment <- function(x) {
   package_check_has_keep_source(x)
-  as_list_of_srcref(srcrefs(x))
+  srcs <- srcrefs(x)
+
+  if (isNamespace(x))
+    srcs[setdiff(get_namespace_object_names(x), names(srcs))] <- NA
+
+  as_list_of_srcref(srcs)
 }
 
 #' @param x A \code{character} package name, which can be used with
