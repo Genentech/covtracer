@@ -30,9 +30,8 @@ get_namespace_object_names <- function(ns) {
 #'
 get_obj_namespace_name <- function(ns, name) {
   is_exported <- name %in% getNamespaceExports(ns)
-  is_valid_name <- name %in% names(getNamespace(ns)) || is_exported
-  if (!is_valid_name) return(NA_character_)
-  obj <- .Internal(getNamespaceValue(ns, name, is_exported))
+  if (!is_exported) return(NA_character_)
+  obj <- getExportedValue(ns, name)
   env <- environment(obj)
   if (is.null(env) || !isNamespace(env)) return(NA_character_)
   unname(getNamespaceName(env))
