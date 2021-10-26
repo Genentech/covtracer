@@ -2,6 +2,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^pkgdown/*
-^README\.Rmd$
+^README\.(Rmd|html)$
 ^LICENSE\.md$
 ^\.github$
