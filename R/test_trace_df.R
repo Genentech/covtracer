@@ -24,7 +24,8 @@ test_trace_df <- function(x, ...) {
 #' @export
 #' @rdname test_trace_df
 test_trace_df.coverage <- function(x, ...,
-  pkg = as.package(attr(x, "package")$path)) {
+  pkg = as.package(attr(x, "package")$path),
+  aggregate_by = sum) {
 
   coverage_check_has_recorded_tests(x)
   pkgname <- pkg$package
@@ -61,9 +62,16 @@ test_trace_df.coverage <- function(x, ...,
   # I.5 build test-to-trace matrix, summarizing by trace hits
   test_mat <- test_trace_mapping(x)
   test_mat <- cbind(test_mat, count = rep(1L, nrow(test_mat)), direct = test_mat[, "i"] == 1L)
+
   if (nrow(test_mat)) {
-    test_mat <- stats::aggregate(cbind(count, direct) ~ test + trace, test_mat, sum)
-    test_mat$direct <- ifelse(test_mat$direct > 0L, 1L, 0L)
+    if (!is.null(aggregate_by)) {
+      test_mat <- stats::aggregate(
+        cbind(count, direct) ~ test + trace,
+        test_mat,
+        aggregate_by
+      )
+    }
+    test_mat[, "direct"] <- ifelse(test_mat[, "direct", drop = FALSE] > 0L, 1L, 0L)
   }
 
   # II.1 merge traces against namespace srcrefs to link objects and docs

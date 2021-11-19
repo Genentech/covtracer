@@ -1,0 +1,127 @@
+---
+title: "Plotting Test Paths"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Plotting Test Paths}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+options(width = 120L)
+```
+
+## Setup
+
+As with all covtracer analysis, we need to start by collecting coverage traces
+of a package. Below is an example where a package is installed with the
+necessary flags such that the coverage traces can be collected.
+
+```{r setup}
+library(covtracer)
+```
+
+```{r calc_cov, message = FALSE, warning = FALSE}
+library(withr)
+library(covr)
+library(remotes)
+
+withr::with_temp_libpaths({
+  options(keep.source = TRUE, keep.source.pkg = TRUE, covr.record_tests = TRUE)
+  examplepkg_source_path <- system.file("examplepkg", package = "covtracer")
+  remotes::install_local(
+    examplepkg_source_path, 
+    quiet = TRUE,
+    INSTALL_opts = c("--with-keep.source", "--install-tests")
+  )
+  examplepkg_cov <- covr::package_coverage(examplepkg_source_path)
+  examplepkg_ns <- getNamespace("examplepkg")
+})
+
+
+ttdf <- covtracer::test_trace_df(examplepkg_cov, aggregate_by = NULL)
+```
+
+## Create Edges of Our Test Path 
+
+Our test-trace dataframe has an index of test expressions, each linked to the
+traces that they evaluate, with added order of evaluation, `i`. To prepare this
+for visualization, we want to convert this to a dataframe where each record
+describes a step of this process. Instead of a test linking to a trace with an
+index, each jump in the test path should link from the calling expression to the
+evaluated expression.
+
+```{r}
+edges_df <- ttdf %>%
+  select(test_name, trace_srcref, alias, is_exported, i) %>%
+  filter(!is.na(test_name)) %>%  # filter out non-test expressions
+  arrange(test_name, i) %>%
+  mutate(test_id = cumsum(!duplicated(test_name))) %>%
+  split(.$test_name) %>%
+  lapply(function(sdf) {
+    unique(data.frame(
+      from = c(sdf$test_name[[1L]], head(sdf$alias, -1L)), 
+      to = sdf$alias
+    ))
+  }) %>%
+  bind_rows()
+
+head(edges_df)
+```
+
+Likewise, we want to capture some metadata about each vertex. Since a vertex in
+this context can be either a test or a trace, we have some data that is captured
+differently for each class of vertex.
+
+```{r}
+vertices_df <- bind_rows(
+  data.frame(
+    name = na.omit(unique(ttdf$test_name)),
+    color = "cornflowerblue",
+    label = paste0("Test #", seq_along(na.omit(unique(ttdf$test_name)))),
+    test_id = seq_along(na.omit(unique(ttdf$test_name))),
+    is_test = TRUE,
+    is_exported = NA),
+  data.frame(
+    name = na.omit(unique(ttdf$alias)),
+    color = "darkgoldenrod",
+    label = na.omit(unique(ttdf$alias)),
+    test_id = NA,
+    is_test = FALSE,
+    is_exported = ttdf$is_exported[match(unique(ttdf$alias), ttdf$alias)])
+)
+
+vertices_df$color[vertices_df$is_exported] <- "goldenrod"
+
+vertices_df %>%
+  select(name, label) %>%
+  head()
+```
+
+Finally, we can plot this network of test executions, 
+
+```{r, fig.width = 7L, fig.height = 7L}
+g <- igraph::graph_from_data_frame(edges_df, vertices = vertices_df)
+
+plot.igraph(g,
+  vertex.label = V(g)$label,
+  vertex.color = V(g)$color,
+  vertex.label.family = "sans",
+  vertex.label.color = "black",
+  vertex.label.cex = 0.8,
+  vertex.label.dist = 1.5,
+  vertex.label.degree = - pi / 2,
+  mark.border = NA
+)
+```
+
+Naturally, there are a plethora of wonderful visualization packages available
+that accept igraph data as input. This graph could just as well be plotted with
+the `visNetwork` package, though it is omitted to keep this example analysis
+minimal.
+

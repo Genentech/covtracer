@@ -7,7 +7,12 @@
 \usage{
 test_trace_df(x, ...)
 
-\method{test_trace_df}{coverage}(x, ..., pkg = as.package(attr(x, "package")$path))
+\method{test_trace_df}{coverage}(
+  x,
+  ...,
+  pkg = as.package(attr(x, "package")$path),
+  aggregate_by = sum
+)
 }
 \arguments{
 \item{x}{A package object, name, source code path or coverage result to use
