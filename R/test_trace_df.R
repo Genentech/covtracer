@@ -118,7 +118,7 @@ coverage_check_has_recorded_tests <- function(coverage) {
     function(i) is.null(i[["tests"]]),
     logical(1L))
 
-  if (!any(has_rec_tests)) {
+  if (length(has_rec_tests) > 0L && !any(has_rec_tests)) {
     stop(
       "Coverage object does not include recorded test information.\n\n",
       "  Expecting non-null `cov[[n]]$tests` for each trace\n\n",

@@ -45,11 +45,11 @@ Rd_df <- function(x) {
   aliases <- unlist(aliases, use.names = FALSE)
 
   data.frame(
-    file = files,
-    filepath = filepaths,
-    alias = aliases,
+    file = files %||% character(0L),
+    filepath = filepaths %||% character(0L),
+    alias = aliases %||% character(0L),
     is_exported = aliases %in% exports,
-    doctype = doctype,
+    doctype = doctype %||% character(0L),
     stringsAsFactors = FALSE
   )
 }
