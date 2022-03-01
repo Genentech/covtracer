@@ -19,6 +19,9 @@ test_trace_df <- function(x, ...) {
 
 #' @param pkg A `package` object as produced by `as.package`, if a specific
 #'   package object is to be used for inspecting the package namespace.
+#' @param aggregate_by `NULL` or a function by which to aggregate recurring hits
+#' `counts` and `direct` columns from a test to a trace. If `NULL`, no
+#' aggregation will be applied. (Default `sum`)
 #'
 #' @importFrom stats aggregate
 #' @export
