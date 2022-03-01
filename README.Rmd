@@ -30,8 +30,9 @@ package provides utilities for linking an assortment of test and
 package information to paint a more complete picture of how a test
 was performed.
 
-```
-Tests <--> Traced Exprs <--> Package Code <--> Package Documentation
+```mermaid
+flowchart LR
+    tests[Tests] <--> traces[Traced Exprs] <--> code[Package Code] <--> docs[Package Documentation]
 ```
 
 ## Installation

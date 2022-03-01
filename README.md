@@ -13,7 +13,10 @@ package provides utilities for linking an assortment of test and package
 information to paint a more complete picture of how a test was
 performed.
 
-    Tests <--> Traced Exprs <--> Package Code <--> Package Documentation
+``` mermaid
+flowchart LR
+    tests[Tests] <--> traces[Traced Exprs] <--> code[Package Code] <--> docs[Package Documentation]
+```
 
 ## Installation
 
@@ -96,16 +99,22 @@ traceability_matrix
 #>                                                    test_name                       file
 #> 1         Example R6 Accumulator class constructor is traced             Accumulator.Rd
 #> 2            Example R6 Accumulator class methods are traced             Accumulator.Rd
-#> 3                         hypotenuse is calculated correctly              hypotenuse.Rd
-#> 4  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd
-#> 5                               S4Example names method works  names-S4Example-method.Rd
-#> 6                                                       <NA> names-S4Example2-method.Rd
-#> 7          Example R6 Person class public methods are traced                  Person.Rd
-#> 8   Example R6 Rando class active field functions are traced                   Rando.Rd
-#> 9                                                       <NA>                   Rando.Rd
-#> 10                                                      <NA>              rd_sampler.Rd
-#> 11              s3_example_func works using default dispatch         s3_example_func.Rd
-#> 12                 s3_example_func works using list dispatch         s3_example_func.Rd
+#> 3               Calling a deeply nested series of functions.      complex_call_stack.Rd
+#> 4               Calling a deeply nested series of functions.  deeper_nested_function.Rd
+#> 5             Calling a function halfway through call stack.  deeper_nested_function.Rd
+#> 6  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd
+#> 7                         hypotenuse is calculated correctly              hypotenuse.Rd
+#> 8                               S4Example names method works  names-S4Example-method.Rd
+#> 9                                                       <NA> names-S4Example2-method.Rd
+#> 10              Calling a deeply nested series of functions.         nested_function.Rd
+#> 11         Example R6 Person class public methods are traced                  Person.Rd
+#> 12  Example R6 Rando class active field functions are traced                   Rando.Rd
+#> 13                                                      <NA>                   Rando.Rd
+#> 14                                                      <NA>              rd_sampler.Rd
+#> 15              Calling a deeply nested series of functions.      recursive_function.Rd
+#> 16            Calling a function halfway through call stack.      recursive_function.Rd
+#> 17              s3_example_func works using default dispatch         s3_example_func.Rd
+#> 18                 s3_example_func works using list dispatch         s3_example_func.Rd
 ```
 
 We can quickly see which functions or methods are entirely untested.
@@ -130,16 +139,22 @@ ttdf %>%
 #>                                                    test_name                       file
 #> 1         Example R6 Accumulator class constructor is traced             Accumulator.Rd
 #> 2            Example R6 Accumulator class methods are traced             Accumulator.Rd
-#> 3                         hypotenuse is calculated correctly              hypotenuse.Rd
-#> 4  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd
-#> 5                               S4Example names method works  names-S4Example-method.Rd
-#> 6                                                       <NA> names-S4Example2-method.Rd
-#> 7          Example R6 Person class public methods are traced                  Person.Rd
-#> 8   Example R6 Rando class active field functions are traced                   Rando.Rd
-#> 9                                                       <NA>                   Rando.Rd
-#> 10                                                      <NA>              rd_sampler.Rd
-#> 11              s3_example_func works using default dispatch         s3_example_func.Rd
-#> 12                 s3_example_func works using list dispatch         s3_example_func.Rd
+#> 3               Calling a deeply nested series of functions.      complex_call_stack.Rd
+#> 4               Calling a deeply nested series of functions.  deeper_nested_function.Rd
+#> 5             Calling a function halfway through call stack.  deeper_nested_function.Rd
+#> 6  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd
+#> 7                         hypotenuse is calculated correctly              hypotenuse.Rd
+#> 8                               S4Example names method works  names-S4Example-method.Rd
+#> 9                                                       <NA> names-S4Example2-method.Rd
+#> 10              Calling a deeply nested series of functions.         nested_function.Rd
+#> 11         Example R6 Person class public methods are traced                  Person.Rd
+#> 12  Example R6 Rando class active field functions are traced                   Rando.Rd
+#> 13                                                      <NA>                   Rando.Rd
+#> 14                                                      <NA>              rd_sampler.Rd
+#> 15              Calling a deeply nested series of functions.      recursive_function.Rd
+#> 16            Calling a function halfway through call stack.      recursive_function.Rd
+#> 17              s3_example_func works using default dispatch         s3_example_func.Rd
+#> 18                 s3_example_func works using list dispatch         s3_example_func.Rd
 ```
 
 ### Finding Untested Behaviors
@@ -176,13 +191,13 @@ ttdf %>%
   group_by(alias) %>%
   summarize(any_direct_tests = any(direct, na.rm = TRUE)) %>%
   arrange(alias)
-#> # A tibble: 10 × 2
-#>   alias                   any_direct_tests
-#>   <chr>                   <lgl>           
-#> 1 Accumulator             TRUE            
-#> 2 hypotenuse              TRUE            
-#> 3 names,S4Example-method  TRUE            
-#> 4 names,S4Example2-method FALSE           
-#> 5 Person                  TRUE            
-#> # … with 5 more rows
+#> # A tibble: 14 × 2
+#>   alias                  any_direct_tests
+#>   <chr>                  <lgl>           
+#> 1 Accumulator            TRUE            
+#> 2 complex_call_stack     TRUE            
+#> 3 deeper_nested_function TRUE            
+#> 4 hypotenuse             TRUE            
+#> 5 names,S4Example-method TRUE            
+#> # … with 9 more rows
 ```
