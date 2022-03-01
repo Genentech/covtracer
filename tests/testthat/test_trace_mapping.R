@@ -4,6 +4,8 @@ test_that("test trace mapping", {
     "produces a matrix from a single trace" = examplepkg_cov[1L],
     "produces an empty matrix from no traces" = examplepkg_cov[c()])
 
+  expect_true(all(vapply(cases, inherits, logical(1L), "coverage")))
+
   for (i in seq_along(cases)) {
     expect_true(nchar(names(cases)[[i]]) > 0L)
     test_that(names(cases)[[i]], {

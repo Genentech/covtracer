@@ -5,14 +5,15 @@
 #'
 #' Used to ensure traces can be linked through s3 dispatch
 #'
+#' @export
 #' @rdname s3_example_func
 s3_example_func <- function(x, ...) {
-  UseMethod("s3_example_func")  
+  UseMethod("s3_example_func")
 }
 
 #' @rdname s3_example_func
 s3_example_func.default <- function(x, ...) {
-  "default"  
+  "default"
 }
 
 #' @rdname s3_example_func

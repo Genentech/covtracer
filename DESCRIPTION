@@ -1,6 +1,6 @@
 Package: covtracer
 Title: Tools for contextualizing tests
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: c(
     person(given = "Doug",
            family = "Kelkhoff",
@@ -28,6 +28,8 @@ Suggests:
     withr,
     R6,
     cli,
+    dplyr,
+    igraph,
     knitr,
     rmarkdown
 Remotes:
