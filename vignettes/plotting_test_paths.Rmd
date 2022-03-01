@@ -16,21 +16,28 @@ knitr::opts_chunk$set(
 options(width = 120L)
 ```
 
+```{css, echo=FALSE}
+img {
+  border: none;
+  margin: 0;
+}
+```
+
 ## Setup
 
 As with all covtracer analysis, we need to start by collecting coverage traces
 of a package. Below is an example where a package is installed with the
 necessary flags such that the coverage traces can be collected.
 
-```{r setup}
+```{r setup, message = FALSE}
 library(covtracer)
-```
 
-```{r calc_cov, message = FALSE, warning = FALSE}
 library(withr)
 library(covr)
 library(remotes)
+```
 
+```{r calc_cov, message = FALSE, warning = FALSE}
 withr::with_temp_libpaths({
   options(keep.source = TRUE, keep.source.pkg = TRUE, covr.record_tests = TRUE)
   examplepkg_source_path <- system.file("examplepkg", package = "covtracer")
@@ -47,6 +54,29 @@ withr::with_temp_libpaths({
 ttdf <- covtracer::test_trace_df(examplepkg_cov, aggregate_by = NULL)
 ```
 
+As well, for this analysis we will use a few supporting packages.
+
+```{r more_setup, message = FALSE}
+library(dplyr)
+library(igraph)
+```
+
+## Preparing Graph Data
+
+Before we use the test data, we will clean our incoming data, removing untested
+records and filtering out untestable objects like S4 class definitions.
+
+```{r}
+ttdf <- ttdf %>%
+  filter(!is.na(test_name)) %>%
+  filter(is.na(doctype) | !doctype %in% "class") %>%
+  select(test_name, alias, is_exported, i) %>%
+  arrange(test_name, i) %>%
+  mutate(test_id = cumsum(!duplicated(test_name)))
+
+head(ttdf)
+```
+
 ## Create Edges of Our Test Path 
 
 Our test-trace dataframe has an index of test expressions, each linked to the
@@ -58,10 +88,6 @@ evaluated expression.
 
 ```{r}
 edges_df <- ttdf %>%
-  select(test_name, trace_srcref, alias, is_exported, i) %>%
-  filter(!is.na(test_name)) %>%  # filter out non-test expressions
-  arrange(test_name, i) %>%
-  mutate(test_id = cumsum(!duplicated(test_name))) %>%
   split(.$test_name) %>%
   lapply(function(sdf) {
     unique(data.frame(
@@ -69,7 +95,8 @@ edges_df <- ttdf %>%
       to = sdf$alias
     ))
   }) %>%
-  bind_rows()
+  bind_rows() %>%
+  distinct()
 
 head(edges_df)
 ```
@@ -79,21 +106,24 @@ this context can be either a test or a trace, we have some data that is captured
 differently for each class of vertex.
 
 ```{r}
+test_names <- na.omit(unique(ttdf$test_name))
+test_aliases <- na.omit(unique(ttdf$alias))
+
 vertices_df <- bind_rows(
   data.frame(
-    name = na.omit(unique(ttdf$test_name)),
+    name = test_names,
     color = "cornflowerblue",
-    label = paste0("Test #", seq_along(na.omit(unique(ttdf$test_name)))),
-    test_id = seq_along(na.omit(unique(ttdf$test_name))),
+    label = paste0("Test #", seq_along(test_names)),
+    test_id = seq_along(test_names),
     is_test = TRUE,
     is_exported = NA),
   data.frame(
-    name = na.omit(unique(ttdf$alias)),
+    name = test_aliases,
     color = "darkgoldenrod",
-    label = na.omit(unique(ttdf$alias)),
+    label = test_aliases,
     test_id = NA,
     is_test = FALSE,
-    is_exported = ttdf$is_exported[match(unique(ttdf$alias), ttdf$alias)])
+    is_exported = ttdf$is_exported[match(test_aliases, ttdf$alias)])
 )
 
 vertices_df$color[vertices_df$is_exported] <- "goldenrod"
@@ -103,20 +133,35 @@ vertices_df %>%
   head()
 ```
 
+## Plotting Our Test Paths
+
 Finally, we can plot this network of test executions, 
 
-```{r, fig.width = 7L, fig.height = 7L}
+```{r, fig.asp = 1, fig.width = 8L, out.width = "100%"}
 g <- igraph::graph_from_data_frame(edges_df, vertices = vertices_df)
 
+par(mai = rep(0, 4), omi = rep(0, 4L))
+
 plot.igraph(g,
+  vertex.size = 8,
   vertex.label = V(g)$label,
   vertex.color = V(g)$color,
   vertex.label.family = "sans",
   vertex.label.color = "black",
-  vertex.label.cex = 0.8,
-  vertex.label.dist = 1.5,
+  vertex.label.dist = 1,
   vertex.label.degree = - pi / 2,
-  mark.border = NA
+  vertex.label.cex = 0.8,
+  mark.border = NA,
+  margin = c(0, 0.2, 0, 0.2)
+)
+
+legend(
+  "bottomleft", 
+  inset = c(0.05, 0),
+  legend = c("test", "exported function", "unexported function"),
+  col = c("cornflowerblue", "goldenrod", "darkgoldenrod"),
+  pch = 16,
+  bty = "n"
 )
 ```
 
@@ -124,4 +169,3 @@ Naturally, there are a plethora of wonderful visualization packages available
 that accept igraph data as input. This graph could just as well be plotted with
 the `visNetwork` package, though it is omitted to keep this example analysis
 minimal.
-
