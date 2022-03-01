@@ -28,6 +28,8 @@ Suggests:
     withr,
     R6,
     cli,
+    dplyr,
+    igraph,
     knitr,
     rmarkdown
 Remotes:
