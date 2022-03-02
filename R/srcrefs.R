@@ -125,6 +125,9 @@ srcrefs.MethodDefinition <- function(x, ..., srcref_names = NULL) {
 #' Map `srcrefs` over an iterable object, Filtering non-srcref results
 #'
 #' @param xs Any iterable object
+#' @param ns A `character` namespace name to attribute to objects in `xs`. If
+#'   `xs` objects themselves have namespaces attributed already to them, the
+#'   namespace will not be replaced.
 #'
 flat_map_srcrefs <- function(xs, ns = NULL) {
   srcs <- mapply(

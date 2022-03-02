@@ -8,6 +8,10 @@ flat_map_srcrefs(xs, ns = NULL)
 }
 \arguments{
 \item{xs}{Any iterable object}
+
+\item{ns}{A \code{character} namespace name to attribute to objects in \code{xs}. If
+\code{xs} objects themselves have namespaces attributed already to them, the
+namespace will not be replaced.}
 }
 \description{
 Map \code{srcrefs} over an iterable object, Filtering non-srcref results
