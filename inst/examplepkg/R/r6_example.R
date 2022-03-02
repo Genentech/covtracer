@@ -1,3 +1,15 @@
+#' Helper function to test closures as R6 methods
+#'
+adder <- function(self) {
+  function(x = 1) {
+    # Accumulator$add  ## [comment used for testing]
+    self$sum <- self$sum + x
+    invisible(self)
+  }
+}
+
+
+
 #' An example R6 Accumulator class
 #'
 #' @references <https://adv-r.hadley.nz/r6.html>
@@ -16,7 +28,7 @@ Accumulator <- R6::R6Class("Accumulator", list(
   #'
   initialize = function(sum = 0) {
     # Accumulator$initialize  ## [comment used for testing]
-    self$sum <- sum    
+    self$sum <- sum
   },
 
   #' @description
@@ -25,11 +37,8 @@ Accumulator <- R6::R6Class("Accumulator", list(
   #' @param x A value to add to the accumulating sum
   #' @return The `Accumulator` object after accumulating the new value
   #'
-  add = function(x = 1) {
-    # Accumulator$add  ## [comment used for testing]
-    self$sum <- self$sum + x 
-    invisible(self)
-  })
+  add = adder(self)
+  )
 )
 
 
@@ -40,7 +49,7 @@ Accumulator <- R6::R6Class("Accumulator", list(
 #' @importFrom R6 R6Class
 #' @export
 #'
-Person <- R6::R6Class("Person", 
+Person <- R6::R6Class("Person",
   public = list(
 
     #' @description
@@ -55,7 +64,7 @@ Person <- R6::R6Class("Person",
       private$age <- age
     },
 
-    
+
     #' @description
     #' Print a Person objects info
     #'
@@ -87,9 +96,16 @@ Rando <- R6::R6Class("Rando", active = list(
   random = function(value) {
     # Rando$random   ## [comment used for testing]
     if (missing(value)) {
-      runif(1)  
+      runif(1)
     } else {
       stop("Can't set `$random`", call. = FALSE)
     }
   }
 ))
+
+
+
+#' A materialized R6 object declared within a package namespace
+#'
+#' @export
+PersonPrime <- Person$new("Optimus", "Prime")

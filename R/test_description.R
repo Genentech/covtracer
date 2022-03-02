@@ -12,26 +12,30 @@
 #'     description, although this behavior is subject to change.
 #'   }
 #' }
-#' 
+#'
 #' @param x a unit test call stack or expression.
-#' 
+#'
 test_description <- function(x) {
   UseMethod("test_description")
 }
 
+#' @exportS3Method
 test_description.default <- function(x) {
   NA_character_
 }
 
+#' @exportS3Method
 test_description.srcref <- function(x) {
-  keystr <- paste0("[", getSrcFilename(x), "#L", as.numeric(x)[1], "] ") 
+  keystr <- paste0("[", getSrcFilename(x), "#L", as.numeric(x)[1], "] ")
   test_description(paste0(keystr, expr_str(srcref_expr(x))))
 }
 
+#' @exportS3Method
 test_description.expression <- function(x) {
-  test_description(as.list(x))  
+  test_description(as.list(x))
 }
 
+#' @exportS3Method
 #' @importFrom utils getSrcref
 test_description.call <- function(x) {
   src <- getSrcref(x)
@@ -39,10 +43,12 @@ test_description.call <- function(x) {
   else test_description(src)
 }
 
+#' @exportS3Method
 test_description.character <- function(x) {
   substring(x, 1L, 120L)
 }
 
+#' @exportS3Method
 #' @importFrom utils head
 test_description.list <- function(x) {
   # check if the call stack contains a test_that call
@@ -51,7 +57,7 @@ test_description.list <- function(x) {
     descs <- lapply(x[which(is_test_that_call)], test_description_test_that)
     return(paste(descs, collapse = "; "))
   }
-  
+
   test_description(x[[length(x)]])
 }
 
@@ -86,7 +92,7 @@ srcref_expr <- function(ref) {
 #'
 #' @param ref a \code{srcref}
 #'
-expr_str <- function(ref) { 
+expr_str <- function(ref) {
   if (is.expression(ref)) ref <- as.call(ref)
   gsub("\\s{2,}", " ", paste0(deparse(ref), collapse = "; "))
 }

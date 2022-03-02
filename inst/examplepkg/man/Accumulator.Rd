@@ -21,10 +21,19 @@ An example R6 Accumulator class
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Accumulator$new()}}
 \item \href{#method-add}{\code{Accumulator$add()}}
+\item \href{#method-new}{\code{Accumulator$new()}}
 \item \href{#method-clone}{\code{Accumulator$clone()}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-add"></a>}}
+\if{latex}{\out{\hypertarget{method-add}{}}}
+\subsection{Method \code{add()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Accumulator$add(x = 1)}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
@@ -44,26 +53,6 @@ Create a new Accumulator
 }
 \subsection{Returns}{
 A new \code{Accumulator} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-add"></a>}}
-\if{latex}{\out{\hypertarget{method-add}{}}}
-\subsection{Method \code{add()}}{
-Add to the accumulating sum
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Accumulator$add(x = 1)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{A value to add to the accumulating sum}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-The \code{Accumulator} object after accumulating the new value
 }
 }
 \if{html}{\out{<hr>}}

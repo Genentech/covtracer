@@ -20,25 +20,6 @@ get_namespace_object_names <- function(ns) {
 
 
 
-#' Get namespace export namespace name
-#'
-#' For most objects, this will be identical to the namespace name provided, but
-#' reexports will retain their originating package's namespace name. This helper
-#' function helps to expose this name to determine which exports are reexports.
-#'
-#' @inheritParams base::getExportedValue
-#'
-get_obj_namespace_name <- function(ns, name) {
-  is_exported <- name %in% getNamespaceExports(ns)
-  if (!is_exported) return(NA_character_)
-  obj <- getExportedValue(ns, name)
-  env <- environment(obj)
-  if (is.null(env) || !isNamespace(env)) return(NA_character_)
-  unname(getNamespaceName(env))
-}
-
-
-
 #' A simple alternative to `devtools::as.package`
 #'
 #' Functionally identical to `devtools`' `as.package`, but without interactive

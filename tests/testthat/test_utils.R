@@ -10,10 +10,10 @@ test_that("get_namespace_object_names filters hidden method and class tables", {
   )
 })
 
-test_that("get_obj_namespace_name extracts reexport namespace names", {
+test_that("obj_namespace_name extracts reexport namespace names", {
   ex <- getNamespaceExports(examplepkg_ns)
   names(ex) <- ex
-  ns_names <- lapply(ex, get_obj_namespace_name, ns = "examplepkg")
+  ns_names <- lapply(ex, obj_namespace_name, ns = "examplepkg")
   expect_equal(ns_names[["help"]], "utils")
   expect_equal(ns_names[["example"]], "utils")
   expect_equal(ns_names[["hypotenuse"]], "examplepkg")

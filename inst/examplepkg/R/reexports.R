@@ -9,4 +9,4 @@ utils::help
 #'
 #' @importFrom utils example
 #' @export
-example <- utils::example
+reexport_example <- utils::example

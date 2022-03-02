@@ -49,13 +49,7 @@ test_trace_df.coverage <- function(x, ...,
 
   # I.2 build namespace srcref data.frame
   pkg_df <- pkg_srcrefs_df(pkgname)
-  names(pkg_df) <- c("alias", "srcref")
-  pkg_df$namespace <- vapply(
-    pkg_df$alias,
-    get_obj_namespace_name,
-    character(1L),
-    ns = pkgname
-  )
+  names(pkg_df)[match("name", names(pkg_df))] <- "alias"
 
   # I.3 build coverage traces
   trace_df <- trace_srcrefs_df(x)

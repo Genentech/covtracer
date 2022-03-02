@@ -87,7 +87,29 @@ as.data.frame.list_of_srcref <- function(x, ..., use.names = TRUE,
 #'
 #' @export
 pkg_srcrefs_df <- function(x) {
-  as.data.frame(pkg_srcrefs(x))
+  srcs <- pkg_srcrefs(x)
+  df <- as.data.frame(srcs)
+  has_srcref <- vapply(df$srcref, inherits, logical(1L), "srcref")
+  df$namespace <- NA_character_
+
+  df$namespace[has_srcref] <- vapply(
+    srcs[has_srcref],
+    attr,
+    character(1L),
+    "namespace"
+  )
+
+  df$namespace[!has_srcref] <- vapply(
+    df$name[!has_srcref],
+    obj_namespace_name,
+    character(1L),
+    ns = x
+  )
+
+  # filter srcrefs pulled from other files (often through class constructors)
+  df <- df[is.na(df$srcref) | !is.na(df$namespace),, drop = FALSE]
+
+  df
 }
 
 
@@ -165,7 +187,7 @@ test_srcrefs_df <- function(x) {
 test_srcrefs_df.coverage <- function(x) {
   cov_tests <- attr(x, "tests")
   test_srcs <- test_srcrefs(x)
-  test_desc <- vapply(cov_tests, function(i) test_description(i), character(1L))
+  test_desc <- vapply(cov_tests, test_description, character(1L))
   names(test_srcs) <- test_desc
   as.data.frame(test_srcs)
 }

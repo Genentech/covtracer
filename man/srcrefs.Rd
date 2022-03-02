@@ -7,7 +7,6 @@
 \alias{srcrefs.namespace}
 \alias{srcrefs.environment}
 \alias{srcrefs.R6ClassGenerator}
-\alias{srcrefs.R6}
 \alias{srcrefs.MethodDefinition}
 \title{Retrieve \code{srcref}s}
 \usage{
@@ -22,8 +21,6 @@ srcrefs(x, ...)
 \method{srcrefs}{environment}(x, ...)
 
 \method{srcrefs}{R6ClassGenerator}(x, ..., srcref_names = NULL)
-
-\method{srcrefs}{R6}(x, ..., srcref_names = NULL)
 
 \method{srcrefs}{MethodDefinition}(x, ..., srcref_names = NULL)
 }
