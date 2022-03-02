@@ -1,0 +1,171 @@
+---
+title: "Plotting Test Paths"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Plotting Test Paths}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+options(width = 120L)
+```
+
+```{css, echo=FALSE}
+img {
+  border: none;
+  margin: 0;
+}
+```
+
+## Setup
+
+As with all covtracer analysis, we need to start by collecting coverage traces
+of a package. Below is an example where a package is installed with the
+necessary flags such that the coverage traces can be collected.
+
+```{r setup, message = FALSE}
+library(covtracer)
+
+library(withr)
+library(covr)
+library(remotes)
+```
+
+```{r calc_cov, message = FALSE, warning = FALSE}
+withr::with_temp_libpaths({
+  options(keep.source = TRUE, keep.source.pkg = TRUE, covr.record_tests = TRUE)
+  examplepkg_source_path <- system.file("examplepkg", package = "covtracer")
+  remotes::install_local(
+    examplepkg_source_path, 
+    quiet = TRUE,
+    INSTALL_opts = c("--with-keep.source", "--install-tests")
+  )
+  examplepkg_cov <- covr::package_coverage(examplepkg_source_path)
+  examplepkg_ns <- getNamespace("examplepkg")
+})
+
+
+ttdf <- covtracer::test_trace_df(examplepkg_cov, aggregate_by = NULL)
+```
+
+As well, for this analysis we will use a few supporting packages.
+
+```{r more_setup, message = FALSE}
+library(dplyr)
+library(igraph)
+```
+
+## Preparing Graph Data
+
+Before we use the test data, we will clean our incoming data, removing untested
+records and filtering out untestable objects like S4 class definitions.
+
+```{r}
+ttdf <- ttdf %>%
+  filter(!is.na(test_name)) %>%
+  filter(is.na(doctype) | !doctype %in% "class") %>%
+  select(test_name, alias, is_exported, i) %>%
+  arrange(test_name, i) %>%
+  mutate(test_id = cumsum(!duplicated(test_name)))
+
+head(ttdf)
+```
+
+## Create Edges of Our Test Path 
+
+Our test-trace dataframe has an index of test expressions, each linked to the
+traces that they evaluate, with added order of evaluation, `i`. To prepare this
+for visualization, we want to convert this to a dataframe where each record
+describes a step of this process. Instead of a test linking to a trace with an
+index, each jump in the test path should link from the calling expression to the
+evaluated expression.
+
+```{r}
+edges_df <- ttdf %>%
+  split(.$test_name) %>%
+  lapply(function(sdf) {
+    unique(data.frame(
+      from = c(sdf$test_name[[1L]], head(sdf$alias, -1L)), 
+      to = sdf$alias
+    ))
+  }) %>%
+  bind_rows() %>%
+  distinct()
+
+head(edges_df)
+```
+
+Likewise, we want to capture some metadata about each vertex. Since a vertex in
+this context can be either a test or a trace, we have some data that is captured
+differently for each class of vertex.
+
+```{r}
+test_names <- na.omit(unique(ttdf$test_name))
+test_aliases <- na.omit(unique(ttdf$alias))
+
+vertices_df <- bind_rows(
+  data.frame(
+    name = test_names,
+    color = "cornflowerblue",
+    label = paste0("Test #", seq_along(test_names)),
+    test_id = seq_along(test_names),
+    is_test = TRUE,
+    is_exported = NA),
+  data.frame(
+    name = test_aliases,
+    color = "darkgoldenrod",
+    label = test_aliases,
+    test_id = NA,
+    is_test = FALSE,
+    is_exported = ttdf$is_exported[match(test_aliases, ttdf$alias)])
+)
+
+vertices_df$color[vertices_df$is_exported] <- "goldenrod"
+
+vertices_df %>%
+  select(name, label) %>%
+  head()
+```
+
+## Plotting Our Test Paths
+
+Finally, we can plot this network of test executions, 
+
+```{r, fig.asp = 1, fig.width = 8L, out.width = "100%"}
+g <- igraph::graph_from_data_frame(edges_df, vertices = vertices_df)
+
+par(mai = rep(0, 4), omi = rep(0, 4L))
+
+plot.igraph(g,
+  vertex.size = 8,
+  vertex.label = V(g)$label,
+  vertex.color = V(g)$color,
+  vertex.label.family = "sans",
+  vertex.label.color = "black",
+  vertex.label.dist = 1,
+  vertex.label.degree = - pi / 2,
+  vertex.label.cex = 0.8,
+  mark.border = NA,
+  margin = c(0, 0.2, 0, 0.2)
+)
+
+legend(
+  "bottomleft", 
+  inset = c(0.05, 0),
+  legend = c("test", "exported function", "unexported function"),
+  col = c("cornflowerblue", "goldenrod", "darkgoldenrod"),
+  pch = 16,
+  bty = "n"
+)
+```
+
+Naturally, there are a plethora of wonderful visualization packages available
+that accept igraph data as input. This graph could just as well be plotted with
+the `visNetwork` package, though it is omitted to keep this example analysis
+minimal.

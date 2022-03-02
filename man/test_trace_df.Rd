@@ -7,7 +7,12 @@
 \usage{
 test_trace_df(x, ...)
 
-\method{test_trace_df}{coverage}(x, ..., pkg = as.package(attr(x, "package")$path))
+\method{test_trace_df}{coverage}(
+  x,
+  ...,
+  pkg = as.package(attr(x, "package")$path),
+  aggregate_by = sum
+)
 }
 \arguments{
 \item{x}{A package object, name, source code path or coverage result to use
@@ -18,6 +23,10 @@ using \code{options(covr.record_tests = TRUE)}.}
 
 \item{pkg}{A \code{package} object as produced by \code{as.package}, if a specific
 package object is to be used for inspecting the package namespace.}
+
+\item{aggregate_by}{\code{NULL} or a function by which to aggregate recurring hits
+\code{counts} and \code{direct} columns from a test to a trace. If \code{NULL}, no
+aggregation will be applied. (Default \code{sum})}
 }
 \description{
 Intercept unit test coverage reports and process results to link evaluated

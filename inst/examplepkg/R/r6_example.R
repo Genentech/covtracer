@@ -38,8 +38,7 @@ Accumulator <- R6::R6Class("Accumulator", list(
   #' @return The `Accumulator` object after accumulating the new value
   #'
   add = adder(self)
-  )
-)
+))
 
 
 

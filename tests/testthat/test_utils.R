@@ -15,6 +15,6 @@ test_that("obj_namespace_name extracts reexport namespace names", {
   names(ex) <- ex
   ns_names <- lapply(ex, obj_namespace_name, ns = "examplepkg")
   expect_equal(ns_names[["help"]], "utils")
-  expect_equal(ns_names[["example"]], "utils")
+  expect_equal(ns_names[["reexport_example"]], "utils")
   expect_equal(ns_names[["hypotenuse"]], "examplepkg")
 })

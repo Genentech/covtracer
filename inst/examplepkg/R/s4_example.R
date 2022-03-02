@@ -5,6 +5,7 @@ NULL
 #'
 #' @slot data Some data
 #' @export
+#' @exportClass S4Example
 #'
 S4Example <- setClass("S4Example", representation(data = "list"))
 
@@ -13,7 +14,7 @@ S4Example <- setClass("S4Example", representation(data = "list"))
 #' @param x An x
 #'
 setMethod("names", signature("S4Example"), function(x) {
-  names(x@data)  
+  names(x@data)
 })
 
 
@@ -21,6 +22,7 @@ setMethod("names", signature("S4Example"), function(x) {
 #'
 #' @slot data Some data
 #' @export
+#' @exportClass S4Example2
 #'
 S4Example2 <- setClass("S4Example2", representation(data = "list"))
 
@@ -30,6 +32,6 @@ S4Example2 <- setClass("S4Example2", representation(data = "list"))
 #' @param x An x
 #'
 setMethod("names", signature("S4Example2"), function(x) {
-  names(x@data)  
+  names(x@data)
 })
 

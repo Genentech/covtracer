@@ -10,3 +10,7 @@ utils::help
 #' @importFrom utils example
 #' @export
 reexport_example <- utils::example
+
+#' @importFrom utils person
+#' @export person
+NULL

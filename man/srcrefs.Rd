@@ -36,7 +36,9 @@ names when choosing which names to provide in the returned list.}
 A \code{list} of \code{srcref} objects. Often, has a length of 1, but can be
 larger for things like environments, namespaces or generic methods. The
 names of the list reflect the name of the Rd name or alias that could be
-used to find information related to each \code{srcref}.
+used to find information related to each \code{srcref}. Elements of the \code{list}
+will have attribute \code{"namespace"} denoting the source environment namespace
+if one can be determined for the srcref object.
 }
 \description{
 This function takes a code collection and returns a \code{list} of related
