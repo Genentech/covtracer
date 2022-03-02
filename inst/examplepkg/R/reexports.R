@@ -17,7 +17,6 @@ NULL
 
 #' Reexport with srcref
 #'
-#' @importFrom covtracer test_trace_df
 #' @export
 #'
 reexport_pkg_srcrefs <- if (

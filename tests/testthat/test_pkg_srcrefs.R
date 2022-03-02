@@ -35,10 +35,10 @@ test_that("pkg_srcrefs discovers namespace of package objects", {
   expect_true(is.null(attr(srcs$person, "namespace")))
 
   # reexport from a package which also has srcrefs available
-  skip_if(
-    is.null(getSrcref(covtracer::pkg_srcrefs)),
-    "`covtracer` must be installed with options(keep.source = TRUE)."
-  )
+  skip_if_not(is_srcref(srcs$reexport_pkg_srcrefs), paste0(
+    "`examplepkg` must be built after `covtracer` is installed with ",
+    "options(keep.source = TRUE) to test reexported functions with source."
+  ))
 
   expect_true(attr(srcs$reexport_pkg_srcrefs, "namespace") == "covtracer")
 })
