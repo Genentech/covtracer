@@ -32,6 +32,20 @@ Suggests:
     igraph,
     knitr,
     rmarkdown
+Config/Needs/tests:
+    testthat,
+    remotes,
+    covr,
+    withr,
+    cli
+Config/Needs/vignettes:
+    remotes,
+    covr,
+    withr,
+    knitr,
+    rmarkdown,
+    dplyr,
+    igraph
 Remotes:
     github::r-lib/covr
 License: MIT + file LICENSE
