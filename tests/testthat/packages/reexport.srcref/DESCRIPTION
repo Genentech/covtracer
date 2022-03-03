@@ -1,0 +1,18 @@
+Package: reexport.srcref
+Title: A test package to test for separation of namespaces for reexports with srcrefs
+Version: 1.0.0
+Authors@R: 
+    person("Author", "McAuthor",
+      "author.mcauthor@example.com",
+      role = c("aut", "cre"),
+      email = "author.mcauthor@example.com"
+    )
+Description: 
+    A package which contains no evaluable code. This may be that it only
+    provides data, documentation or reexports, meaning that "covr" would not
+    inject any traces that could be used by "covtracer".
+License:
+    Inheritted From Parent Package
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2

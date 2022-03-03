@@ -34,11 +34,9 @@ test_that("pkg_srcrefs discovers namespace of package objects", {
   # reexport from utils with a `NULL` object
   expect_true(is.null(attr(srcs$person, "namespace")))
 
-  # reexport from a package which also has srcrefs available
-  skip_if_not(is_srcref(srcs$reexport_pkg_srcrefs), paste0(
-    "`examplepkg` must be built after `covtracer` is installed with ",
-    "options(keep.source = TRUE) to test reexported functions with source."
-  ))
+})
 
-  expect_true(attr(srcs$reexport_pkg_srcrefs, "namespace") == "covtracer")
+test_that("pkg_srcrefs distinguish namespaces of reexported object srcrefs", {
+  expect_s3_class(srcs <- pkg_srcrefs(reexport_srcref_pkg_ns), "list_of_srcref")
+  expect_true("examplepkg" %in% lapply(srcs, attr, "namespace"))
 })
