@@ -29,7 +29,7 @@ As with all covtracer analysis, we need to start by collecting coverage traces
 of a package. Below is an example where a package is installed with the
 necessary flags such that the coverage traces can be collected.
 
-```{r setup, message = FALSE}
+```{r setup}
 library(covtracer)
 
 library(withr)
@@ -37,26 +37,32 @@ library(covr)
 library(remotes)
 ```
 
-```{r calc_cov, message = FALSE, warning = FALSE}
-withr::with_temp_libpaths({
-  options(keep.source = TRUE, keep.source.pkg = TRUE, covr.record_tests = TRUE)
-  examplepkg_source_path <- system.file("examplepkg", package = "covtracer")
-  remotes::install_local(
-    examplepkg_source_path, 
-    quiet = TRUE,
-    INSTALL_opts = c("--with-keep.source", "--install-tests")
-  )
-  examplepkg_cov <- covr::package_coverage(examplepkg_source_path)
-  examplepkg_ns <- getNamespace("examplepkg")
-})
+```{r libpaths, include = FALSE}
+init_libs = .libPaths()
+dir.create(lib <- tempfile("covtracer_pkgs_"))
+.libPaths(c(lib, .libPaths()))
+```
 
+```{r calc_cov, message = FALSE, warning = FALSE}
+options(keep.source = TRUE, keep.source.pkg = TRUE, covr.record_tests = TRUE)
+examplepkg_source_path <- system.file("examplepkg", package = "covtracer")
+
+remotes::install_local(
+  examplepkg_source_path,
+  quiet = TRUE,
+  force = TRUE,
+  INSTALL_opts = c("--with-keep.source", "--install-tests")
+)
+
+examplepkg_cov <- covr::package_coverage(examplepkg_source_path)
+examplepkg_ns <- getNamespace("examplepkg")
 
 ttdf <- covtracer::test_trace_df(examplepkg_cov, aggregate_by = NULL)
 ```
 
 As well, for this analysis we will use a few supporting packages.
 
-```{r more_setup, message = FALSE}
+```{r more_setup}
 library(dplyr)
 library(igraph)
 ```
@@ -91,7 +97,7 @@ edges_df <- ttdf %>%
   split(.$test_name) %>%
   lapply(function(sdf) {
     unique(data.frame(
-      from = c(sdf$test_name[[1L]], head(sdf$alias, -1L)), 
+      from = c(sdf$test_name[[1L]], head(sdf$alias, -1L)),
       to = sdf$alias
     ))
   }) %>%
@@ -106,27 +112,29 @@ this context can be either a test or a trace, we have some data that is captured
 differently for each class of vertex.
 
 ```{r}
-test_names <- na.omit(unique(ttdf$test_name))
-test_aliases <- na.omit(unique(ttdf$alias))
+test_names <- Filter(Negate(is.na), unique(ttdf$test_name))
+obj_names <- Filter(Negate(is.na), unique(ttdf$alias))
 
-vertices_df <- bind_rows(
-  data.frame(
-    name = test_names,
-    color = "cornflowerblue",
-    label = paste0("Test #", seq_along(test_names)),
-    test_id = seq_along(test_names),
-    is_test = TRUE,
-    is_exported = NA),
-  data.frame(
-    name = test_aliases,
-    color = "darkgoldenrod",
-    label = test_aliases,
-    test_id = NA,
-    is_test = FALSE,
-    is_exported = ttdf$is_exported[match(test_aliases, ttdf$alias)])
+test_vertices <- data.frame(
+  name = test_names,
+  color = "cornflowerblue",
+  label = sprintf("Test #%d", seq_along(test_names)),
+  test_id = seq_along(test_names),
+  is_test = TRUE,
+  is_exported = NA
 )
 
-vertices_df$color[vertices_df$is_exported] <- "goldenrod"
+obj_vertices <- data.frame(
+  name = obj_names,
+  color = "darkgoldenrod",
+  label = obj_names,
+  test_id = NA,
+  is_test = FALSE,
+  is_exported = ttdf$is_exported[match(obj_names, ttdf$alias)]
+)
+
+vertices_df <- bind_rows(test_vertices, obj_vertices) %>%
+  mutate(color = ifelse(is_exported, "goldenrod", color))
 
 vertices_df %>%
   select(name, label) %>%
@@ -156,7 +164,7 @@ plot.igraph(g,
 )
 
 legend(
-  "bottomleft", 
+  "bottomleft",
   inset = c(0.05, 0),
   legend = c("test", "exported function", "unexported function"),
   col = c("cornflowerblue", "goldenrod", "darkgoldenrod"),
