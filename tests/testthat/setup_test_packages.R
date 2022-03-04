@@ -27,6 +27,7 @@ pkg_dirs <- list(
 for (i in seq_along(pkg_dirs)) {
   install.packages(
     pkg_dirs[[i]],
+    type = "source",
     lib = lib,
     repos = NULL,
     dependencies = FALSE,
