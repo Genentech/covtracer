@@ -3,7 +3,6 @@ Title: A test package modelled after "assertive" with no evaluable code
 Version: 1.0.0
 Authors@R: 
     person("Author", "McAuthor",
-      "author.mcauthor@example.com",
       role = c("aut", "cre"),
       email = "author.mcauthor@example.com"
     )
