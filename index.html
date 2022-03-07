@@ -4,14 +4,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content='
+    Provides tools for dissecting a package namespace or "covr" coverage object
+    in order to cross reference tested code with the lines that are evaluated, as
+    well as linking those evaluated lines to the documentation that they are
+    described within. Connecting these three pieces of information provides a
+    mechanism of linking tests to documented behaviors.'>
 <title>Tools for contextualizing tests • covtracer</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
-<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Tools for contextualizing tests">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Tools for contextualizing tests">
 <meta property="og:description" content='
     Provides tools for dissecting a package namespace or "covr" coverage object
     in order to cross reference tested code with the lines that are evaluated, as
@@ -23,121 +28,104 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="container template-home">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">covtracer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
-      </span>
-    </div>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+    
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    
+    <a class="navbar-brand me-2" href="index.html">covtracer</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9001</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="articles/combining_srcref_data.html">Combining srcref Data</a>
-    </li>
-    <li>
-      <a href="articles/working_with_srcrefs.html">Working with srcrefs</a>
-    </li>
-  </ul>
-</li>
-      </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="">
-    <span class="fa fa-gitlab fa-lg"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="coverage.html">
-    <span class="fa fa-layer-group"></span>
-     
-  </a>
-</li>
-      </ul>
-</div>
-<!--/.nav-collapse -->
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="articles/combining_srcref_data.html">Combining srcref Data</a>
+    <a class="dropdown-item" href="articles/plotting_test_paths.html">Plotting Test Paths</a>
+    <a class="dropdown-item" href="articles/working_with_srcrefs.html">Working with srcrefs</a>
   </div>
-<!--/.container -->
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="news/index.html">Changelog</a>
+</li>
+      </ul>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/genentech/covtracer/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
-<!--/.navbar -->
 
-      
-
-      </header><div class="row">
-  <div class="contents col-md-9">
-<div id="covtracer-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#covtracer-" class="anchor"></a>covtracer <a href="https://github.com/genentech/covtracer"><img src="reference/figures/hex.png" align="right" height="139"></a>
+    
+  </div>
+</nav><div class="container template-home">
+<div class="row">
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header"><h1 id="covtracer-">covtracer <a href="https://github.com/genentech/covtracer" class="external-link"><img src="reference/figures/hex.png" align="right" height="139"></a>
+<a class="anchor" aria-label="anchor" href="#covtracer-"></a>
 </h1></div>
+<!-- badges: start -->
 
 <p>Tools for contextualizing tests, built using <code>covr</code> test traces. This package provides utilities for linking an assortment of test and package information to paint a more complete picture of how a test was performed.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>Tests &lt;--&gt;<span class="st"> </span>Traced Exprs &lt;--&gt;<span class="st"> </span>Package Code &lt;--&gt;<span class="st"> </span>Package Documentation</span></code></pre></div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>To install, use <code>remotes</code> to install directly from <a href="https://www.github.com/Genentech/covtracer">GitHub</a></p>
+<pre class="mermaid"><code>flowchart LR
+    tests[Tests] &lt;--&gt; traces[Traced Exprs] &lt;--&gt; code[Package Code] &lt;--&gt; docs[Package Documentation]</code></pre>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>To install, use <code>remotes</code> to install directly from <a href="https://www.github.com/Genentech/covtracer" class="external-link">GitHub</a></p>
 <p>Functionality hinges heavily on coverage objects prepared using <code>covr</code> (≥ 3.5.1.9003). To ensure suggested dependency requirements are met, install with <code>dependencies = TRUE</code> (satisfy all dependencies).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># will install covr &gt;= v3.5.1.9003 for examples</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"Genentech/covtracer"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"Genentech/covtracer"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="motivation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#motivation" class="anchor"></a>Motivation</h2>
+<div class="section level2">
+<h2 id="motivation">Motivation<a class="anchor" aria-label="anchor" href="#motivation"></a>
+</h2>
 <p>Tests are not black boxes. When it comes to verifying behaviors of code, we can use observations about the code that is executed by a test to build a more complete picture of exactly what the test does. This is a core part of software validation. By combining information about each test, the tested package code and linking that code to package documentation, we can link documented behaviors to their respective tests.</p>
 </div>
-<div id="getting-started" class="section level2">
-<h2 class="hasAnchor">
-<a href="#getting-started" class="anchor"></a>Getting Started</h2>
+<div class="section level2">
+<h2 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+</h2>
 <p>Test traces are connected to evaluated code using <code>covr</code> (≥ 3.5.1.9003). Likewise, a new option flag (<code>covr.record_tests</code>) must be set in order to record tests alongside the coverage traces. Finally, the package to evaluate must be installed with source references in order to map all the components together.</p>
 <p>That’s a lot to configure, but if you’re in a position where this test data is valuable hopefully it’s worth the setup.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">covtracer</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/genentech/covtracer" class="external-link">covtracer</a></span><span class="op">)</span>
 
 <span class="co"># additional demo packages</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">dplyr</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://withr.r-lib.org">withr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://covr.r-lib.org">covr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://remotes.r-lib.org">remotes</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://withr.r-lib.org" class="external-link">withr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://covr.r-lib.org" class="external-link">covr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://remotes.r-lib.org" class="external-link">remotes</a></span><span class="op">)</span>
 
-<span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_temp_libpaths.html">with_temp_libpaths</a></span><span class="op">(</span><span class="op">{</span>
-  <span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"examplepkg"</span>, package <span class="op">=</span> <span class="st">"covtracer"</span><span class="op">)</span>
-  <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_local.html">install_local</a></span><span class="op">(</span>
+<span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_temp_libpaths.html" class="external-link">with_temp_libpaths</a></span><span class="op">(</span><span class="op">{</span>
+  <span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examplepkg"</span>, package <span class="op">=</span> <span class="st">"covtracer"</span><span class="op">)</span>
+  <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_local.html" class="external-link">install_local</a></span><span class="op">(</span>
     <span class="va">pkg</span>, 
     force <span class="op">=</span> <span class="cn">TRUE</span>, 
     quiet <span class="op">=</span> <span class="cn">TRUE</span>, 
     INSTALL_opts <span class="op">=</span> <span class="st">"--with-keep.source"</span>
   <span class="op">)</span>
 
-  <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>covr.record_tests <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-  <span class="va">cov</span> <span class="op">&lt;-</span> <span class="fu">covr</span><span class="fu">::</span><span class="fu"><a href="http://covr.r-lib.org/reference/package_coverage.html">package_coverage</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>covr.record_tests <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+  <span class="va">cov</span> <span class="op">&lt;-</span> <span class="fu">covr</span><span class="fu">::</span><span class="fu"><a href="http://covr.r-lib.org/reference/package_coverage.html" class="external-link">package_coverage</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span>
 
   <span class="va">ttdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/test_trace_df.html">test_trace_df</a></span><span class="op">(</span><span class="va">cov</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span></code></pre></div>
@@ -146,137 +134,182 @@
 <p><strong>Note:</strong> Below we ignore documentation for datasets and S4 class constructors. Although these are defined in the package, they don’t map to testable lines of code because they are constructed when the package is built.</p>
 </blockquote>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">traceability_matrix</span> <span class="op">&lt;-</span> <span class="va">ttdf</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">doctype</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"class"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># ignore objects without testable code</span>
-  <span class="fu">select</span><span class="op">(</span><span class="va">test_name</span>, <span class="va">file</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html">duplicated</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">arrange</span><span class="op">(</span><span class="va">file</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">traceability_matrix</span> <span class="op">&lt;-</span> <span class="va">ttdf</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">doctype</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"class"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  <span class="co"># ignore objects without testable code</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">test_name</span>, <span class="va">file</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">duplicated</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span>
 
 <span class="va">traceability_matrix</span>
 <span class="co">#&gt;                                                    test_name                       file</span>
 <span class="co">#&gt; 1         Example R6 Accumulator class constructor is traced             Accumulator.Rd</span>
 <span class="co">#&gt; 2            Example R6 Accumulator class methods are traced             Accumulator.Rd</span>
-<span class="co">#&gt; 3                         hypotenuse is calculated correctly              hypotenuse.Rd</span>
-<span class="co">#&gt; 4  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd</span>
-<span class="co">#&gt; 5                               S4Example names method works  names-S4Example-method.Rd</span>
-<span class="co">#&gt; 6                                                       &lt;NA&gt; names-S4Example2-method.Rd</span>
-<span class="co">#&gt; 7          Example R6 Person class public methods are traced                  Person.Rd</span>
-<span class="co">#&gt; 8   Example R6 Rando class active field functions are traced                   Rando.Rd</span>
-<span class="co">#&gt; 9                                                       &lt;NA&gt;                   Rando.Rd</span>
-<span class="co">#&gt; 10                                                      &lt;NA&gt;              rd_sampler.Rd</span>
-<span class="co">#&gt; 11              s3_example_func works using default dispatch         s3_example_func.Rd</span>
-<span class="co">#&gt; 12                 s3_example_func works using list dispatch         s3_example_func.Rd</span></code></pre></div>
+<span class="co">#&gt; 3                                                       &lt;NA&gt;                   adder.Rd</span>
+<span class="co">#&gt; 4            Example R6 Accumulator class methods are traced                   adder.Rd</span>
+<span class="co">#&gt; 5               Calling a deeply nested series of functions.      complex_call_stack.Rd</span>
+<span class="co">#&gt; 6               Calling a deeply nested series of functions.  deeper_nested_function.Rd</span>
+<span class="co">#&gt; 7             Calling a function halfway through call stack.  deeper_nested_function.Rd</span>
+<span class="co">#&gt; 8                         hypotenuse is calculated correctly              hypotenuse.Rd</span>
+<span class="co">#&gt; 9  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd</span>
+<span class="co">#&gt; 10                              S4Example names method works  names-S4Example-method.Rd</span>
+<span class="co">#&gt; 11                                                      &lt;NA&gt; names-S4Example2-method.Rd</span>
+<span class="co">#&gt; 12              Calling a deeply nested series of functions.         nested_function.Rd</span>
+<span class="co">#&gt; 13         Example R6 Person class public methods are traced                  Person.Rd</span>
+<span class="co">#&gt; 14  Example R6 Rando class active field functions are traced                   Rando.Rd</span>
+<span class="co">#&gt; 15                                                      &lt;NA&gt;                   Rando.Rd</span>
+<span class="co">#&gt; 16                                                      &lt;NA&gt;              rd_sampler.Rd</span>
+<span class="co">#&gt; 17            Calling a function halfway through call stack.      recursive_function.Rd</span>
+<span class="co">#&gt; 18              Calling a deeply nested series of functions.      recursive_function.Rd</span>
+<span class="co">#&gt; 19                                                      &lt;NA&gt;        reexport_example.Rd</span>
+<span class="co">#&gt; 20                                                      &lt;NA&gt;               reexports.Rd</span>
+<span class="co">#&gt; 21              s3_example_func works using default dispatch         s3_example_func.Rd</span>
+<span class="co">#&gt; 22                 s3_example_func works using list dispatch         s3_example_func.Rd</span>
+<span class="co">#&gt; 23                                                      &lt;NA&gt;                       &lt;NA&gt;</span></code></pre></div>
 <p>We can quickly see which functions or methods are entirely untested.</p>
 </div>
-<div id="use-cases" class="section level2">
-<h2 class="hasAnchor">
-<a href="#use-cases" class="anchor"></a>Use Cases</h2>
+<div class="section level2">
+<h2 id="use-cases">Use Cases<a class="anchor" aria-label="anchor" href="#use-cases"></a>
+</h2>
 <p>The <code>data.frame</code> returned by <code>test_trace_df</code> contains a ton of information, and we can measure a few dimensions of the quality of tests with some relatively straightforward analysis.</p>
-<div id="traceability-matrix" class="section level3">
-<h3 class="hasAnchor">
-<a href="#traceability-matrix" class="anchor"></a>Traceability Matrix</h3>
+<div class="section level3">
+<h3 id="traceability-matrix">Traceability Matrix<a class="anchor" aria-label="anchor" href="#traceability-matrix"></a>
+</h3>
 <p>Perhaps the most immediate use case is to map unit tests to documented behaviors.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ttdf</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">doctype</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"class"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># ignore objects without testable code</span>
-  <span class="fu">select</span><span class="op">(</span><span class="va">test_name</span>, <span class="va">file</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html">duplicated</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">arrange</span><span class="op">(</span><span class="va">file</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">ttdf</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">doctype</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"class"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  <span class="co"># ignore objects without testable code</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">test_name</span>, <span class="va">file</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">duplicated</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span>
 <span class="co">#&gt;                                                    test_name                       file</span>
 <span class="co">#&gt; 1         Example R6 Accumulator class constructor is traced             Accumulator.Rd</span>
 <span class="co">#&gt; 2            Example R6 Accumulator class methods are traced             Accumulator.Rd</span>
-<span class="co">#&gt; 3                         hypotenuse is calculated correctly              hypotenuse.Rd</span>
-<span class="co">#&gt; 4  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd</span>
-<span class="co">#&gt; 5                               S4Example names method works  names-S4Example-method.Rd</span>
-<span class="co">#&gt; 6                                                       &lt;NA&gt; names-S4Example2-method.Rd</span>
-<span class="co">#&gt; 7          Example R6 Person class public methods are traced                  Person.Rd</span>
-<span class="co">#&gt; 8   Example R6 Rando class active field functions are traced                   Rando.Rd</span>
-<span class="co">#&gt; 9                                                       &lt;NA&gt;                   Rando.Rd</span>
-<span class="co">#&gt; 10                                                      &lt;NA&gt;              rd_sampler.Rd</span>
-<span class="co">#&gt; 11              s3_example_func works using default dispatch         s3_example_func.Rd</span>
-<span class="co">#&gt; 12                 s3_example_func works using list dispatch         s3_example_func.Rd</span></code></pre></div>
+<span class="co">#&gt; 3                                                       &lt;NA&gt;                   adder.Rd</span>
+<span class="co">#&gt; 4            Example R6 Accumulator class methods are traced                   adder.Rd</span>
+<span class="co">#&gt; 5               Calling a deeply nested series of functions.      complex_call_stack.Rd</span>
+<span class="co">#&gt; 6               Calling a deeply nested series of functions.  deeper_nested_function.Rd</span>
+<span class="co">#&gt; 7             Calling a function halfway through call stack.  deeper_nested_function.Rd</span>
+<span class="co">#&gt; 8                         hypotenuse is calculated correctly              hypotenuse.Rd</span>
+<span class="co">#&gt; 9  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd</span>
+<span class="co">#&gt; 10                              S4Example names method works  names-S4Example-method.Rd</span>
+<span class="co">#&gt; 11                                                      &lt;NA&gt; names-S4Example2-method.Rd</span>
+<span class="co">#&gt; 12              Calling a deeply nested series of functions.         nested_function.Rd</span>
+<span class="co">#&gt; 13         Example R6 Person class public methods are traced                  Person.Rd</span>
+<span class="co">#&gt; 14  Example R6 Rando class active field functions are traced                   Rando.Rd</span>
+<span class="co">#&gt; 15                                                      &lt;NA&gt;                   Rando.Rd</span>
+<span class="co">#&gt; 16                                                      &lt;NA&gt;              rd_sampler.Rd</span>
+<span class="co">#&gt; 17            Calling a function halfway through call stack.      recursive_function.Rd</span>
+<span class="co">#&gt; 18              Calling a deeply nested series of functions.      recursive_function.Rd</span>
+<span class="co">#&gt; 19                                                      &lt;NA&gt;        reexport_example.Rd</span>
+<span class="co">#&gt; 20                                                      &lt;NA&gt;               reexports.Rd</span>
+<span class="co">#&gt; 21              s3_example_func works using default dispatch         s3_example_func.Rd</span>
+<span class="co">#&gt; 22                 s3_example_func works using list dispatch         s3_example_func.Rd</span>
+<span class="co">#&gt; 23                                                      &lt;NA&gt;                       &lt;NA&gt;</span></code></pre></div>
 </div>
-<div id="finding-untested-behaviors" class="section level3">
-<h3 class="hasAnchor">
-<a href="#finding-untested-behaviors" class="anchor"></a>Finding Untested Behaviors</h3>
+<div class="section level3">
+<h3 id="finding-untested-behaviors">Finding Untested Behaviors<a class="anchor" aria-label="anchor" href="#finding-untested-behaviors"></a>
+</h3>
 <p>Once we can map unit testing to documentation, we can filter down to only documentation that is not covered by any test.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ttdf</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">doctype</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"class"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># ignore objects without testable code</span>
-  <span class="fu">select</span><span class="op">(</span><span class="va">test_name</span>, <span class="va">count</span>, <span class="va">alias</span>, <span class="va">file</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">arrange</span><span class="op">(</span><span class="va">alias</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">ttdf</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">doctype</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"class"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  <span class="co"># ignore objects without testable code</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">test_name</span>, <span class="va">count</span>, <span class="va">alias</span>, <span class="va">file</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">alias</span><span class="op">)</span>
 <span class="co">#&gt;   test_name count                   alias                       file</span>
-<span class="co">#&gt; 1      &lt;NA&gt;    NA names,S4Example2-method names-S4Example2-method.Rd</span>
-<span class="co">#&gt; 2      &lt;NA&gt;    NA                   Rando                   Rando.Rd</span>
-<span class="co">#&gt; 3      &lt;NA&gt;    NA              rd_sampler              rd_sampler.Rd</span></code></pre></div>
+<span class="co">#&gt; 1      &lt;NA&gt;    NA                   adder                   adder.Rd</span>
+<span class="co">#&gt; 2      &lt;NA&gt;    NA                    help               reexports.Rd</span>
+<span class="co">#&gt; 3      &lt;NA&gt;    NA names,S4Example2-method names-S4Example2-method.Rd</span>
+<span class="co">#&gt; 4      &lt;NA&gt;    NA                  person                       &lt;NA&gt;</span>
+<span class="co">#&gt; 5      &lt;NA&gt;    NA                   Rando                   Rando.Rd</span>
+<span class="co">#&gt; 6      &lt;NA&gt;    NA              rd_sampler              rd_sampler.Rd</span>
+<span class="co">#&gt; 7      &lt;NA&gt;    NA        reexport_example        reexport_example.Rd</span>
+<span class="co">#&gt; 8      &lt;NA&gt;    NA               reexports               reexports.Rd</span></code></pre></div>
 </div>
-<div id="filter-for-only-directly-tested-behaviors" class="section level3">
-<h3 class="hasAnchor">
-<a href="#filter-for-only-directly-tested-behaviors" class="anchor"></a>Filter For Only Directly Tested Behaviors</h3>
+<div class="section level3">
+<h3 id="filter-for-only-directly-tested-behaviors">Filter For Only Directly Tested Behaviors<a class="anchor" aria-label="anchor" href="#filter-for-only-directly-tested-behaviors"></a>
+</h3>
 <p>Some tests evaluate a broad set of functionality by calling functions that themselves call out to internal package functions. This is often perfectly fine, since the mechanisms of calling those internal functions are limited by the surfaced user-facing functions. Nevertheless, whether a function is called directly is a good indication of the “unit”-ness of a unit test. You may consider only the coverage of directly tested functions.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ttdf</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">doctype</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"class"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># ignore objects without testable code</span>
-  <span class="fu">select</span><span class="op">(</span><span class="va">direct</span>, <span class="va">alias</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">alias</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">summarize</span><span class="op">(</span>any_direct_tests <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="va">direct</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">arrange</span><span class="op">(</span><span class="va">alias</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 10 × 2</span>
-<span class="co">#&gt;   alias                   any_direct_tests</span>
-<span class="co">#&gt;   &lt;chr&gt;                   &lt;lgl&gt;           </span>
-<span class="co">#&gt; 1 Accumulator             TRUE            </span>
-<span class="co">#&gt; 2 hypotenuse              TRUE            </span>
-<span class="co">#&gt; 3 names,S4Example-method  TRUE            </span>
-<span class="co">#&gt; 4 names,S4Example2-method FALSE           </span>
-<span class="co">#&gt; 5 Person                  TRUE            </span>
-<span class="co">#&gt; # … with 5 more rows</span></code></pre></div>
+<code class="sourceCode R"><span class="va">ttdf</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">doctype</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"class"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  <span class="co"># ignore objects without testable code</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">direct</span>, <span class="va">alias</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">alias</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>any_direct_tests <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="va">direct</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">alias</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 19 × 2</span>
+<span class="co">#&gt;   alias                  any_direct_tests</span>
+<span class="co">#&gt;   &lt;chr&gt;                  &lt;lgl&gt;           </span>
+<span class="co">#&gt; 1 Accumulator            TRUE            </span>
+<span class="co">#&gt; 2 adder                  TRUE            </span>
+<span class="co">#&gt; 3 complex_call_stack     TRUE            </span>
+<span class="co">#&gt; 4 deeper_nested_function TRUE            </span>
+<span class="co">#&gt; 5 help                   FALSE           </span>
+<span class="co">#&gt; # … with 14 more rows</span></code></pre></div>
 </div>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="license">
-<h2>License</h2>
+  </main><aside class="col-md-3"><div class="links">
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><a href="https://github.com/genentech/covtracer/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/genentech/covtracer/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
+<div class="license">
+<h2 data-toc-skip>License</h2>
+<ul class="list-unstyled">
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+</ul>
+</div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing covtracer</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Doug Kelkhoff <br><small class="roles"> Author, maintainer </small>  </li>
 <li>Andrew McNeil <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=ggpackets"><img src="https://img.shields.io/cran/v/ggpackets.svg" alt="CRAN"></a></li>
-<li><a href="https://github.com/Genentech/covtracer/actions"><img src="https://github.com/Genentech/covtracer/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://codecov.io/gh/genentech/covtracer"><img src="https://img.shields.io/codecov/c/github/genentech/covtracer/main.svg" alt="Code Coverage"></a></li>
+<li><a href="https://cran.r-project.org/package=ggpackets" class="external-link"><img src="https://img.shields.io/cran/v/ggpackets.svg" alt="CRAN"></a></li>
+<li><a href="https://github.com/Genentech/covtracer/actions" class="external-link"><img src="https://github.com/Genentech/covtracer/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://codecov.io/gh/genentech/covtracer" class="external-link"><img src="https://img.shields.io/codecov/c/github/genentech/covtracer/main.svg" alt="Code Coverage"></a></li>
 </ul>
 </div>
-</div>
-</div>
 
-
-      <footer><div class="copyright">
-  <p>Developed by Doug Kelkhoff, Andrew McNeil.</p>
+  </aside>
 </div>
 
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+
+    <footer><div class="pkgdown-footer-left">
+  <p></p>
+<p>Developed by Doug Kelkhoff, Andrew McNeil.</p>
 </div>
 
-      </footer>
+<div class="pkgdown-footer-right">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+</div>
+
+    </footer>
 </div>
 
   
 
+  
 
   </body>
 </html>

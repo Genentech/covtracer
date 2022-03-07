@@ -4,132 +4,115 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="covtracer">
 <title>Combining srcref Data • covtracer</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Combining srcref Data">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Combining srcref Data">
 <meta property="og:description" content="covtracer">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">covtracer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
-      </span>
-    </div>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+    
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    
+    <a class="navbar-brand me-2" href="../index.html">covtracer</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9001</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/combining_srcref_data.html">Combining srcref Data</a>
-    </li>
-    <li>
-      <a href="../articles/working_with_srcrefs.html">Working with srcrefs</a>
-    </li>
-  </ul>
-</li>
-      </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="../">
-    <span class="fa fa-gitlab fa-lg"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="../coverage.html">
-    <span class="fa fa-layer-group"></span>
-     
-  </a>
-</li>
-      </ul>
-</div>
-<!--/.nav-collapse -->
+<li class="active nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/combining_srcref_data.html">Combining srcref Data</a>
+    <a class="dropdown-item" href="../articles/plotting_test_paths.html">Plotting Test Paths</a>
+    <a class="dropdown-item" href="../articles/working_with_srcrefs.html">Working with srcrefs</a>
   </div>
-<!--/.container -->
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
+</li>
+      </ul>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/genentech/covtracer/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
-<!--/.navbar -->
 
-      
+    
+  </div>
+</nav><div class="container template-article">
 
-      </header><script src="combining_srcref_data_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Combining srcref Data</h1>
+
+
+<script src="combining_srcref_data_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+  <main id="main"><div class="page-header">
+      <img src="" class="logo" alt=""><h1>Combining srcref Data</h1>
             
       
-      
-      <div class="hidden name"><code>combining_srcref_data.Rmd</code></div>
-
+      <small class="dont-index">Source: <a href="https://github.com/genentech/covtracer/blob/HEAD/vignettes/combining_srcref_data.Rmd" class="external-link"><code>vignettes/combining_srcref_data.Rmd</code></a></small>
+      <div class="d-none name"><code>combining_srcref_data.Rmd</code></div>
     </div>
 
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">covtracer</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/genentech/covtracer" class="external-link">covtracer</a></span><span class="op">)</span></code></pre></div>
 <p>There are two key relationships that we will explore. The first is a relationship of <code>srcref</code> objects, and the second is the relationship between namespace object definitions and their associated documentation.</p>
-<div id="setup" class="section level1">
-<h1 class="hasAnchor">
-<a href="#setup" class="anchor"></a>Setup</h1>
+<div class="section level2">
+<h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
+</h2>
 <p>Before we begin, we’ll set up a demo coverage object and package namespace that we can use to showcase these relationships:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://withr.r-lib.org">withr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://covr.r-lib.org">covr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://remotes.r-lib.org">remotes</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://withr.r-lib.org" class="external-link">withr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://covr.r-lib.org" class="external-link">covr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://remotes.r-lib.org" class="external-link">remotes</a></span><span class="op">)</span>
 
-<span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_temp_libpaths.html">with_temp_libpaths</a></span><span class="op">(</span><span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>keep.source <span class="op">=</span> <span class="cn">TRUE</span>, keep.source.pkg <span class="op">=</span> <span class="cn">TRUE</span>, covr.record_tests <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-  <span class="va">examplepkg_source_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"examplepkg"</span>, package <span class="op">=</span> <span class="st">"covtracer"</span><span class="op">)</span>
-  <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_local.html">install_local</a></span><span class="op">(</span>
+<span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_temp_libpaths.html" class="external-link">with_temp_libpaths</a></span><span class="op">(</span><span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>keep.source <span class="op">=</span> <span class="cn">TRUE</span>, keep.source.pkg <span class="op">=</span> <span class="cn">TRUE</span>, covr.record_tests <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+  <span class="va">examplepkg_source_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examplepkg"</span>, package <span class="op">=</span> <span class="st">"covtracer"</span><span class="op">)</span>
+  <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_local.html" class="external-link">install_local</a></span><span class="op">(</span>
     <span class="va">examplepkg_source_path</span>, 
     quiet <span class="op">=</span> <span class="cn">TRUE</span>,
-    INSTALL_opts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"--with-keep.source"</span>, <span class="st">"--install-tests"</span><span class="op">)</span>
+    INSTALL_opts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"--with-keep.source"</span>, <span class="st">"--install-tests"</span><span class="op">)</span>
   <span class="op">)</span>
-  <span class="va">examplepkg_cov</span> <span class="op">&lt;-</span> <span class="fu">covr</span><span class="fu">::</span><span class="fu"><a href="http://covr.r-lib.org/reference/package_coverage.html">package_coverage</a></span><span class="op">(</span><span class="va">examplepkg_source_path</span><span class="op">)</span>
-  <span class="va">examplepkg_ns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ns-reflect.html">getNamespace</a></span><span class="op">(</span><span class="st">"examplepkg"</span><span class="op">)</span>
+  <span class="va">examplepkg_cov</span> <span class="op">&lt;-</span> <span class="fu">covr</span><span class="fu">::</span><span class="fu"><a href="http://covr.r-lib.org/reference/package_coverage.html" class="external-link">package_coverage</a></span><span class="op">(</span><span class="va">examplepkg_source_path</span><span class="op">)</span>
+  <span class="va">examplepkg_ns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ns-reflect.html" class="external-link">getNamespace</a></span><span class="op">(</span><span class="st">"examplepkg"</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="relational-srcref-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#relational-srcref-data" class="anchor"></a>Relational <code>srcref</code> data</h1>
+<div class="section level2">
+<h2 id="relational-srcref-data">Relational <code>srcref</code> data<a class="anchor" aria-label="anchor" href="#relational-srcref-data"></a>
+</h2>
 <p>First and foremost, we want to be able to associate <code>srcref</code> objects. These relationships are define the location of code. A <code>srecref</code> describes a region of code where the expression was pulled from, and we can compare these to determine whether a <code>srcref</code> is within, containing or independent of another.</p>
 <p>This vignette will gloss over each of these tables. For more details see the <em>Working with <code>srcref</code>s</em> vignette.</p>
-<div id="linking-covr-traces-to-package-object-srcrefs" class="section level2">
-<h2 class="hasAnchor">
-<a href="#linking-covr-traces-to-package-object-srcrefs" class="anchor"></a>Linking <code>covr</code> traces to package object <code>srcref</code>s</h2>
+<div class="section level3">
+<h3 id="linking-covr-traces-to-package-object-srcrefs">Linking <code>covr</code> traces to package object <code>srcref</code>s<a class="anchor" aria-label="anchor" href="#linking-covr-traces-to-package-object-srcrefs"></a>
+</h3>
 <p>It’s important to note that coverage traces always sit within a package namespace object. Where a namespace object might have a <code>srcref</code> to the full code for a function, coverage traces trace individual expressions within that function.</p>
 <p>To associate <code>srcref</code>s by this relation, we provide a special joining function to combine <code>data.frames</code> by <code>srcref</code> columns.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -137,112 +120,134 @@
 <span class="va">pkg_ns_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_srcrefs_df.html">pkg_srcrefs_df</a></span><span class="op">(</span><span class="va">examplepkg_ns</span><span class="op">)</span></code></pre></div>
 <p>Just looking at these two <code>data.frames</code>, we can use the first trace and package object to illustrate the relationship:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"pkg  : "</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="va">pkg_ns_df</span><span class="op">$</span><span class="va">srcref</span><span class="op">[</span><span class="st">"s3_example_func.list"</span><span class="op">]</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span>
-<span class="co">#&gt; pkg  :  s3_example.R:19:25:21:1</span>
-<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"trace: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="va">traces_df</span><span class="op">$</span><span class="va">srcref</span><span class="op">[</span><span class="fl">1L</span><span class="op">]</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span>
-<span class="co">#&gt; trace:  s3_example.R:20:3:20:8</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"pkg  : "</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">pkg_ns_df</span><span class="op">$</span><span class="va">srcref</span><span class="op">[</span><span class="st">"s3_example_func.list"</span><span class="op">]</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span>
+<span class="co">#&gt; pkg  :  s3_example.R:20:25:22:1</span>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"trace: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">traces_df</span><span class="op">$</span><span class="va">srcref</span><span class="op">[</span><span class="fl">1L</span><span class="op">]</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span>
+<span class="co">#&gt; trace:  complex_call_stack.R:22:7:22:13</span></code></pre></div>
 <p>Although still a little arcane, you can see that the package object code contains the coverage trace. The package code spans lines 19-21, whereas the coverage trace lies in line 20. With this information, we can couple each package object with the coverage traces contained within each.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/join_on_containing_srcrefs.html">join_on_containing_srcrefs</a></span><span class="op">(</span><span class="va">traces_df</span>, <span class="va">pkg_ns_df</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;                                 name.x                srcref.x                  name.y                srcref.y</span>
-<span class="co">#&gt; 1   s3_example.R:20:3:20:8:3:8:207:207  s3_example.R:20:3:20:8    s3_example_func.list s3_example.R:19:25:21:1</span>
-<span class="co">#&gt; 2   r6_example.R:89:9:89:22:9:22:89:89 r6_example.R:89:9:89:22                   Rando r6_example.R:87:12:94:3</span>
-<span class="co">#&gt; 3   rd_sampler.R:57:3:57:6:3:6:185:185  rd_sampler.R:57:3:57:6              rd_sampler rd_sampler.R:56:15:58:1</span>
-<span class="co">#&gt; 4 s4_example.R:33:3:33:15:3:15:242:242 s4_example.R:33:3:33:15 names,S4Example2-method s4_example.R:32:45:34:1</span>
-<span class="co">#&gt; 5 r6_example.R:90:7:90:14:7:14:102:102 r6_example.R:90:7:90:14                   Rando r6_example.R:87:12:94:3</span>
-<span class="co">#&gt; 6   r6_example.R:54:7:54:26:7:26:66:66 r6_example.R:54:7:54:26                  Person r6_example.R:52:18:56:5</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/join_on_containing_srcrefs.html">join_on_containing_srcrefs</a></span><span class="op">(</span><span class="va">traces_df</span>, <span class="va">pkg_ns_df</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;                                       name.x                        srcref.x                 name.y</span>
+<span class="co">#&gt; 1 complex_call_stack.R:22:7:22:13:7:13:22:22 complex_call_stack.R:22:7:22:13     recursive_function</span>
+<span class="co">#&gt; 2       r6_example.R:74:7:74:23:7:23:111:111         r6_example.R:74:7:74:23                 Person</span>
+<span class="co">#&gt; 3       s4_example.R:17:3:17:15:3:15:284:284         s4_example.R:17:3:17:15 names,S4Example-method</span>
+<span class="co">#&gt; 4             r6_example.R:4:3:8:3:3:3:41:45            r6_example.R:4:3:8:3                  adder</span>
+<span class="co">#&gt; 5       r6_example.R:75:7:75:51:7:51:112:112         r6_example.R:75:7:75:51                 Person</span>
+<span class="co">#&gt; 6       r6_example.R:63:7:63:24:7:24:100:100         r6_example.R:63:7:63:24                 Person</span>
+<span class="co">#&gt;                          srcref.y namespace.y</span>
+<span class="co">#&gt; 1 complex_call_stack.R:21:23:24:1  examplepkg</span>
+<span class="co">#&gt; 2         r6_example.R:72:13:77:5  examplepkg</span>
+<span class="co">#&gt; 3         s4_example.R:16:44:18:1  examplepkg</span>
+<span class="co">#&gt; 4           r6_example.R:3:10:9:1  examplepkg</span>
+<span class="co">#&gt; 5         r6_example.R:72:13:77:5  examplepkg</span>
+<span class="co">#&gt; 6         r6_example.R:60:18:64:5  examplepkg</span></code></pre></div>
 <p>As expected, we can see that this test trace (now with the <code>".x"</code> suffix) is mapped to the expected corresponding package namespace object.</p>
 </div>
-<div id="linking-unit-tests-to-evaluated-covr-traces" class="section level2">
-<h2 class="hasAnchor">
-<a href="#linking-unit-tests-to-evaluated-covr-traces" class="anchor"></a>Linking unit tests to evaluated <code>covr</code> traces</h2>
-<p>Although this relationship doesn’t require any fancy <code>srcref</code> joining, we can associate tests and traces by a simple mapping of indices. FOr this, the <code><a href="../reference/test_trace_mapping.html">test_trace_mapping()</a></code> function is provided which will reshape a <code>covr</code> object (produced using <code><a href="https://rdrr.io/r/base/options.html">options(covr.record_tests = TRUE)</a></code>) to create a unified table across all <code>covr</code> traces:</p>
+<div class="section level3">
+<h3 id="linking-unit-tests-to-evaluated-covr-traces">Linking unit tests to evaluated <code>covr</code> traces<a class="anchor" aria-label="anchor" href="#linking-unit-tests-to-evaluated-covr-traces"></a>
+</h3>
+<p>Although this relationship doesn’t require any fancy <code>srcref</code> joining, we can associate tests and traces by a simple mapping of indices. FOr this, the <code><a href="../reference/test_trace_mapping.html">test_trace_mapping()</a></code> function is provided which will reshape a <code>covr</code> object (produced using <code>options(covr.record_tests = TRUE)</code>) to create a unified table across all <code>covr</code> traces:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/test_trace_mapping.html">test_trace_mapping</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/test_trace_mapping.html">test_trace_mapping</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;      test depth i trace</span>
-<span class="co">#&gt; [1,]    1    37 1    14</span>
-<span class="co">#&gt; [2,]    2    48 1    14</span>
-<span class="co">#&gt; [3,]    3    43 1    15</span>
-<span class="co">#&gt; [4,]    4    43 1    15</span>
-<span class="co">#&gt; [5,]    5    37 1    13</span>
-<span class="co">#&gt; [6,]    5    37 2    11</span></code></pre></div>
+<span class="co">#&gt; [1,]    1    37 1    15</span>
+<span class="co">#&gt; [2,]    1    38 2    25</span>
+<span class="co">#&gt; [3,]    1    39 3     8</span>
+<span class="co">#&gt; [4,]    1    40 4     1</span>
+<span class="co">#&gt; [5,]    1    40 5    23</span>
+<span class="co">#&gt; [6,]    1    41 6     1</span></code></pre></div>
 <p>The <code>test</code> and <code>trace</code> columns contain the row indices in the respective <code><a href="../reference/test_srcrefs_df.html">test_srcrefs_df()</a></code> and <code><a href="../reference/trace_srcrefs_df.html">trace_srcrefs_df()</a></code> <code>data.frame</code>s, allowing for this data to be joined. However, since it is easy for a testing suite to cause the evaluation of an enormous number of traces, this matrix can become extremely long. It is recommended to do some aggregation or subsetting of this matrix before trying to use it to join more data-rich data.</p>
 <p>You can also see that the evaluation order is stored (<code>i</code>), as well as the stack depth when it was evaluated (<code>depth</code>). With this added info, you might consider first filtering for only the first trace evaluated by each test, or to count all the times that a line of code was evaluated by each test by aggregating rows.</p>
 </div>
 </div>
-<div id="relational-documentation-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#relational-documentation-data" class="anchor"></a>Relational documentation data</h1>
+<div class="section level2">
+<h2 id="relational-documentation-data">Relational documentation data<a class="anchor" aria-label="anchor" href="#relational-documentation-data"></a>
+</h2>
 <p>On the other side of the process, we also need to associate package objects with documentation. In many cases, this is trivial, and the name of the exported object can be used directly to find documentation as you have come to expect using <code>?&lt;object&gt;</code>. This holds for simple functions. However, some objects are aliased to different documentation files or are built at package build time into internal representations, as is with <code>S4</code> classes, and <code>R6</code> classes.</p>
 <p>To handle these cases, we can use the <code><a href="../reference/Rd_df.html">Rd_df()</a></code> function to associate any available source code with a documentation file.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># filter for interesting columns for display</span>
-<span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"file"</span>, <span class="st">"alias"</span>, <span class="st">"doctype"</span><span class="op">)</span>
+<span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"file"</span>, <span class="st">"alias"</span>, <span class="st">"doctype"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/Rd_df.html">Rd_df</a></span><span class="op">(</span><span class="va">examplepkg_source_path</span><span class="op">)</span><span class="op">[</span>, <span class="va">cols</span><span class="op">]</span>
 <span class="co">#&gt;                          file                   alias doctype</span>
 <span class="co">#&gt; 1              Accumulator.Rd             Accumulator    &lt;NA&gt;</span>
-<span class="co">#&gt; 2               hypotenuse.Rd              hypotenuse    &lt;NA&gt;</span>
-<span class="co">#&gt; 3   names-S4Example-method.Rd  names,S4Example-method    &lt;NA&gt;</span>
-<span class="co">#&gt; 4  names-S4Example2-method.Rd names,S4Example2-method    &lt;NA&gt;</span>
-<span class="co">#&gt; 5                   Person.Rd                  Person    &lt;NA&gt;</span>
-<span class="co">#&gt; 6                    Rando.Rd                   Rando    &lt;NA&gt;</span>
-<span class="co">#&gt; 7          rd_data_sampler.Rd         rd_data_sampler    data</span>
-<span class="co">#&gt; 8               rd_sampler.Rd              rd_sampler    &lt;NA&gt;</span>
-<span class="co">#&gt; 9          s3_example_func.Rd         s3_example_func    &lt;NA&gt;</span>
-<span class="co">#&gt; 10         s3_example_func.Rd s3_example_func.default    &lt;NA&gt;</span>
-<span class="co">#&gt; 11         s3_example_func.Rd    s3_example_func.list    &lt;NA&gt;</span>
-<span class="co">#&gt; 12         S4Example-class.Rd         S4Example-class   class</span>
-<span class="co">#&gt; 13         S4Example-class.Rd               S4Example   class</span>
-<span class="co">#&gt; 14        S4Example2-class.Rd        S4Example2-class   class</span>
-<span class="co">#&gt; 15        S4Example2-class.Rd              S4Example2   class</span></code></pre></div>
+<span class="co">#&gt; 2                    adder.Rd                   adder    &lt;NA&gt;</span>
+<span class="co">#&gt; 3       complex_call_stack.Rd      complex_call_stack    &lt;NA&gt;</span>
+<span class="co">#&gt; 4   deeper_nested_function.Rd  deeper_nested_function    &lt;NA&gt;</span>
+<span class="co">#&gt; 5               hypotenuse.Rd              hypotenuse    &lt;NA&gt;</span>
+<span class="co">#&gt; 6   names-S4Example-method.Rd  names,S4Example-method    &lt;NA&gt;</span>
+<span class="co">#&gt; 7  names-S4Example2-method.Rd names,S4Example2-method    &lt;NA&gt;</span>
+<span class="co">#&gt; 8          nested_function.Rd         nested_function    &lt;NA&gt;</span>
+<span class="co">#&gt; 9                   Person.Rd                  Person    &lt;NA&gt;</span>
+<span class="co">#&gt; 10             PersonPrime.Rd             PersonPrime    data</span>
+<span class="co">#&gt; 11                   Rando.Rd                   Rando    &lt;NA&gt;</span>
+<span class="co">#&gt; 12         rd_data_sampler.Rd         rd_data_sampler    data</span>
+<span class="co">#&gt; 13              rd_sampler.Rd              rd_sampler    &lt;NA&gt;</span>
+<span class="co">#&gt; 14      recursive_function.Rd      recursive_function    &lt;NA&gt;</span>
+<span class="co">#&gt; 15        reexport_example.Rd        reexport_example    &lt;NA&gt;</span>
+<span class="co">#&gt; 16               reexports.Rd               reexports  import</span>
+<span class="co">#&gt; 17               reexports.Rd                    help  import</span>
+<span class="co">#&gt; 18         s3_example_func.Rd         s3_example_func    &lt;NA&gt;</span>
+<span class="co">#&gt; 19         s3_example_func.Rd s3_example_func.default    &lt;NA&gt;</span>
+<span class="co">#&gt; 20         s3_example_func.Rd    s3_example_func.list    &lt;NA&gt;</span>
+<span class="co">#&gt; 21         S4Example-class.Rd         S4Example-class   class</span>
+<span class="co">#&gt; 22         S4Example-class.Rd               S4Example   class</span>
+<span class="co">#&gt; 23        S4Example2-class.Rd        S4Example2-class   class</span>
+<span class="co">#&gt; 24        S4Example2-class.Rd              S4Example2   class</span></code></pre></div>
 <p>These aliases are also used when we use <code><a href="../reference/pkg_srcrefs_df.html">pkg_srcrefs_df()</a></code> and can be used to associate <code>srcrefs</code> with <code>.Rd</code> files.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/pkg_srcrefs_df.html">pkg_srcrefs_df</a></span><span class="op">(</span><span class="va">examplepkg_ns</span><span class="op">)</span>
-<span class="co">#&gt;                       name                  srcref</span>
-<span class="co">#&gt; 1  s3_example_func.default s3_example.R:14:28:16:1</span>
-<span class="co">#&gt; 2                    Rando r6_example.R:87:12:94:3</span>
-<span class="co">#&gt; 3                   Person r6_example.R:52:18:56:5</span>
-<span class="co">#&gt; 4                   Person r6_example.R:64:13:69:5</span>
-<span class="co">#&gt; 5   names,S4Example-method s4_example.R:15:44:17:1</span>
-<span class="co">#&gt; 6  names,S4Example2-method s4_example.R:32:45:34:1</span>
-<span class="co">#&gt; 7               hypotenuse   hypotenuse.R:7:15:9:1</span>
-<span class="co">#&gt; 8              Accumulator r6_example.R:17:16:20:3</span>
-<span class="co">#&gt; 9              Accumulator  r6_example.R:28:9:32:3</span>
-<span class="co">#&gt; 10         s3_example_func  s3_example.R:9:20:11:1</span>
-<span class="co">#&gt; 11    s3_example_func.list s3_example.R:19:25:21:1</span>
-<span class="co">#&gt; 12              rd_sampler rd_sampler.R:56:15:58:1</span></code></pre></div>
+<span class="co">#&gt;                       name                          srcref  namespace</span>
+<span class="co">#&gt; 1  s3_example_func.default         s3_example.R:15:28:17:1 examplepkg</span>
+<span class="co">#&gt; 2                    Rando        r6_example.R:95:12:102:3 examplepkg</span>
+<span class="co">#&gt; 3                    adder           r6_example.R:3:10:9:1 examplepkg</span>
+<span class="co">#&gt; 4                   Person         r6_example.R:60:18:64:5 examplepkg</span>
+<span class="co">#&gt; 5                   Person         r6_example.R:72:13:77:5 examplepkg</span>
+<span class="co">#&gt; 6   names,S4Example-method         s4_example.R:16:44:18:1 examplepkg</span>
+<span class="co">#&gt; 7  names,S4Example2-method         s4_example.R:34:45:36:1 examplepkg</span>
+<span class="co">#&gt; 8               hypotenuse           hypotenuse.R:7:15:9:1 examplepkg</span>
+<span class="co">#&gt; 9              Accumulator         r6_example.R:29:16:32:3 examplepkg</span>
+<span class="co">#&gt; 11         s3_example_func         s3_example.R:10:20:12:1 examplepkg</span>
+<span class="co">#&gt; 12      complex_call_stack   complex_call_stack.R:3:23:5:1 examplepkg</span>
+<span class="co">#&gt; 13      recursive_function complex_call_stack.R:21:23:24:1 examplepkg</span>
+<span class="co">#&gt; 14         nested_function  complex_call_stack.R:9:20:11:1 examplepkg</span>
+<span class="co">#&gt; 15  deeper_nested_function complex_call_stack.R:15:27:17:1 examplepkg</span>
+<span class="co">#&gt; 16    s3_example_func.list         s3_example.R:20:25:22:1 examplepkg</span>
+<span class="co">#&gt; 17              rd_sampler         rd_sampler.R:56:15:58:1 examplepkg</span>
+<span class="co">#&gt; 18                    help                            &lt;NA&gt;      utils</span>
+<span class="co">#&gt; 19         rd_data_sampler                            &lt;NA&gt;       &lt;NA&gt;</span>
+<span class="co">#&gt; 20                  person                            &lt;NA&gt;      utils</span>
+<span class="co">#&gt; 21        reexport_example                            &lt;NA&gt;      utils</span>
+<span class="co">#&gt; 22             PersonPrime                            &lt;NA&gt;       &lt;NA&gt;</span></code></pre></div>
 <p>You’ll see that we don’t have any <code>srcref</code>s associated with the <code>"data"</code> and <code>"class"</code> doctype documentation because these objects do not themselves have source code, even if there is source code in that was used to create them at bulid time.</p>
 </div>
-<div id="summary" class="section level1">
-<h1 class="hasAnchor">
-<a href="#summary" class="anchor"></a>Summary</h1>
+<div class="section level2">
+<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</h2>
 <p>With these relationships, we can build some really deep understandings of exactly what code a test evaluates and tie that test together with the documented behaviors.</p>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p>Developed by Doug Kelkhoff, Andrew McNeil.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p></p>
+<p>Developed by Doug Kelkhoff, Andrew McNeil.</p>
 </div>
 
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+<div class="pkgdown-footer-right">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
   
 
+  
 
   </body>
 </html>
