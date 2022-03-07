@@ -53,7 +53,7 @@ test_trace_df.coverage <- function(x, ...,
 
   # I.2 build namespace srcref data.frame
   pkg_df <- pkg_srcrefs_df(pkgname)
-  names(pkg_df) <- c("alias", "srcref")
+  names(pkg_df)[match("name", names(pkg_df))] <- "alias"
 
   # I.3 build coverage traces
   trace_df <- trace_srcrefs_df(x)
@@ -61,10 +61,21 @@ test_trace_df.coverage <- function(x, ...,
 
   # I.4 build documentation data.frame (and rename to remove ambiguity)
   docs_df <- Rd_df(pkg$path)
+  docs_df <- merge(
+    docs_df,
+    unique(pkg_df[, c("alias", "namespace"), drop = FALSE]),
+    by = "alias",
+    all.x = TRUE,
+    all.y = TRUE
+  )
 
   # I.5 build test-to-trace matrix, summarizing by trace hits
   test_mat <- test_trace_mapping(x)
-  test_mat <- cbind(test_mat, count = rep(1L, nrow(test_mat)), direct = test_mat[, "i"] == 1L)
+  test_mat <- cbind(
+    test_mat,
+    count = rep(1L, nrow(test_mat)),
+    direct = test_mat[, "i"] == 1L
+  )
 
   if (nrow(test_mat)) {
     if (!is.null(aggregate_by)) {
@@ -78,23 +89,32 @@ test_trace_df.coverage <- function(x, ...,
   }
 
   # II.1 merge traces against namespace srcrefs to link objects and docs
-  trace_df <- join_on_containing_srcrefs(trace_df, pkg_df, by = c("trace_srcref" = "srcref"))
+  trace_df <- join_on_containing_srcrefs(
+    trace_df,
+    pkg_df[, setdiff(names(pkg_df), "namespace"), drop = FALSE],
+    by = c("trace_srcref" = "srcref")
+  )
+
   trace_df$trace <- seq_len(nrow(trace_df))
 
-  # II.2 merge tests against traces to link test num, hash and description to trace
+  # II.2 merge tests against traces to link test num, hash and description to
+  # trace
   tests_df <- cbind(test_mat, tests_df[test_mat[, "test"], ])
 
   # II.3 merge coverage+package traces against test traces
   df <- merge(tests_df, trace_df, by = "trace", all.x = TRUE, all.y = TRUE)
 
-  # II.4 merge pkg objects against their documentation by documentation alias, keeping untested objects
+  # II.4 merge pkg objects against their documentation by documentation alias,
+  # keeping untested objects
   df <- merge(df, docs_df, by = "alias", all.x = TRUE, all.y = TRUE)
 
   # Reorder columns
+  df$is_reexported <- !(is.na(df$namespace) | df$namespace == pkgname)
   cols <- setdiff(names(df), c("trace_name", "trace", "test", "depth"))
-  col_order <- c("alias", "srcref", "test_name", "test_srcref", "trace_srcref")
+  col_order <- c("alias", "srcref", "test_name", "test_srcref", "trace_srcref",
+    "count", "direct", "is_exported", "is_reexported")
   col_order <- c(col_order, setdiff(cols, col_order))
-  df <- df[,col_order]
+  df <- df[, col_order]
 
   df
 }

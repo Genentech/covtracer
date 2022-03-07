@@ -33,7 +33,9 @@ is_srcref <- function(x) {
 #' @return A `list` of `srcref` objects. Often, has a length of 1, but can be
 #'   larger for things like environments, namespaces or generic methods. The
 #'   names of the list reflect the name of the Rd name or alias that could be
-#'   used to find information related to each `srcref`.
+#'   used to find information related to each `srcref`. Elements of the `list`
+#'   will have attribute `"namespace"` denoting the source environment namespace
+#'   if one can be determined for the srcref object.
 #'
 #' @examples
 #' # examples use `with` to execute within namespace as function isn't exported
@@ -50,6 +52,7 @@ srcrefs <- function(x, ...) {
   UseMethod("srcrefs")
 }
 
+#' @exportS3Method
 #' @importFrom utils getSrcref
 #' @rdname srcrefs
 srcrefs.default <- function(x, ..., srcref_names = NULL) {
@@ -60,48 +63,50 @@ srcrefs.default <- function(x, ..., srcref_names = NULL) {
     return(srcrefs(sr))
   }
 
+  env <- environment(x)
+  if (!is.null(sr) && !is.null(env)) {
+    attr(sr, "namespace") <- env_ns_name(env)
+  }
+
   out <- list(sr)
   names(out) <- srcref_names
   out
 }
 
+#' @exportS3Method
 #' @rdname srcrefs
 srcrefs.list <- function(x, ..., srcref_names = NULL) {
   flat_map_srcrefs(x)
 }
 
+#' @exportS3Method
 #' @rdname srcrefs
 srcrefs.namespace <- function(x, ...) {
-  flat_map_srcrefs(as.list(x, all.names = TRUE))
+  flat_map_srcrefs(as.list(x, all.names = TRUE), ns = env_ns_name(x))
 }
 
+#' @exportS3Method
 #' @rdname srcrefs
 srcrefs.environment <- function(x, ...) {
   if (isNamespace(x)) return(srcrefs.namespace(x))
   objs <- as.list(x, all.names = TRUE)
   objs <- Filter(function(i) !identical(i, x), objs)  # prevent direct recursion
-  flat_map_srcrefs(objs)
+  flat_map_srcrefs(objs, ns = env_ns_name(x))
 }
 
 ### R6
 
+#' @exportS3Method
 #' @rdname srcrefs
 srcrefs.R6ClassGenerator <- function(x, ..., srcref_names = NULL) {
   objs <- c(list(x$new), x$public_methods, x$private_methods, x$active)
   names(objs) <- rep_len(srcref_names, length(objs))
-  flat_map_srcrefs(objs)
-}
-
-#' @rdname srcrefs
-srcrefs.R6 <- function(x, ..., srcref_names = NULL) {
-  objs <- c(as.list(x, all.names = TRUE), .subset2(x, "private"))
-  names(objs) <- rep_len(srcref_names, length(objs))
-  objs <- Filter(function(i) !identical(i, x), objs)  # prevent direct recursion
-  flat_map_srcrefs(objs)
+  flat_map_srcrefs(objs, ns = env_ns_name(x$parent_env))
 }
 
 ### S4
 
+#' @exportS3Method
 #' @importFrom utils getSrcref
 #' @rdname srcrefs
 srcrefs.MethodDefinition <- function(x, ..., srcref_names = NULL) {
@@ -110,6 +115,8 @@ srcrefs.MethodDefinition <- function(x, ..., srcref_names = NULL) {
   signatures <- signatures[!duplicated(signatures)]
   objs <- rep_len(list(getSrcref(x)), length(signatures))
   names(objs) <- signatures
+  ns <- env_ns_name(environment(x@.Data))
+  for (i in seq_along(objs)) attr(objs[[i]], "namespace") <- ns
   objs
 }
 
@@ -118,10 +125,13 @@ srcrefs.MethodDefinition <- function(x, ..., srcref_names = NULL) {
 #' Map `srcrefs` over an iterable object, Filtering non-srcref results
 #'
 #' @param xs Any iterable object
+#' @param ns A `character` namespace name to attribute to objects in `xs`. If
+#'   `xs` objects themselves have namespaces attributed already to them, the
+#'   namespace will not be replaced.
 #'
-flat_map_srcrefs <- function(xs) {
+flat_map_srcrefs <- function(xs, ns = NULL) {
   srcs <- mapply(
-    function(i, ...) srcrefs(i, ...),
+    srcrefs,
     xs,
     srcref_names = names(xs) %||% rep_len("", length(xs)),
     SIMPLIFY = FALSE
@@ -136,7 +146,16 @@ flat_map_srcrefs <- function(xs) {
 
   srcs <- unlist(srcs, recursive = FALSE)
   names(srcs) <- unlist(srcnames, recursive = FALSE, use.names = FALSE)
-  Filter(is_srcref, srcs)
+  srcs <- Filter(is_srcref, srcs)
+
+  if (!is.null(ns)) {
+    for (i in seq_along(srcs)) {
+      if (!is.null(attr(srcs[[i]], "namespace"))) next
+      attr(srcs[[i]], "namespace") <- ns
+    }
+  }
+
+  srcs
 }
 
 
@@ -151,9 +170,9 @@ flat_map_srcrefs <- function(xs) {
 #' @examples
 #' pkg <- system.file("examplepkg", package = "covtracer")
 #' remotes::install_local(
-#'   pkg, 
-#'   force = TRUE, 
-#'   quiet = TRUE, 
+#'   pkg,
+#'   force = TRUE,
+#'   quiet = TRUE,
 #'   INSTALL_opts = "--with-keep.source"
 #' )
 #' pkg_srcrefs("examplepkg")
@@ -174,7 +193,13 @@ pkg_srcrefs <- function(x) {
 #' @export
 pkg_srcrefs.environment <- function(x) {
   package_check_has_keep_source(x)
-  as_list_of_srcref(srcrefs(x))
+  srcs <- srcrefs(x)
+
+  if (isNamespace(x)) {
+    srcs[setdiff(get_namespace_object_names(x), names(srcs))] <- NA
+  }
+
+  as_list_of_srcref(srcs)
 }
 
 #' @param x A \code{character} package name, which can be used with

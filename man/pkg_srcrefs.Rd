@@ -25,9 +25,9 @@ Extract all the srcref objects of objects within a package namespace
 \examples{
 pkg <- system.file("examplepkg", package = "covtracer")
 remotes::install_local(
-  pkg, 
-  force = TRUE, 
-  quiet = TRUE, 
+  pkg,
+  force = TRUE,
+  quiet = TRUE,
   INSTALL_opts = "--with-keep.source"
 )
 pkg_srcrefs("examplepkg")

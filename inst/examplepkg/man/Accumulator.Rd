@@ -3,84 +3,27 @@
 \name{Accumulator}
 \alias{Accumulator}
 \title{An example R6 Accumulator class}
-\description{
-An example R6 Accumulator class
+\arguments{
+\item{sum}{An initial sum to begin accumulating}
 
-An example R6 Accumulator class
+\item{x}{A value to add to the accumulating sum}
 }
-\references{
-\url{https://adv-r.hadley.nz/r6.html}
-}
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{sum}}{An accumulated sum}
-}
-\if{html}{\out{</div>}}
-}
-\section{Methods}{
-\subsection{Public methods}{
-\itemize{
-\item \href{#method-new}{\code{Accumulator$new()}}
-\item \href{#method-add}{\code{Accumulator$add()}}
-\item \href{#method-clone}{\code{Accumulator$clone()}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
-\subsection{Method \code{new()}}{
-Create a new Accumulator
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Accumulator$new(sum = 0)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{sum}}{An initial sum to begin accumulating}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
+\value{
 A new \code{Accumulator} object
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-add"></a>}}
-\if{latex}{\out{\hypertarget{method-add}{}}}
-\subsection{Method \code{add()}}{
-Add to the accumulating sum
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Accumulator$add(x = 1)}\if{html}{\out{</div>}}
-}
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{A value to add to the accumulating sum}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
 The \code{Accumulator} object after accumulating the new value
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Accumulator$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
+\description{
+Create a new Accumulator
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
+Add to the accumulating sum
+}
+\section{Fields}{
+
 \describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
+\item{\code{sum}}{An accumulated sum}
+}}
+
+\references{
+\url{https://adv-r.hadley.nz/r6.html}
 }

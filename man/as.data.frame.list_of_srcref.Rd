@@ -46,9 +46,9 @@ Coerce a list_of_srcref object to a data.frame
 \examples{
 pkg <- system.file("examplepkg", package = "covtracer")
 remotes::install_local(
-  pkg, 
-  force = TRUE, 
-  quiet = TRUE, 
+  pkg,
+  force = TRUE,
+  quiet = TRUE,
   INSTALL_opts = "--with-keep.source"
 )
 as.data.frame(pkg_srcrefs("examplepkg"))
