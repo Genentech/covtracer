@@ -49,10 +49,14 @@ test_description.character <- function(x) {
 }
 
 #' @exportS3Method
-#' @importFrom utils head
 test_description.list <- function(x) {
   # check if the call stack contains a test_that call
-  is_test_that_call <- lapply(x, `[[`, 1L) == quote(test_that)
+  test_calls <- lapply(x, `[[`, 1L)
+  is_test_that_call <- vapply(test_calls, function(test_call) {
+    identical(test_call, quote(test_that)) ||
+    identical(test_call, quote(testthat::test_that))
+  }, logical(1L))
+
   if (any(is_test_that_call)) {
     descs <- lapply(x[which(is_test_that_call)], test_description_test_that)
     return(paste(descs, collapse = "; "))
