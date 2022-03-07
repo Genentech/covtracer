@@ -1,30 +1,31 @@
-navbar:
-  structure:
-    left: [home, intro, reference, articles, tutorials, news]
-    right: [gitlab, coverage]
-  components:
-    gitlab:
-      icon: fa fa-gitlab fa-lg
-      href: !expr Sys.getenv("CI_PROJECT_URL")
-    coverage:
-      icon: fa fa-layer-group
-      href: "coverage.html"
+template:
+  bootstrap: 5
 
 reference:
   - title: "Mapping Tests to Documentation"
+    desc: >
+      The primary user-facing functionality provided by the package.
     contents:
       - test_trace_df
   - title: "Working with `srcrefs`"
-  - contents:
+    desc: >
+      Want to dig deeper? This functions will help you tease apart the internals
+      of package objects, documentation and tests.
+    contents:
       - pkg_srcrefs
       - test_srcrefs
       - trace_srcrefs
-      - srcref_key
-      - as.data.frame.list_of_srcrefs
-      - join_srcref_within
-  - title: "Working with R Documentation"
-  - contents:
+      - as.data.frame.list_of_srcref
+      - match_containing_srcrefs
+      - join_on_containing_srcrefs
       - Rd_df
   - title: "Extracting Unit Test Descriptions"
-  - contents:
+    desc: >
+      An extensible interface for extracting test information from test calls.
+    contents:
       - test_description
+  - title: "Miscellaneous Internals"
+    desc: >
+      Everthing that happens behind-the-scenes.
+    contents:
+      - matches("*")
