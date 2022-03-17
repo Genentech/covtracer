@@ -258,6 +258,15 @@ test_trace_mapping <- function(x) {
 #' @param r A `list_of_srcref` object
 #'
 match_containing_srcrefs <- function(l, r) {
+  # NOTE:
+  #   srcrefs are matched due to filenames, as full file paths are often
+  #   different. Trace srcrefs srcfiles will point to a temporary installation
+  #   when running covr, whereas package namespace srcrefs srcfiles will point
+  #   to the package install location.
+  #
+  # TODO:
+  #   more comprehensive path comparisons (perhaps pkgname/R/file.R)
+
   ldf <- as.data.frame(l, expand.srcref = TRUE)
   rdf <- as.data.frame(r, expand.srcref = TRUE)
 
@@ -271,7 +280,7 @@ match_containing_srcrefs <- function(l, r) {
   while (li <= nrow(ldf) && ri <= nrow(rdf)) {
     # if filenames don't match, jump to filename
     if ((t <- basename(ldf[[li, "srcfile"]])) != basename(rdf[[ri, "srcfile"]])) {
-      p <- Position(function(i) i == t, basename(rdf[ri:nrow(rdf), "srcfile"]))
+      p <- Position(function(i) identical(i, t), basename(rdf[ri:nrow(rdf), "srcfile"]))
       if (is.na(p)) {
         # no srcrefs from the same file, no chance of being contained, iterate
         idx[[li]] <- NA_integer_
