@@ -88,7 +88,7 @@
 <span class="co">#&gt; function(a, b) {</span>
 <span class="co">#&gt;   return(sqrt(a^2 + b^2))</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x5654d9633e80&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x5650cdfe6e80&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:examplepkg&gt;</span></code></pre></div>
 <div class="section level2">
 <h2 id="what-are-srcref-objects">What are <code>srcref</code> objects?<a class="anchor" aria-label="anchor" href="#what-are-srcref-objects"></a>
@@ -176,7 +176,7 @@
 <p>Note that the original source files will no longer exist, as <code>covr</code> will install the package into a temporary location for testing. Because of this, test “srcrefs” are actually <code>call</code> objects with a <code>with_pseudo_srcref</code>, allowing them to be treated like a <code>srcref</code>s for consistency.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/test_srcrefs.html">test_srcrefs</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
-<span class="co">#&gt; $`/tmp/RtmppAh8eR/R_LIBS3e7e4cad9c2c/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`</span>
+<span class="co">#&gt; $`/tmp/RtmpumY8o2/R_LIBS3a4328b78d14/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`</span>
 <span class="co">#&gt; complex_call_stack("test")</span></code></pre></div>
 <p>Despite not having a valid <code>srcfile</code>, we can still use all of our favorite <code>srcref</code> functions because of the <code>with_pseudo_scref</code> subclass:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
