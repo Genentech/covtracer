@@ -61,7 +61,7 @@ rd_sampler()
 
 }
 \references{
-R.D. Sampler. (2021)
+R.D. Sampler. (1999)
 }
 \seealso{
 base::print

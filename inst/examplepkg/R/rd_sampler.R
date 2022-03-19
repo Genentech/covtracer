@@ -5,7 +5,7 @@
 #' *emphasis text*.
 #'
 #' Rd sampler details
-#' 
+#'
 #' Rd sampler enumerated list
 #' 1. One
 #' 2. Two
@@ -25,7 +25,7 @@
 #' \deqn{Rd * sampler * block * equation}
 #'
 #' # Rd sampler subsection
-#' 
+#'
 #' Rd sampler subsection text
 #'
 #' ## Rd sampler sub-subsection
@@ -46,13 +46,13 @@
 #' @family rd_samplers
 #' @seealso base::print
 #'
-#' @references 
-#' R.D. Sampler. (2021)
+#' @references
+#' R.D. Sampler. (1999)
 #'
 #' @author R.D. Sampler.
 #'
 #' @export
 #'
 rd_sampler <- function(x, y = TRUE, ...) {
-  TRUE    
+  TRUE
 }
