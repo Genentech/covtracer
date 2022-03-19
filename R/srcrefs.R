@@ -111,7 +111,7 @@ srcrefs.R6ClassGenerator <- function(x, ..., srcref_names = NULL) {
 #' @rdname srcrefs
 srcrefs.MethodDefinition <- function(x, ..., srcref_names = NULL) {
   # catch methods in methods tables from packages without srcref data
-  if (is.null(sr <- getSrcref(x))) return(x)
+  if (is.null(sr <- getSrcref(x))) return(sr)
 
   # as produced by `methods:::.methods_info`
   signatures <- paste0(x@generic, ",", paste0(x@defined, collapse = ","), "-method")
