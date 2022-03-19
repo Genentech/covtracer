@@ -27,8 +27,7 @@ obj_namespace_name.default <- function(x, ns) {
 obj_namespace_name.character <- function(x, ns) {
   is_exported <- x %in% getNamespaceExports(ns)
   if (!is_exported) return(NA_character_)
-  x <- getExportedValue(ns, x)
-  obj_namespace_name(x, ns)
+  env_ns_name(environment(getExportedValue(ns, x)))
 }
 
 #' @exportS3Method
