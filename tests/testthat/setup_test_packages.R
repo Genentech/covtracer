@@ -31,7 +31,8 @@ for (i in seq_along(pkg_dirs)) {
     lib = lib,
     repos = NULL,
     dependencies = FALSE,
-    INSTALL_opts = c("--with-keep.source", "--install-tests")
+    INSTALL_opts = c("--with-keep.source", "--install-tests"),
+    quiet = TRUE
   )
 }
 
