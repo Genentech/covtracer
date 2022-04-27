@@ -1,5 +1,8 @@
 # Unreleased (tentative 0.0.1)
 
+* Resolve edge-case bug where all nested namespace objects are without srcrefs
+  (#33, @dgkf)
+
 * Resolve bug with reepxort methods S3 tables (#31, @dgkf)
 
 * Remove unnecessary recursion when searching for object's namespace (#31, @dgkf)
