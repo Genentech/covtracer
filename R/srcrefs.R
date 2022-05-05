@@ -140,6 +140,9 @@ flat_map_srcrefs <- function(xs, ns = NULL) {
     SIMPLIFY = FALSE
   )
 
+  # remove NULL srcrefs, otherwise they cause problematic unlisting.
+  srcs <- Filter(Negate(is.null), srcs)
+
   srcnames <- mapply(
     function(new, old) names(new) %||% rep_len(old, length(new)),
     srcs,

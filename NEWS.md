@@ -5,6 +5,9 @@
   calls out to C, in which cases it's ambiguious whether test traces were
   captured. (#35, @dgkf)
 
+* Resolve edge-case bug where all nested namespace objects are without srcrefs
+  (#33, @dgkf)
+
 * Resolve bug with reepxort methods S3 tables (#31, @dgkf)
 
 * Remove unnecessary recursion when searching for object's namespace (#31, @dgkf)
