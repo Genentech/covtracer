@@ -15,6 +15,7 @@ Assumes the coverage object was produced while
 }
 \seealso{
 Other coverage_tests: 
-\code{\link{coverage_check_has_recorded_tests}()}
+\code{\link{coverage_check_has_recorded_tests}()},
+\code{\link{coverage_has_recorded_tests}()}
 }
 \concept{coverage_tests}
