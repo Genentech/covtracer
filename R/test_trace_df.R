@@ -135,7 +135,7 @@ coverage_get_tests <- function(coverage) {
 
 
 
-#' Verify that the coverage object retains testing information
+#' Test that the coverage object retains testing information
 #'
 #' Test whether the coverage object has expected fields produced when coverage
 #' was captured with \code{option(covr.record_tests = TRUE)}.
@@ -143,18 +143,55 @@ coverage_get_tests <- function(coverage) {
 #' @param coverage a \code{\link[covr]{covr}} coverage object
 #' @family coverage_tests
 #'
-coverage_check_has_recorded_tests <- function(coverage) {
-  has_rec_tests <- !vapply(
-    coverage,
-    function(i) is.null(i[["tests"]]),
-    logical(1L))
+#' @importFrom utils getSrcDirectory
+#'
+coverage_has_recorded_tests <- function(coverage) {
+  has_tests_attr <- !is.null(attr(coverage, "tests"))
 
-  if (length(has_rec_tests) > 0L && !any(has_rec_tests)) {
+  has_r_dir_traces <- !is.na(Position(
+    function(trace) basename(getSrcDirectory(trace$srcref)) == "R",
+    coverage
+  ))
+
+  has_trace_tests <- !is.na(Position(
+    function(trace) !is.null(trace[["tests"]]),
+    coverage
+  ))
+
+  if (has_tests_attr || has_trace_tests) return(TRUE)
+  else if (!has_r_dir_traces) return(NA)
+  else return(FALSE)
+}
+
+
+
+#' Check that the coverage object retains testing information
+#'
+#' Check whether the coverage object has expected fields produced when coverage
+#' was captured with \code{option(covr.record_tests = TRUE)}, throwing an error
+#' if it was not.
+#'
+#' @param coverage a \code{\link[covr]{covr}} coverage object
+#' @param warn Whether to warn when it is uncertain whether the tests were
+#'   recorded. It may be uncertain if tests were recorded if there are no tested
+#'   R code traces.
+#'
+#' @family coverage_tests
+#'
+coverage_check_has_recorded_tests <- function(coverage, warn = TRUE) {
+  has_recorded_tests <- coverage_has_recorded_tests(coverage)
+
+  if (identical(has_recorded_tests, FALSE)) {
     stop(
       "Coverage object does not include recorded test information.\n\n",
       "  Expecting non-null `cov[[n]]$tests` for each trace\n\n",
       "  Ensure `options(covr.record_tests = TRUE)` was set during coverage ",
       "execution.\n\n"
+    )
+  } else if (warn && is.na(has_recorded_tests)) {
+    warning(
+      "Coverage object does not appear to contain traced R code, and ",
+      "therefore has no logged test information."
     )
   }
 }
