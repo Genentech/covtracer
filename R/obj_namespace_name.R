@@ -3,6 +3,16 @@ env_ns_name <- function(e) {
   unname(getNamespaceName(e))
 }
 
+env_name <- function(e) {
+  # NOTE:
+  #   If this ever becomes problematic, we can embed C call to grab environment
+  #   pointer address instead of using output. Plenty of prior art, see
+  #   envnames::address or data.table::address for examples.
+
+  # because environment may have attributes, only take first line of output
+  sub("<environment: (.*)>", "\\1", capture.output(e)[[1L]])
+}
+
 
 
 #' Get namespace export namespace name

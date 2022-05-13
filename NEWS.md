@@ -1,5 +1,9 @@
 # Unreleased (tentative 0.0.1)
 
+* Added safety fuse for extracting srcrefs of cyclic recursive environment
+  nesting, terminating when beginning to recurse into an environment that has
+  already been hit (#38, @dkgf)
+
 * Resolve bug with reepxort methods S3 tables (#31, @dgkf)
 
 * Remove unnecessary recursion when searching for object's namespace (#31, @dgkf)

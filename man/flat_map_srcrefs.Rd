@@ -4,7 +4,7 @@
 \alias{flat_map_srcrefs}
 \title{Map \code{srcrefs} over an iterable object, Filtering non-srcref results}
 \usage{
-flat_map_srcrefs(xs, ns = NULL)
+flat_map_srcrefs(xs, ns = NULL, breadcrumbs = character())
 }
 \arguments{
 \item{xs}{Any iterable object}
