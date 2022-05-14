@@ -100,12 +100,12 @@ srcrefs.namespace <- function(x, ..., breadcrumbs = character()) {
 #' @exportS3Method
 #' @rdname srcrefs
 srcrefs.environment <- function(x, ..., breadcrumbs = character()) {
+  if (isNamespace(x))
+    return(srcrefs.namespace(x, ..., breadcrumbs = breadcrumbs))
+
   # short circuit on recursive environment traversal
   if (env_name(x) %in% breadcrumbs)
     return(NULL)
-
-  if (isNamespace(x))
-    return(srcrefs.namespace(x, ..., breadcrumbs = breadcrumbs))
 
   objs <- as.list(x, all.names = TRUE)
   objs <- Filter(function(i) !identical(i, x), objs)  # prevent direct recursion
