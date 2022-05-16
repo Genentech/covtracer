@@ -59,7 +59,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">flat_map_srcrefs</span><span class="op">(</span><span class="va">xs</span>, ns <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">flat_map_srcrefs</span><span class="op">(</span><span class="va">xs</span>, ns <span class="op">=</span> <span class="cn">NULL</span>, breadcrumbs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -70,6 +70,11 @@
 <dd><p>A <code>character</code> namespace name to attribute to objects in <code>xs</code>. If
 <code>xs</code> objects themselves have namespaces attributed already to them, the
 namespace will not be replaced.</p></dd>
+<dt>breadcrumbs</dt>
+<dd><p>Recursive methods are expected to propegate a vector of
+"breadcrumbs" (a character vector of namespace names encountered while
+traversing the namespace used as a memory of what we've seen already),
+which is used for short-circuiting recursive environment traversal.</p></dd>
 </dl></div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

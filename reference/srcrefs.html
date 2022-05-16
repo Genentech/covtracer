@@ -77,19 +77,19 @@ set of <code>srcref</code> objects.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">srcrefs</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for default</span>
-<span class="fu">srcrefs</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, srcref_names <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
+<span class="fu">srcrefs</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, srcref_names <span class="op">=</span> <span class="cn">NULL</span>, breadcrumbs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># S3 method for list</span>
-<span class="fu">srcrefs</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, srcref_names <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
+<span class="fu">srcrefs</span><span class="op">(</span><span class="va">x</span>, srcref_names <span class="op">=</span> <span class="cn">NULL</span>, breadcrumbs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># S3 method for namespace</span>
-<span class="fu">srcrefs</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">srcrefs</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, breadcrumbs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># S3 method for environment</span>
-<span class="fu">srcrefs</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">srcrefs</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, breadcrumbs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># S3 method for R6ClassGenerator</span>
-<span class="fu">srcrefs</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, srcref_names <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
+<span class="fu">srcrefs</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, srcref_names <span class="op">=</span> <span class="cn">NULL</span>, breadcrumbs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># S3 method for MethodDefinition</span>
 <span class="fu">srcrefs</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, srcref_names <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
@@ -104,6 +104,11 @@ set of <code>srcref</code> objects.</p>
 <dt>srcref_names</dt>
 <dd><p>An optional field used to supercede any discovered object
 names when choosing which names to provide in the returned list.</p></dd>
+<dt>breadcrumbs</dt>
+<dd><p>Recursive methods are expected to propegate a vector of
+"breadcrumbs" (a character vector of namespace names encountered while
+traversing the namespace used as a memory of what we've seen already),
+which is used for short-circuiting recursive environment traversal.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
