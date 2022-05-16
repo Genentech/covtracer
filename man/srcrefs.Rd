@@ -12,15 +12,15 @@
 \usage{
 srcrefs(x, ...)
 
-\method{srcrefs}{default}(x, ..., srcref_names = NULL)
+\method{srcrefs}{default}(x, ..., srcref_names = NULL, breadcrumbs = character())
 
-\method{srcrefs}{list}(x, ..., srcref_names = NULL)
+\method{srcrefs}{list}(x, srcref_names = NULL, breadcrumbs = character())
 
-\method{srcrefs}{namespace}(x, ...)
+\method{srcrefs}{namespace}(x, ..., breadcrumbs = character())
 
-\method{srcrefs}{environment}(x, ...)
+\method{srcrefs}{environment}(x, ..., breadcrumbs = character())
 
-\method{srcrefs}{R6ClassGenerator}(x, ..., srcref_names = NULL)
+\method{srcrefs}{R6ClassGenerator}(x, ..., srcref_names = NULL, breadcrumbs = character())
 
 \method{srcrefs}{MethodDefinition}(x, ..., srcref_names = NULL)
 }
@@ -31,6 +31,11 @@ srcrefs(x, ...)
 
 \item{srcref_names}{An optional field used to supercede any discovered object
 names when choosing which names to provide in the returned list.}
+
+\item{breadcrumbs}{Recursive methods are expected to propegate a vector of
+"breadcrumbs" (a character vector of namespace names encountered while
+traversing the namespace used as a memory of what we've seen already),
+which is used for short-circuiting recursive environment traversal.}
 }
 \value{
 A \code{list} of \code{srcref} objects. Often, has a length of 1, but can be

@@ -30,6 +30,10 @@ is_srcref <- function(x) {
 #' @param ... Additional arguments passed to methods
 #' @param srcref_names An optional field used to supercede any discovered object
 #'   names when choosing which names to provide in the returned list.
+#' @param breadcrumbs Recursive methods are expected to propegate a vector of
+#'   "breadcrumbs" (a character vector of namespace names encountered while
+#'   traversing the namespace used as a memory of what we've seen already),
+#'   which is used for short-circuiting recursive environment traversal.
 #' @return A `list` of `srcref` objects. Often, has a length of 1, but can be
 #'   larger for things like environments, namespaces or generic methods. The
 #'   names of the list reflect the name of the Rd name or alias that could be
@@ -55,7 +59,7 @@ srcrefs <- function(x, ...) {
 #' @exportS3Method
 #' @importFrom utils getSrcref
 #' @rdname srcrefs
-srcrefs.default <- function(x, ..., srcref_names = NULL) {
+srcrefs.default <- function(x, ..., srcref_names = NULL, breadcrumbs = character()) {
   sr <- getSrcref(x)
 
   if (!is.null(sr) && !is_srcref(sr) && !identical(sr, x)) {
@@ -75,33 +79,57 @@ srcrefs.default <- function(x, ..., srcref_names = NULL) {
 
 #' @exportS3Method
 #' @rdname srcrefs
-srcrefs.list <- function(x, ..., srcref_names = NULL) {
-  flat_map_srcrefs(x)
+srcrefs.list <- function(x, srcref_names = NULL, breadcrumbs = character()) {
+  flat_map_srcrefs(x, ns = srcref_names, breadcrumbs = breadcrumbs)
 }
 
 #' @exportS3Method
 #' @rdname srcrefs
-srcrefs.namespace <- function(x, ...) {
-  flat_map_srcrefs(as.list(x, all.names = TRUE), ns = env_ns_name(x))
+srcrefs.namespace <- function(x, ..., breadcrumbs = character()) {
+  # short circuit on recursive environment traversal
+  if (env_name(x) %in% breadcrumbs)
+    return(NULL)
+
+  flat_map_srcrefs(
+    as.list(x, all.names = TRUE),
+    ns = env_ns_name(x),
+    breadcrumbs = c(breadcrumbs, env_name(x))
+  )
 }
 
 #' @exportS3Method
 #' @rdname srcrefs
-srcrefs.environment <- function(x, ...) {
-  if (isNamespace(x)) return(srcrefs.namespace(x))
+srcrefs.environment <- function(x, ..., breadcrumbs = character()) {
+  if (isNamespace(x))
+    return(srcrefs.namespace(x, ..., breadcrumbs = breadcrumbs))
+
+  # short circuit on recursive environment traversal
+  if (env_name(x) %in% breadcrumbs)
+    return(NULL)
+
   objs <- as.list(x, all.names = TRUE)
   objs <- Filter(function(i) !identical(i, x), objs)  # prevent direct recursion
-  flat_map_srcrefs(objs, ns = env_ns_name(x))
+  flat_map_srcrefs(
+    objs,
+    ns = env_ns_name(x),
+    breadcrumbs = c(breadcrumbs, env_name(x))
+  )
 }
 
 ### R6
 
 #' @exportS3Method
 #' @rdname srcrefs
-srcrefs.R6ClassGenerator <- function(x, ..., srcref_names = NULL) {
+srcrefs.R6ClassGenerator <- function(x, ..., srcref_names = NULL,
+  breadcrumbs = character()) {
+
   objs <- c(list(x$new), x$public_methods, x$private_methods, x$active)
   names(objs) <- rep_len(srcref_names, length(objs))
-  flat_map_srcrefs(objs, ns = env_ns_name(x$parent_env))
+  flat_map_srcrefs(
+    objs,
+    ns = env_ns_name(x$parent_env),
+    breadcrumbs = breadcrumbs
+  )
 }
 
 ### S4
@@ -131,12 +159,14 @@ srcrefs.MethodDefinition <- function(x, ..., srcref_names = NULL) {
 #' @param ns A `character` namespace name to attribute to objects in `xs`. If
 #'   `xs` objects themselves have namespaces attributed already to them, the
 #'   namespace will not be replaced.
+#' @inheritParams srcrefs
 #'
-flat_map_srcrefs <- function(xs, ns = NULL) {
+flat_map_srcrefs <- function(xs, ns = NULL, breadcrumbs = character()) {
   srcs <- mapply(
     srcrefs,
     xs,
     srcref_names = names(xs) %||% rep_len("", length(xs)),
+    breadcrumbs = rep_len(list(breadcrumbs), length(xs)),
     SIMPLIFY = FALSE
   )
 
@@ -163,6 +193,9 @@ flat_map_srcrefs <- function(xs, ns = NULL) {
 
   srcs
 }
+
+
+
 
 
 

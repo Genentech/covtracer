@@ -1,5 +1,9 @@
 # Unreleased (tentative 0.0.1)
 
+* Added safety fuse for extracting srcrefs of cyclic recursive environment
+  nesting, terminating when beginning to recurse into an environment that has
+  already been hit (#38, @dkgf)
+
 * Now emit a warning when a coverage object does not include traces from any R
   code. This scenario may occur if a package only has reexports, or if it only
   calls out to C, in which cases it's ambiguious whether test traces were
