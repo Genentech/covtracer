@@ -12,6 +12,11 @@ flat_map_srcrefs(xs, ns = NULL, breadcrumbs = character())
 \item{ns}{A \code{character} namespace name to attribute to objects in \code{xs}. If
 \code{xs} objects themselves have namespaces attributed already to them, the
 namespace will not be replaced.}
+
+\item{breadcrumbs}{Recursive methods are expected to propegate a vector of
+"breadcrumbs" (a character vector of namespace names encountered while
+traversing the namespace used as a memory of what we've seen already),
+which is used for short-circuiting recursive environment traversal.}
 }
 \description{
 Map \code{srcrefs} over an iterable object, Filtering non-srcref results

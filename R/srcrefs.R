@@ -159,6 +159,7 @@ srcrefs.MethodDefinition <- function(x, ..., srcref_names = NULL) {
 #' @param ns A `character` namespace name to attribute to objects in `xs`. If
 #'   `xs` objects themselves have namespaces attributed already to them, the
 #'   namespace will not be replaced.
+#' @inheritParams srcrefs
 #'
 flat_map_srcrefs <- function(xs, ns = NULL, breadcrumbs = character()) {
   srcs <- mapply(

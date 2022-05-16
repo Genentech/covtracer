@@ -3,6 +3,7 @@ env_ns_name <- function(e) {
   unname(getNamespaceName(e))
 }
 
+#' @importFrom utils capture.output
 env_name <- function(e) {
   # NOTE:
   #   If this ever becomes problematic, we can embed C call to grab environment
