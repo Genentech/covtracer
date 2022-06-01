@@ -1,6 +1,6 @@
 Package: covtracer
 Title: Tools for contextualizing tests
-Version: 0.0.0.9004
+Version: 0.0.0.9005
 Authors@R: c(
     person(
       given = "Doug",

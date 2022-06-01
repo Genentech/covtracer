@@ -27,7 +27,7 @@ test_description.default <- function(x) {
 #' @exportS3Method
 test_description.srcref <- function(x) {
   keystr <- paste0("[", getSrcFilename(x), "#L", as.numeric(x)[1], "] ")
-  test_description(paste0(keystr, expr_str(srcref_expr(x))))
+  test_description(paste0(keystr, srcref_str(x)))
 }
 
 #' @exportS3Method
@@ -87,7 +87,17 @@ test_description_test_that <- function(x, ...) {
 #' @param ref a \code{srcref}
 #'
 srcref_expr <- function(ref) {
-  parse(text = as.character(ref))
+  parse(text = srcref_str(ref))
+}
+
+
+
+#' Parse the expression associated with a srcref
+#'
+#' @param ref a \code{srcref}
+#'
+srcref_str <- function(ref) {
+  paste0(as.character(ref), collapse = "\n")
 }
 
 
