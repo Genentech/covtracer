@@ -1,5 +1,9 @@
 # Unreleased (tentative 0.0.1)
 
+* Avoid parsing srcrefs when they're only needed for producing a test
+  description string, instead just jumping straight to coersion to string (#41,
+  @dgkf)
+
 * Added safety fuse for extracting srcrefs of cyclic recursive environment
   nesting, terminating when beginning to recurse into an environment that has
   already been hit (#38, @dkgf)
