@@ -73,6 +73,8 @@ test_description.list <- function(x) {
 #' Wrap object in test description derivation data
 #'
 #' @param x A test description string to bind style data to
+#' @param type A type class to attribute to the test description. Defaults to
+#'   \code{"call"}.
 #' @return A \code{test_description} subclass object with additional
 #'   \code{style} attribute indicating how the test description was derived.
 #'

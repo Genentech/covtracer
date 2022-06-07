@@ -11,6 +11,9 @@ as_testthat_desc(x)
 }
 \arguments{
 \item{x}{A test description string to bind style data to}
+
+\item{type}{A type class to attribute to the test description. Defaults to
+\code{"call"}.}
 }
 \value{
 A \code{test_description} subclass object with additional
