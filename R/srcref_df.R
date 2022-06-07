@@ -162,10 +162,18 @@ trace_srcrefs_df <- function(x) {
 #'   variables:
 #'
 #' \describe{
-#'   \item{name}{A \code{character} test description. For \code{testthat} tests,
-#'     the \code{desc} parameter will be used, otherwise a snippet of code will
-#'     be used for the test name}
-#'   \item{srcref}{A \code{srcref} object describing the location of the test}
+#'   \item{name}{
+#'     A \code{character} test description. For \code{testthat} tests, the
+#'     \code{desc} parameter will be used, otherwise a snippet of code will be
+#'     used for the test name
+#'   }
+#'   \item{srcref}{
+#'     A \code{srcref} object describing the location of the test
+#'   }
+#'   \item{test_type}{
+#'     A \code{character} indicating the structure of the test.  One of
+#'     \code{"testthat"}, \code{"call"} or \code{NULL}
+#'   }
 #' }
 #'
 #' @examples
@@ -186,10 +194,19 @@ test_srcrefs_df <- function(x) {
 #' @export
 test_srcrefs_df.coverage <- function(x) {
   cov_tests <- attr(x, "tests")
+
+  # extract tests srcrefs and descriptions and structure as data.frame
   test_srcs <- test_srcrefs(x)
-  test_desc <- vapply(cov_tests, test_description, character(1L))
-  names(test_srcs) <- test_desc
-  as.data.frame(test_srcs)
+  test_desc <- lapply(cov_tests, test_description)
+  names(test_srcs) <- as.character(test_desc)
+  df <- as.data.frame(test_srcs)
+
+  # extract test description style attribute and structure as column
+  test_type <- lapply(test_desc, attr, "type")
+  test_type_isnull <- vapply(test_type, is.null, logical(1L))
+  df$type <- ifelse(test_type_isnull, NA_character_, as.character(test_type))
+
+  df
 }
 
 

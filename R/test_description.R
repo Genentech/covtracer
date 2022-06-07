@@ -14,6 +14,9 @@
 #' }
 #'
 #' @param x a unit test call stack or expression.
+#' @return A string that describes the test. If possible, this will be a written
+#'   description of the test, but will fall back to the test call as a string in
+#'   cases where no written description can be determined.
 #'
 test_description <- function(x) {
   UseMethod("test_description")
@@ -45,7 +48,7 @@ test_description.call <- function(x) {
 
 #' @exportS3Method
 test_description.character <- function(x) {
-  substring(x, 1L, 120L)
+  as_test_desc(substring(x, 1L, 120L))
 }
 
 #' @exportS3Method
@@ -59,10 +62,30 @@ test_description.list <- function(x) {
 
   if (any(is_test_that_call)) {
     descs <- lapply(x[which(is_test_that_call)], test_description_test_that)
-    return(paste(descs, collapse = "; "))
+    return(as_testthat_desc(paste(descs, collapse = "; ")))
   }
 
   test_description(x[[length(x)]])
+}
+
+
+
+#' Wrap object in test description derivation data
+#'
+#' @param x A test description string to bind style data to
+#' @return A \code{test_description} subclass object with additional
+#'   \code{style} attribute indicating how the test description was derived.
+#'
+#' @rdname as_test_desc
+as_test_desc <- function(x, type = "call") {
+  structure(x, type = type, class = "test_description")
+}
+
+#' Adds "testthat" style
+#'
+#' @rdname as_test_desc
+as_testthat_desc <- function(x) {
+  as_test_desc(x, type = "testthat")
 }
 
 
@@ -74,10 +97,10 @@ test_description.list <- function(x) {
 #'
 test_description_test_that <- function(x, ...) {
   expr <- match.call(testthat::test_that, x)$desc
-  if (is.character(expr)) return(expr)
+  if (is.character(expr)) return(as_testthat_desc(expr))
   try_expr <- try(eval(expr, envir = baseenv()), silent = TRUE)
-  if (!inherits(try_expr, "try-error")) return(try_expr)
-  expr_str(expr)
+  if (!inherits(try_expr, "try-error")) return(as_testthat_desc(try_expr))
+  as_test_desc(expr_str(expr))
 }
 
 
