@@ -9,6 +9,11 @@ test_description(x)
 \arguments{
 \item{x}{a unit test call stack or expression.}
 }
+\value{
+A string that describes the test. If possible, this will be a written
+description of the test, but will fall back to the test call as a string in
+cases where no written description can be determined.
+}
 \description{
 In the general case, a simple indicator of the source file and line number is
 used as a test description. There are some special cases where more

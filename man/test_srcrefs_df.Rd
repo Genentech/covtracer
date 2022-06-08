@@ -16,10 +16,18 @@ A \code{data.frame} of test \code{srcrefs} extracted from a
 variables:
 
 \describe{
-\item{name}{A \code{character} test description. For \code{testthat} tests,
-the \code{desc} parameter will be used, otherwise a snippet of code will
-be used for the test name}
-\item{srcref}{A \code{srcref} object describing the location of the test}
+\item{name}{
+A \code{character} test description. For \code{testthat} tests, the
+\code{desc} parameter will be used, otherwise a snippet of code will be
+used for the test name
+}
+\item{srcref}{
+A \code{srcref} object describing the location of the test
+}
+\item{test_type}{
+A \code{character} indicating the structure of the test.  One of
+\code{"testthat"}, \code{"call"} or \code{NULL}
+}
 }
 }
 \description{

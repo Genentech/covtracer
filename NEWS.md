@@ -1,5 +1,9 @@
 # Unreleased (tentative 0.0.1)
 
+* Added column `type` to the result of `test_srcrefs_df` and thereby `test_type`
+  to the result of `test_trace_df` to provide contextual information necessary
+  for interpretting the test descriptions (#43, @dgkf)
+
 * Avoid parsing srcrefs when they're only needed for producing a test
   description string, instead just jumping straight to coersion to string (#41,
   @dgkf)
