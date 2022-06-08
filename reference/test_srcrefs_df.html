@@ -18,7 +18,7 @@ each expression executed within a testing suite."><!-- mathjax --><script src="h
     
     <a class="navbar-brand me-2" href="../index.html">covtracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,12 +85,16 @@ the name of the package used is extracted.</p></dd>
     <p>A <code>data.frame</code> of test <code>srcrefs</code> extracted from a
 <code>coverage</code> object. Contains one record for each <code>srcref</code> with
 variables:</p><dl><dt>name</dt>
-<dd><p>A <code>character</code> test description. For <code>testthat</code> tests,
-the <code>desc</code> parameter will be used, otherwise a snippet of code will
-be used for the test name</p></dd>
+<dd><p>A <code>character</code> test description. For <code>testthat</code> tests, the
+<code>desc</code> parameter will be used, otherwise a snippet of code will be
+used for the test name</p></dd>
 
 <dt>srcref</dt>
 <dd><p>A <code>srcref</code> object describing the location of the test</p></dd>
+
+<dt>test_type</dt>
+<dd><p>A <code>character</code> indicating the structure of the test.  One of
+<code>"testthat"</code>, <code>"call"</code> or <code>NULL</code></p></dd>
 
 
 </dl></div>
@@ -122,20 +126,20 @@ be used for the test name</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11              s3_example_func works using default dispatch</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12                 s3_example_func works using list dispatch</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13                              S4Example names method works</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                           srcref</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  test-complex-calls.R:2:3:2:50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  test-complex-calls.R:6:3:6:54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     test-hypotenuse.R:2:3:2:35</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     test-hypotenuse.R:5:5:5:39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     test-r6-example.R:2:3:2:43</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     test-r6-example.R:7:3:7:43</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7     test-r6-example.R:8:3:8:36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   test-r6-example.R:12:3:12:40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   test-r6-example.R:13:3:13:26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10  test-r6-example.R:18:3:18:38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11    test-s3-example.R:2:3:2:46</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12    test-s3-example.R:6:3:6:54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13    test-s4-example.R:3:3:3:40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                           srcref     type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  test-complex-calls.R:2:3:2:50 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  test-complex-calls.R:6:3:6:54 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     test-hypotenuse.R:2:3:2:35 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     test-hypotenuse.R:5:5:5:39 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     test-r6-example.R:2:3:2:43 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     test-r6-example.R:7:3:7:43 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     test-r6-example.R:8:3:8:36 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   test-r6-example.R:12:3:12:40 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   test-r6-example.R:13:3:13:26 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  test-r6-example.R:18:3:18:38 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    test-s3-example.R:2:3:2:46 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    test-s3-example.R:6:3:6:54 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    test-s4-example.R:3:3:3:40 testthat</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
