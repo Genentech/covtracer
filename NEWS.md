@@ -31,5 +31,3 @@
 
 * Adding initial test-trace data.frame constructors (@dgkf)
 
-* Skip classes not used for dispatch in `srcrefs.list` (@maksymiuks)
-
