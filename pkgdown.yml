@@ -1,9 +1,9 @@
 pandoc: 2.7.3
-pkgdown: 2.0.3
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   combining_srcref_data: combining_srcref_data.html
   plotting_test_paths: plotting_test_paths.html
   working_with_srcrefs: working_with_srcrefs.html
-last_built: 2022-06-08T00:14Z
+last_built: 2022-07-25T13:14Z
 
