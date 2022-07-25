@@ -80,6 +80,11 @@ srcrefs.default <- function(x, ..., srcref_names = NULL, breadcrumbs = character
 #' @exportS3Method
 #' @rdname srcrefs
 srcrefs.list <- function(x, srcref_names = NULL, breadcrumbs = character()) {
+  # The method is designed to handle lists and is later passed to the mapper
+  # However if the object has other classes than list with set .[[ methods
+  # it could lead to unexpected results returned by the mapper. Thus, if 
+  # list was the class used for dispatch, we remove other classes.
+  x <- unclass(x)
   flat_map_srcrefs(x, ns = srcref_names, breadcrumbs = breadcrumbs)
 }
 
