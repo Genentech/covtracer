@@ -247,17 +247,24 @@ test_trace_mapping <- function(x) {
 
   # if no tests are present, return first available matrix with 0 rows
   if (!any(has_tests)) {
-    empty_result <- matrix(numeric(0L), ncol = 4L,
-      dimnames = list(c(), c("test", "depth", "i", "trace")))
+    empty_result <- matrix(
+      integer(0L),
+      ncol = 4L,
+      dimnames = list(c(), c("test", "depth", "i", "trace"))
+    )
+
     return(empty_result)
   }
 
   mat <- do.call(
     rbind,
-    mapply(function(i, covi) cbind(covi$tests, trace = i),
+    mapply(
+      function(i, covi) cbind(covi$tests, trace = i),
       seq_along(x)[has_tests],
       x[has_tests],
-      SIMPLIFY = FALSE))
+      SIMPLIFY = FALSE
+    )
+  )
 
   mat <- mat[order(mat[, "test"], mat[, "i"]),, drop = FALSE]
   mat

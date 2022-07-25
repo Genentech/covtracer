@@ -1,5 +1,8 @@
 # Unreleased (tentative 0.0.1)
 
+* Minor changes to internal test matrix type to use `integer` instead of
+  `numeric` (`double`), coinciding with changes to upstream `covr`. (#47, @dgkf)
+
 * Added column `type` to the result of `test_srcrefs_df` and thereby `test_type`
   to the result of `test_trace_df` to provide contextual information necessary
   for interpretting the test descriptions (#43, @dgkf)
