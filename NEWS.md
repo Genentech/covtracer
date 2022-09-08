@@ -1,5 +1,9 @@
 # Unreleased (tentative 0.0.1)
 
+* Fix bug when producing a test-trace data.frame when package objects have an
+  empty `srcfile`. This can happen when an object is documented, such as a
+  `list`, which does not preserve a `srcref` (#51, @dgkf)
+
 * Minor changes to internal test matrix type to use `integer` instead of
   `numeric` (`double`), coinciding with changes to upstream `covr`. (#47, @dgkf)
 
