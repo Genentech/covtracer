@@ -303,7 +303,7 @@ match_containing_srcrefs <- function(l, r) {
 
   while (li <= nrow(ldf) && ri <= nrow(rdf)) {
     # if filenames don't match, jump to filename
-    if ((t <- basename(ldf[[li, "srcfile"]])) != basename(rdf[[ri, "srcfile"]])) {
+    if (!identical(t <- basename(ldf[[li, "srcfile"]]), basename(rdf[[ri, "srcfile"]]))) {
       p <- Position(function(i) identical(i, t), basename(rdf[ri:nrow(rdf), "srcfile"]))
       if (is.na(p)) {
         # no srcrefs from the same file, no chance of being contained, iterate
