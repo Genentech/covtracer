@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">covtracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9009</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,34 +86,34 @@ the test <code>srcref</code>s are extracted.</p></dd>
 <span class="r-in"><span><span class="va">pkg_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examplepkg"</span>, package <span class="op">=</span> <span class="st">"covtracer"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">cov</span> <span class="op">&lt;-</span> <span class="fu">covr</span><span class="fu">::</span><span class="fu"><a href="http://covr.r-lib.org/reference/package_coverage.html" class="external-link">package_coverage</a></span><span class="op">(</span><span class="va">pkg_path</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">test_srcrefs</span><span class="op">(</span><span class="va">cov</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpwDYXFI/R_LIBS36f176ff8395/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpTHMrvj/R_LIBS3ec63f913cfe/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> complex_call_stack("test")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpwDYXFI/R_LIBS36f176ff8395/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:6:3:6:54:3:54:6:6`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpTHMrvj/R_LIBS3ec63f913cfe/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:6:3:6:54:3:54:6:6`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> deeper_nested_function("test")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpwDYXFI/R_LIBS36f176ff8395/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:2:3:2:35:3:35:2:2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpTHMrvj/R_LIBS3ec63f913cfe/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:2:3:2:35:3:35:2:2`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> hypotenuse(3, 4)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpwDYXFI/R_LIBS36f176ff8395/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:5:5:5:39:5:39:5:5`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpTHMrvj/R_LIBS3ec63f913cfe/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:5:5:5:39:5:39:5:5`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> hypotenuse(-3, -4)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpwDYXFI/R_LIBS36f176ff8395/examplepkg/examplepkg-tests/testthat/test-r6-example.R:2:3:2:43:3:43:2:2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpTHMrvj/R_LIBS3ec63f913cfe/examplepkg/examplepkg-tests/testthat/test-r6-example.R:2:3:2:43:3:43:2:2`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> initialize(...)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpwDYXFI/R_LIBS36f176ff8395/examplepkg/examplepkg-tests/testthat/test-r6-example.R:7:3:7:43:3:43:7:7`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpTHMrvj/R_LIBS3ec63f913cfe/examplepkg/examplepkg-tests/testthat/test-r6-example.R:7:3:7:43:3:43:7:7`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> initialize(...)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpwDYXFI/R_LIBS36f176ff8395/examplepkg/examplepkg-tests/testthat/test-r6-example.R:8:3:8:36:3:36:8:8`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpTHMrvj/R_LIBS3ec63f913cfe/examplepkg/examplepkg-tests/testthat/test-r6-example.R:8:3:8:36:3:36:8:8`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> acc$add(3L)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpwDYXFI/R_LIBS36f176ff8395/examplepkg/examplepkg-tests/testthat/test-r6-example.R:12:3:12:40:3:40:12:12`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpTHMrvj/R_LIBS3ec63f913cfe/examplepkg/examplepkg-tests/testthat/test-r6-example.R:12:3:12:40:3:40:12:12`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> initialize(...)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpwDYXFI/R_LIBS36f176ff8395/examplepkg/examplepkg-tests/testthat/test-r6-example.R:13:3:13:26:3:26:13:13`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpTHMrvj/R_LIBS3ec63f913cfe/examplepkg/examplepkg-tests/testthat/test-r6-example.R:13:3:13:26:3:26:13:13`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> p$print()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpwDYXFI/R_LIBS36f176ff8395/examplepkg/examplepkg-tests/testthat/test-r6-example.R:18:3:18:38:3:38:18:18`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpTHMrvj/R_LIBS3ec63f913cfe/examplepkg/examplepkg-tests/testthat/test-r6-example.R:18:3:18:38:3:38:18:18`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (function (value) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     if (if (TRUE) {</span>
@@ -133,13 +133,13 @@ the test <code>srcref</code>s are extracted.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> })()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpwDYXFI/R_LIBS36f176ff8395/examplepkg/examplepkg-tests/testthat/test-s3-example.R:2:3:2:46:3:46:2:2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpTHMrvj/R_LIBS3ec63f913cfe/examplepkg/examplepkg-tests/testthat/test-s3-example.R:2:3:2:46:3:46:2:2`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> s3_example_func(1L)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpwDYXFI/R_LIBS36f176ff8395/examplepkg/examplepkg-tests/testthat/test-s3-example.R:6:3:6:54:3:54:6:6`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpTHMrvj/R_LIBS3ec63f913cfe/examplepkg/examplepkg-tests/testthat/test-s3-example.R:6:3:6:54:3:54:6:6`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> s3_example_func(list(1, 2, 3))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpwDYXFI/R_LIBS36f176ff8395/examplepkg/examplepkg-tests/testthat/test-s4-example.R:3:3:3:40:3:40:3:3`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpTHMrvj/R_LIBS3ec63f913cfe/examplepkg/examplepkg-tests/testthat/test-s4-example.R:3:3:3:40:3:40:3:3`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> names(s4ex)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
