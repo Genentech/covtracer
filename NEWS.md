@@ -1,5 +1,7 @@
 # Unreleased (tentative 0.0.1)
 
+* Improved support for S4 generic functions (#58, @dgkf)
+
 * Fix bug when producing a test-trace data.frame when package objects have an
   empty `srcfile`. This can happen when an object is documented, such as a
   `list`, which does not preserve a `srcref` (#51, @dgkf)
