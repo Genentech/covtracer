@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![CRAN](https://img.shields.io/cran/v/ggpackets.svg)](https://cran.r-project.org/package=ggpackets)
+[![CRAN](https://img.shields.io/cran/v/covtracer.svg)](https://cran.r-project.org/package=covtracer)
 [![R-CMD-check](https://github.com/Genentech/covtracer/workflows/R-CMD-check/badge.svg)](https://github.com/Genentech/covtracer/actions)
 [![Code
 Coverage](https://img.shields.io/codecov/c/github/genentech/covtracer/main.svg)](https://codecov.io/gh/genentech/covtracer)
@@ -100,29 +100,30 @@ traceability_matrix <- ttdf %>%
 
 traceability_matrix
 #>                                                    test_name                       file
-#> 1         Example R6 Accumulator class constructor is traced             Accumulator.Rd
-#> 2            Example R6 Accumulator class methods are traced             Accumulator.Rd
+#> 1            Example R6 Accumulator class methods are traced             Accumulator.Rd
+#> 2         Example R6 Accumulator class constructor is traced             Accumulator.Rd
 #> 3                                                       <NA>                   adder.Rd
 #> 4            Example R6 Accumulator class methods are traced                   adder.Rd
 #> 5               Calling a deeply nested series of functions.      complex_call_stack.Rd
-#> 6               Calling a deeply nested series of functions.  deeper_nested_function.Rd
-#> 7             Calling a function halfway through call stack.  deeper_nested_function.Rd
-#> 8                         hypotenuse is calculated correctly              hypotenuse.Rd
-#> 9  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd
-#> 10                              S4Example names method works  names-S4Example-method.Rd
-#> 11                                                      <NA> names-S4Example2-method.Rd
-#> 12              Calling a deeply nested series of functions.         nested_function.Rd
-#> 13         Example R6 Person class public methods are traced                  Person.Rd
-#> 14  Example R6 Rando class active field functions are traced                   Rando.Rd
+#> 6             Calling a function halfway through call stack.  deeper_nested_function.Rd
+#> 7               Calling a deeply nested series of functions.  deeper_nested_function.Rd
+#> 8  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd
+#> 9                         hypotenuse is calculated correctly              hypotenuse.Rd
+#> 10                  S4Example increment generic method works               increment.Rd
+#> 11                              S4Example names method works  names-S4Example-method.Rd
+#> 12                                                      <NA> names-S4Example2-method.Rd
+#> 13              Calling a deeply nested series of functions.         nested_function.Rd
+#> 14         Example R6 Person class public methods are traced                  Person.Rd
 #> 15                                                      <NA>                   Rando.Rd
-#> 16                                                      <NA>              rd_sampler.Rd
-#> 17            Calling a function halfway through call stack.      recursive_function.Rd
-#> 18              Calling a deeply nested series of functions.      recursive_function.Rd
-#> 19                                                      <NA>        reexport_example.Rd
-#> 20                                                      <NA>               reexports.Rd
-#> 21              s3_example_func works using default dispatch         s3_example_func.Rd
+#> 16  Example R6 Rando class active field functions are traced                   Rando.Rd
+#> 17                                                      <NA>              rd_sampler.Rd
+#> 18            Calling a function halfway through call stack.      recursive_function.Rd
+#> 19              Calling a deeply nested series of functions.      recursive_function.Rd
+#> 20                                                      <NA>        reexport_example.Rd
+#> 21                                                      <NA>               reexports.Rd
 #> 22                 s3_example_func works using list dispatch         s3_example_func.Rd
-#> 23                                                      <NA>                       <NA>
+#> 23              s3_example_func works using default dispatch         s3_example_func.Rd
+#> 24                                                      <NA>                       <NA>
 ```
 
 We can quickly see which functions or methods are entirely untested.
@@ -145,29 +146,30 @@ ttdf %>%
   filter(!duplicated(.)) %>%
   arrange(file)
 #>                                                    test_name                       file
-#> 1         Example R6 Accumulator class constructor is traced             Accumulator.Rd
-#> 2            Example R6 Accumulator class methods are traced             Accumulator.Rd
+#> 1            Example R6 Accumulator class methods are traced             Accumulator.Rd
+#> 2         Example R6 Accumulator class constructor is traced             Accumulator.Rd
 #> 3                                                       <NA>                   adder.Rd
 #> 4            Example R6 Accumulator class methods are traced                   adder.Rd
 #> 5               Calling a deeply nested series of functions.      complex_call_stack.Rd
-#> 6               Calling a deeply nested series of functions.  deeper_nested_function.Rd
-#> 7             Calling a function halfway through call stack.  deeper_nested_function.Rd
-#> 8                         hypotenuse is calculated correctly              hypotenuse.Rd
-#> 9  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd
-#> 10                              S4Example names method works  names-S4Example-method.Rd
-#> 11                                                      <NA> names-S4Example2-method.Rd
-#> 12              Calling a deeply nested series of functions.         nested_function.Rd
-#> 13         Example R6 Person class public methods are traced                  Person.Rd
-#> 14  Example R6 Rando class active field functions are traced                   Rando.Rd
+#> 6             Calling a function halfway through call stack.  deeper_nested_function.Rd
+#> 7               Calling a deeply nested series of functions.  deeper_nested_function.Rd
+#> 8  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd
+#> 9                         hypotenuse is calculated correctly              hypotenuse.Rd
+#> 10                  S4Example increment generic method works               increment.Rd
+#> 11                              S4Example names method works  names-S4Example-method.Rd
+#> 12                                                      <NA> names-S4Example2-method.Rd
+#> 13              Calling a deeply nested series of functions.         nested_function.Rd
+#> 14         Example R6 Person class public methods are traced                  Person.Rd
 #> 15                                                      <NA>                   Rando.Rd
-#> 16                                                      <NA>              rd_sampler.Rd
-#> 17            Calling a function halfway through call stack.      recursive_function.Rd
-#> 18              Calling a deeply nested series of functions.      recursive_function.Rd
-#> 19                                                      <NA>        reexport_example.Rd
-#> 20                                                      <NA>               reexports.Rd
-#> 21              s3_example_func works using default dispatch         s3_example_func.Rd
+#> 16  Example R6 Rando class active field functions are traced                   Rando.Rd
+#> 17                                                      <NA>              rd_sampler.Rd
+#> 18            Calling a function halfway through call stack.      recursive_function.Rd
+#> 19              Calling a deeply nested series of functions.      recursive_function.Rd
+#> 20                                                      <NA>        reexport_example.Rd
+#> 21                                                      <NA>               reexports.Rd
 #> 22                 s3_example_func works using list dispatch         s3_example_func.Rd
-#> 23                                                      <NA>                       <NA>
+#> 23              s3_example_func works using default dispatch         s3_example_func.Rd
+#> 24                                                      <NA>                       <NA>
 ```
 
 ### Finding Untested Behaviors
@@ -209,7 +211,7 @@ ttdf %>%
   group_by(alias) %>%
   summarize(any_direct_tests = any(direct, na.rm = TRUE)) %>%
   arrange(alias)
-#> # A tibble: 19 × 2
+#> # A tibble: 20 × 2
 #>   alias                  any_direct_tests
 #>   <chr>                  <lgl>           
 #> 1 Accumulator            TRUE            
@@ -217,5 +219,5 @@ ttdf %>%
 #> 3 complex_call_stack     TRUE            
 #> 4 deeper_nested_function TRUE            
 #> 5 help                   FALSE           
-#> # … with 14 more rows
+#> # … with 15 more rows
 ```
