@@ -45,3 +45,11 @@ obj_namespace_name.character <- function(x, ns) {
 obj_namespace_name.R6ClassGenerator <- function(x, ns) {
   env_ns_name(x$parent_env)
 }
+
+#' @exportS3Method
+obj_namespace_name.standardGeneric <- function(x, ns) {
+  methods::packageSlot(x)
+}
+
+#' @exportS3Method
+obj_namespace_name.nonstandardGenericFunction <- obj_namespace_name.standardGeneric

@@ -243,7 +243,8 @@ test_trace_mapping <- function(x) {
   has_tests <- vapply(
     x,
     function(i) !is.null(i[["tests"]]) && nrow(i[["tests"]]) > 0L,
-    logical(1L))
+    logical(1L)
+  )
 
   # if no tests are present, return first available matrix with 0 rows
   if (!any(has_tests)) {

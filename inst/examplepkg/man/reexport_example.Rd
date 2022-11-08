@@ -11,6 +11,7 @@ reexport_example(
   character.only = FALSE,
   give.lines = FALSE,
   local = FALSE,
+  type = c("console", "html"),
   echo = TRUE,
   verbose = getOption("verbose"),
   setRNG = FALSE,
