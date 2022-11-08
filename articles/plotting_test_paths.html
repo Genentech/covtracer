@@ -70,7 +70,8 @@
 
 
 
-<script src="plotting_test_paths_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Plotting Test Paths</h1>
             
@@ -90,7 +91,10 @@ img {
 <div class="section level2">
 <h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
 </h2>
-<p>As with all covtracer analysis, we need to start by collecting coverage traces of a package. Below is an example where a package is installed with the necessary flags such that the coverage traces can be collected.</p>
+<p>As with all covtracer analysis, we need to start by collecting
+coverage traces of a package. Below is an example where a package is
+installed with the necessary flags such that the coverage traces can be
+collected.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/genentech/covtracer" class="external-link">covtracer</a></span><span class="op">)</span></span>
 <span></span>
@@ -139,7 +143,9 @@ img {
 <div class="section level2">
 <h2 id="preparing-graph-data">Preparing Graph Data<a class="anchor" aria-label="anchor" href="#preparing-graph-data"></a>
 </h2>
-<p>Before we use the test data, we will clean our incoming data, removing untested records and filtering out untestable objects like S4 class definitions.</p>
+<p>Before we use the test data, we will clean our incoming data,
+removing untested records and filtering out untestable objects like S4
+class definitions.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ttdf</span> <span class="op">&lt;-</span> <span class="va">ttdf</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">test_name</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -160,7 +166,13 @@ img {
 <div class="section level2">
 <h2 id="create-edges-of-our-test-path">Create Edges of Our Test Path<a class="anchor" aria-label="anchor" href="#create-edges-of-our-test-path"></a>
 </h2>
-<p>Our test-trace dataframe has an index of test expressions, each linked to the traces that they evaluate, with added order of evaluation, <code>i</code>. To prepare this for visualization, we want to convert this to a dataframe where each record describes a step of this process. Instead of a test linking to a trace with an index, each jump in the test path should link from the calling expression to the evaluated expression.</p>
+<p>Our test-trace dataframe has an index of test expressions, each
+linked to the traces that they evaluate, with added order of evaluation,
+<code>i</code>. To prepare this for visualization, we want to convert
+this to a dataframe where each record describes a step of this process.
+Instead of a test linking to a trace with an index, each jump in the
+test path should link from the calling expression to the evaluated
+expression.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">edges_df</span> <span class="op">&lt;-</span> <span class="va">ttdf</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">.</span><span class="op">$</span><span class="va">test_name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -181,7 +193,9 @@ img {
 <span><span class="co">#&gt; 4                         deeper_nested_function     recursive_function</span></span>
 <span><span class="co">#&gt; 5                             recursive_function     recursive_function</span></span>
 <span><span class="co">#&gt; 6 Calling a function halfway through call stack. deeper_nested_function</span></span></code></pre></div>
-<p>Likewise, we want to capture some metadata about each vertex. Since a vertex in this context can be either a test or a trace, we have some data that is captured differently for each class of vertex.</p>
+<p>Likewise, we want to capture some metadata about each vertex. Since a
+vertex in this context can be either a test or a trace, we have some
+data that is captured differently for each class of vertex.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Negate</a></span><span class="op">(</span><span class="va">is.na</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">ttdf</span><span class="op">$</span><span class="va">test_name</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">obj_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Negate</a></span><span class="op">(</span><span class="va">is.na</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">ttdf</span><span class="op">$</span><span class="va">alias</span><span class="op">)</span><span class="op">)</span></span>
@@ -249,7 +263,10 @@ img {
 <span>  bty <span class="op">=</span> <span class="st">"n"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting_test_paths_files/figure-html/unnamed-chunk-6-1.png" width="100%"></p>
-<p>Naturally, there are a plethora of wonderful visualization packages available that accept igraph data as input. This graph could just as well be plotted with the <code>visNetwork</code> package, though it is omitted to keep this example analysis minimal.</p>
+<p>Naturally, there are a plethora of wonderful visualization packages
+available that accept igraph data as input. This graph could just as
+well be plotted with the <code>visNetwork</code> package, though it is
+omitted to keep this example analysis minimal.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

@@ -83,6 +83,7 @@
 <a class="anchor" aria-label="anchor" href="#covtracer-"></a>
 </h1></div>
 <!-- badges: start -->
+
 <p>Tools for contextualizing tests, built using <code>covr</code> test traces. This package provides utilities for linking an assortment of test and package information to paint a more complete picture of how a test was performed.</p>
 <pre class="mermaid"><code>flowchart LR
     tests[Tests] &lt;--&gt; traces[Traced Exprs] &lt;--&gt; code[Package Code] &lt;--&gt; docs[Package Documentation]</code></pre>
@@ -129,7 +130,9 @@
 <span>  <span class="va">ttdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/test_trace_df.html">test_trace_df</a></span><span class="op">(</span><span class="va">cov</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 <p>There’s a lot of info in the resulting <code>data.frame</code>, but we’ll focus on just the critical piece, showing which tests evaluate code related to which documented behaviors. Below we show how one might map unit tests to evaluated, documented objects.</p>
-<blockquote><p><strong>Note:</strong> Below we ignore documentation for datasets and S4 class constructors. Although these are defined in the package, they don’t map to testable lines of code because they are constructed when the package is built.</p></blockquote>
+<blockquote>
+<p><strong>Note:</strong> Below we ignore documentation for datasets and S4 class constructors. Although these are defined in the package, they don’t map to testable lines of code because they are constructed when the package is built.</p>
+</blockquote>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">traceability_matrix</span> <span class="op">&lt;-</span> <span class="va">ttdf</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">doctype</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"class"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  <span class="co"># ignore objects without testable code</span></span>
@@ -139,29 +142,30 @@
 <span></span>
 <span><span class="va">traceability_matrix</span></span>
 <span><span class="co">#&gt;                                                    test_name                       file</span></span>
-<span><span class="co">#&gt; 1         Example R6 Accumulator class constructor is traced             Accumulator.Rd</span></span>
-<span><span class="co">#&gt; 2            Example R6 Accumulator class methods are traced             Accumulator.Rd</span></span>
+<span><span class="co">#&gt; 1            Example R6 Accumulator class methods are traced             Accumulator.Rd</span></span>
+<span><span class="co">#&gt; 2         Example R6 Accumulator class constructor is traced             Accumulator.Rd</span></span>
 <span><span class="co">#&gt; 3                                                       &lt;NA&gt;                   adder.Rd</span></span>
 <span><span class="co">#&gt; 4            Example R6 Accumulator class methods are traced                   adder.Rd</span></span>
 <span><span class="co">#&gt; 5               Calling a deeply nested series of functions.      complex_call_stack.Rd</span></span>
-<span><span class="co">#&gt; 6               Calling a deeply nested series of functions.  deeper_nested_function.Rd</span></span>
-<span><span class="co">#&gt; 7             Calling a function halfway through call stack.  deeper_nested_function.Rd</span></span>
-<span><span class="co">#&gt; 8                         hypotenuse is calculated correctly              hypotenuse.Rd</span></span>
-<span><span class="co">#&gt; 9  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd</span></span>
-<span><span class="co">#&gt; 10                              S4Example names method works  names-S4Example-method.Rd</span></span>
-<span><span class="co">#&gt; 11                                                      &lt;NA&gt; names-S4Example2-method.Rd</span></span>
-<span><span class="co">#&gt; 12              Calling a deeply nested series of functions.         nested_function.Rd</span></span>
-<span><span class="co">#&gt; 13         Example R6 Person class public methods are traced                  Person.Rd</span></span>
-<span><span class="co">#&gt; 14  Example R6 Rando class active field functions are traced                   Rando.Rd</span></span>
+<span><span class="co">#&gt; 6             Calling a function halfway through call stack.  deeper_nested_function.Rd</span></span>
+<span><span class="co">#&gt; 7               Calling a deeply nested series of functions.  deeper_nested_function.Rd</span></span>
+<span><span class="co">#&gt; 8  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd</span></span>
+<span><span class="co">#&gt; 9                         hypotenuse is calculated correctly              hypotenuse.Rd</span></span>
+<span><span class="co">#&gt; 10                  S4Example increment generic method works               increment.Rd</span></span>
+<span><span class="co">#&gt; 11                              S4Example names method works  names-S4Example-method.Rd</span></span>
+<span><span class="co">#&gt; 12                                                      &lt;NA&gt; names-S4Example2-method.Rd</span></span>
+<span><span class="co">#&gt; 13              Calling a deeply nested series of functions.         nested_function.Rd</span></span>
+<span><span class="co">#&gt; 14         Example R6 Person class public methods are traced                  Person.Rd</span></span>
 <span><span class="co">#&gt; 15                                                      &lt;NA&gt;                   Rando.Rd</span></span>
-<span><span class="co">#&gt; 16                                                      &lt;NA&gt;              rd_sampler.Rd</span></span>
-<span><span class="co">#&gt; 17            Calling a function halfway through call stack.      recursive_function.Rd</span></span>
-<span><span class="co">#&gt; 18              Calling a deeply nested series of functions.      recursive_function.Rd</span></span>
-<span><span class="co">#&gt; 19                                                      &lt;NA&gt;        reexport_example.Rd</span></span>
-<span><span class="co">#&gt; 20                                                      &lt;NA&gt;               reexports.Rd</span></span>
-<span><span class="co">#&gt; 21              s3_example_func works using default dispatch         s3_example_func.Rd</span></span>
+<span><span class="co">#&gt; 16  Example R6 Rando class active field functions are traced                   Rando.Rd</span></span>
+<span><span class="co">#&gt; 17                                                      &lt;NA&gt;              rd_sampler.Rd</span></span>
+<span><span class="co">#&gt; 18            Calling a function halfway through call stack.      recursive_function.Rd</span></span>
+<span><span class="co">#&gt; 19              Calling a deeply nested series of functions.      recursive_function.Rd</span></span>
+<span><span class="co">#&gt; 20                                                      &lt;NA&gt;        reexport_example.Rd</span></span>
+<span><span class="co">#&gt; 21                                                      &lt;NA&gt;               reexports.Rd</span></span>
 <span><span class="co">#&gt; 22                 s3_example_func works using list dispatch         s3_example_func.Rd</span></span>
-<span><span class="co">#&gt; 23                                                      &lt;NA&gt;                       &lt;NA&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; 23              s3_example_func works using default dispatch         s3_example_func.Rd</span></span>
+<span><span class="co">#&gt; 24                                                      &lt;NA&gt;                       &lt;NA&gt;</span></span></code></pre></div>
 <p>We can quickly see which functions or methods are entirely untested.</p>
 </div>
 <div class="section level2">
@@ -179,29 +183,30 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">duplicated</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                                    test_name                       file</span></span>
-<span><span class="co">#&gt; 1         Example R6 Accumulator class constructor is traced             Accumulator.Rd</span></span>
-<span><span class="co">#&gt; 2            Example R6 Accumulator class methods are traced             Accumulator.Rd</span></span>
+<span><span class="co">#&gt; 1            Example R6 Accumulator class methods are traced             Accumulator.Rd</span></span>
+<span><span class="co">#&gt; 2         Example R6 Accumulator class constructor is traced             Accumulator.Rd</span></span>
 <span><span class="co">#&gt; 3                                                       &lt;NA&gt;                   adder.Rd</span></span>
 <span><span class="co">#&gt; 4            Example R6 Accumulator class methods are traced                   adder.Rd</span></span>
 <span><span class="co">#&gt; 5               Calling a deeply nested series of functions.      complex_call_stack.Rd</span></span>
-<span><span class="co">#&gt; 6               Calling a deeply nested series of functions.  deeper_nested_function.Rd</span></span>
-<span><span class="co">#&gt; 7             Calling a function halfway through call stack.  deeper_nested_function.Rd</span></span>
-<span><span class="co">#&gt; 8                         hypotenuse is calculated correctly              hypotenuse.Rd</span></span>
-<span><span class="co">#&gt; 9  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd</span></span>
-<span><span class="co">#&gt; 10                              S4Example names method works  names-S4Example-method.Rd</span></span>
-<span><span class="co">#&gt; 11                                                      &lt;NA&gt; names-S4Example2-method.Rd</span></span>
-<span><span class="co">#&gt; 12              Calling a deeply nested series of functions.         nested_function.Rd</span></span>
-<span><span class="co">#&gt; 13         Example R6 Person class public methods are traced                  Person.Rd</span></span>
-<span><span class="co">#&gt; 14  Example R6 Rando class active field functions are traced                   Rando.Rd</span></span>
+<span><span class="co">#&gt; 6             Calling a function halfway through call stack.  deeper_nested_function.Rd</span></span>
+<span><span class="co">#&gt; 7               Calling a deeply nested series of functions.  deeper_nested_function.Rd</span></span>
+<span><span class="co">#&gt; 8  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd</span></span>
+<span><span class="co">#&gt; 9                         hypotenuse is calculated correctly              hypotenuse.Rd</span></span>
+<span><span class="co">#&gt; 10                  S4Example increment generic method works               increment.Rd</span></span>
+<span><span class="co">#&gt; 11                              S4Example names method works  names-S4Example-method.Rd</span></span>
+<span><span class="co">#&gt; 12                                                      &lt;NA&gt; names-S4Example2-method.Rd</span></span>
+<span><span class="co">#&gt; 13              Calling a deeply nested series of functions.         nested_function.Rd</span></span>
+<span><span class="co">#&gt; 14         Example R6 Person class public methods are traced                  Person.Rd</span></span>
 <span><span class="co">#&gt; 15                                                      &lt;NA&gt;                   Rando.Rd</span></span>
-<span><span class="co">#&gt; 16                                                      &lt;NA&gt;              rd_sampler.Rd</span></span>
-<span><span class="co">#&gt; 17            Calling a function halfway through call stack.      recursive_function.Rd</span></span>
-<span><span class="co">#&gt; 18              Calling a deeply nested series of functions.      recursive_function.Rd</span></span>
-<span><span class="co">#&gt; 19                                                      &lt;NA&gt;        reexport_example.Rd</span></span>
-<span><span class="co">#&gt; 20                                                      &lt;NA&gt;               reexports.Rd</span></span>
-<span><span class="co">#&gt; 21              s3_example_func works using default dispatch         s3_example_func.Rd</span></span>
+<span><span class="co">#&gt; 16  Example R6 Rando class active field functions are traced                   Rando.Rd</span></span>
+<span><span class="co">#&gt; 17                                                      &lt;NA&gt;              rd_sampler.Rd</span></span>
+<span><span class="co">#&gt; 18            Calling a function halfway through call stack.      recursive_function.Rd</span></span>
+<span><span class="co">#&gt; 19              Calling a deeply nested series of functions.      recursive_function.Rd</span></span>
+<span><span class="co">#&gt; 20                                                      &lt;NA&gt;        reexport_example.Rd</span></span>
+<span><span class="co">#&gt; 21                                                      &lt;NA&gt;               reexports.Rd</span></span>
 <span><span class="co">#&gt; 22                 s3_example_func works using list dispatch         s3_example_func.Rd</span></span>
-<span><span class="co">#&gt; 23                                                      &lt;NA&gt;                       &lt;NA&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; 23              s3_example_func works using default dispatch         s3_example_func.Rd</span></span>
+<span><span class="co">#&gt; 24                                                      &lt;NA&gt;                       &lt;NA&gt;</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="finding-untested-behaviors">Finding Untested Behaviors<a class="anchor" aria-label="anchor" href="#finding-untested-behaviors"></a>
@@ -234,7 +239,7 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">alias</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>any_direct_tests <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="va">direct</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">alias</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 19 × 2</span></span>
+<span><span class="co">#&gt; # A tibble: 20 × 2</span></span>
 <span><span class="co">#&gt;   alias                  any_direct_tests</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                  &lt;lgl&gt;           </span></span>
 <span><span class="co">#&gt; 1 Accumulator            TRUE            </span></span>
@@ -242,7 +247,7 @@
 <span><span class="co">#&gt; 3 complex_call_stack     TRUE            </span></span>
 <span><span class="co">#&gt; 4 deeper_nested_function TRUE            </span></span>
 <span><span class="co">#&gt; 5 help                   FALSE           </span></span>
-<span><span class="co">#&gt; # … with 14 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # … with 15 more rows</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -281,7 +286,7 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=ggpackets" class="external-link"><img src="https://img.shields.io/cran/v/ggpackets.svg" alt="CRAN"></a></li>
+<li><a href="https://cran.r-project.org/package=covtracer" class="external-link"><img src="https://img.shields.io/cran/v/covtracer.svg" alt="CRAN"></a></li>
 <li><a href="https://github.com/Genentech/covtracer/actions" class="external-link"><img src="https://github.com/Genentech/covtracer/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://codecov.io/gh/genentech/covtracer" class="external-link"><img src="https://img.shields.io/codecov/c/github/genentech/covtracer/main.svg" alt="Code Coverage"></a></li>
 </ul>

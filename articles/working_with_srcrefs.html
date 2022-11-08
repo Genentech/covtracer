@@ -70,7 +70,8 @@
 
 
 
-<script src="working_with_srcrefs_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Working with srcrefs</h1>
             
@@ -88,14 +89,22 @@
 <span><span class="co">#&gt; function(a, b) {</span></span>
 <span><span class="co">#&gt;   return(sqrt(a^2 + b^2))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x55b2beb21f28&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x5595b0966a38&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:examplepkg&gt;</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="what-are-srcref-objects">What are <code>srcref</code> objects?<a class="anchor" aria-label="anchor" href="#what-are-srcref-objects"></a>
 </h2>
-<p><code>srcref</code>s are a base R data type that is used frequently for working with package code. When you install a package using the <code>--with-keep.source</code> flag, data about the package’s source code representation is bound to the objects that the namespace attaches or loads. In short, <code>srcref</code>s are simple data structures which store the file path of the source code and information about where to find the relevant bits in that file including line and character columns of the start and end of the source code.</p>
+<p><code>srcref</code>s are a base R data type that is used frequently
+for working with package code. When you install a package using the
+<code>--with-keep.source</code> flag, data about the package’s source
+code representation is bound to the objects that the namespace attaches
+or loads. In short, <code>srcref</code>s are simple data structures
+which store the file path of the source code and information about where
+to find the relevant bits in that file including line and character
+columns of the start and end of the source code.</p>
 <blockquote>
-<p>For extensive details, refer to <code><a href="https://rdrr.io/r/utils/sourceutils.html" class="external-link">?getSrcref</a></code> and <code><a href="https://rdrr.io/r/base/srcfile.html" class="external-link">?srcref</a></code>.</p>
+<p>For extensive details, refer to <code><a href="https://rdrr.io/r/utils/sourceutils.html" class="external-link">?getSrcref</a></code> and
+<code><a href="https://rdrr.io/r/base/srcfile.html" class="external-link">?srcref</a></code>.</p>
 </blockquote>
 <p>Lets see it in action:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -111,7 +120,10 @@
 <div class="section level2">
 <h2 id="extracting-relevant-traceability-srcrefs">Extracting relevant traceability <code>srcref</code>s<a class="anchor" aria-label="anchor" href="#extracting-relevant-traceability-srcrefs"></a>
 </h2>
-<p>Instead of working with these objects directly, there are a few helper functions for making these objects easier to extract. For tracing coverage paths, there are three important classes of <code>srcref</code>s:</p>
+<p>Instead of working with these objects directly, there are a few
+helper functions for making these objects easier to extract. For tracing
+coverage paths, there are three important classes of
+<code>srcref</code>s:</p>
 <ol style="list-style-type: decimal">
 <li>Package namespace object <code>srcref</code>s</li>
 <li>Test code <code>srcref</code>s</li>
@@ -120,7 +132,10 @@
 <div class="section level3">
 <h3 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
 </h3>
-<p>Before we begin, we’ll get a package test coverage object and store the package namespace. We take extra precaution to use a temporary library for the sake of example, but this is only necessary when we want to avoid installing the package into our working library.</p>
+<p>Before we begin, we’ll get a package test coverage object and store
+the package namespace. We take extra precaution to use a temporary
+library for the sake of example, but this is only necessary when we want
+to avoid installing the package into our working library.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://withr.r-lib.org" class="external-link">withr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://covr.r-lib.org" class="external-link">covr</a></span><span class="op">)</span></span>
@@ -141,9 +156,20 @@
 <div class="section level3">
 <h3 id="functions-for-extracting-srcrefs">Functions for extracting <code>srcref</code>s<a class="anchor" aria-label="anchor" href="#functions-for-extracting-srcrefs"></a>
 </h3>
-<p>There are a few functions for teasing out this information succinctly. These include <code>pkg</code>, <code>trace</code>, and <code>test</code> flavors for <code>*_srcefs</code> and <code>*_srcrefs_df</code> families of functions (eg, <code><a href="../reference/pkg_srcrefs_df.html">pkg_srcrefs_df()</a></code>). <code>*_srcrefs()</code> functions return a more primitive <code>list</code> objects. Because these can be a bit cumbersome to read through, <code>*_srcrefs_df()</code> alternatives are provided for improved introspection and readability.</p>
+<p>There are a few functions for teasing out this information
+succinctly. These include <code>pkg</code>, <code>trace</code>, and
+<code>test</code> flavors for <code>*_srcefs</code> and
+<code>*_srcrefs_df</code> families of functions (eg,
+<code><a href="../reference/pkg_srcrefs_df.html">pkg_srcrefs_df()</a></code>). <code>*_srcrefs()</code> functions
+return a more primitive <code>list</code> objects. Because these can be
+a bit cumbersome to read through, <code>*_srcrefs_df()</code>
+alternatives are provided for improved introspection and
+readability.</p>
 <blockquote>
-<p><code>data.frame</code> results contain a <code>srcref</code> column, where each element is a <code>srcref</code> object. Even though this appears as a succinct text, it contains all the <code>srcref</code> data.</p>
+<p><code>data.frame</code> results contain a <code>srcref</code> column,
+where each element is a <code>srcref</code> object. Even though this
+appears as a succinct text, it contains all the <code>srcref</code>
+data.</p>
 </blockquote>
 <div class="section level4">
 <h4 id="extracting-package-namespace-object-srcrefs">Extracting package namespace object <code>srcref</code>s<a class="anchor" aria-label="anchor" href="#extracting-package-namespace-object-srcrefs"></a>
@@ -161,7 +187,8 @@
 <span><span class="co">#&gt; 4                  Person  r6_example.R:60:18:64:5 examplepkg</span></span>
 <span><span class="co">#&gt; 5                  Person  r6_example.R:72:13:77:5 examplepkg</span></span>
 <span><span class="co">#&gt; 6  names,S4Example-method  s4_example.R:16:44:18:1 examplepkg</span></span></code></pre></div>
-<p>Extracing individual <code>srcref</code>s from the resulting <code>data.frame</code></p>
+<p>Extracing individual <code>srcref</code>s from the resulting
+<code>data.frame</code></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_srcrefs_df.html">pkg_srcrefs_df</a></span><span class="op">(</span><span class="va">examplepkg_ns</span><span class="op">)</span></span>
 <span><span class="va">df</span><span class="op">$</span><span class="va">srcref</span><span class="op">[[</span><span class="fl">1L</span><span class="op">]</span><span class="op">]</span></span>
@@ -172,17 +199,29 @@
 <div class="section level4">
 <h4 id="extracting-test-srcrefs">Extracting test <code>srcref</code>s<a class="anchor" aria-label="anchor" href="#extracting-test-srcrefs"></a>
 </h4>
-<p>Similarly, we can extract test <code>srcrefs</code> using equivalent functions for tests. However, to get test traces, we must first run the package coverage, which records exactly which tests were actually run by the test suite. Starting from coverage omits any skipped tests or unevaluated test lines, only presenting test code that is actually run.</p>
-<p>Note that the original source files will no longer exist, as <code>covr</code> will install the package into a temporary location for testing. Because of this, test “srcrefs” are actually <code>call</code> objects with a <code>with_pseudo_srcref</code>, allowing them to be treated like a <code>srcref</code>s for consistency.</p>
+<p>Similarly, we can extract test <code>srcrefs</code> using equivalent
+functions for tests. However, to get test traces, we must first run the
+package coverage, which records exactly which tests were actually run by
+the test suite. Starting from coverage omits any skipped tests or
+unevaluated test lines, only presenting test code that is actually
+run.</p>
+<p>Note that the original source files will no longer exist, as
+<code>covr</code> will install the package into a temporary location for
+testing. Because of this, test “srcrefs” are actually <code>call</code>
+objects with a <code>with_pseudo_srcref</code>, allowing them to be
+treated like a <code>srcref</code>s for consistency.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/test_srcrefs.html">test_srcrefs</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
-<span><span class="co">#&gt; $`/tmp/RtmpUtIXpB/R_LIBS461f7cb6cffd/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`</span></span>
+<span><span class="co">#&gt; $`/tmp/Rtmp7SHcFF/R_LIBS40a66283d9e4/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`</span></span>
 <span><span class="co">#&gt; complex_call_stack("test")</span></span></code></pre></div>
-<p>Despite not having a valid <code>srcfile</code>, we can still use all of our favorite <code>srcref</code> functions because of the <code>with_pseudo_scref</code> subclass:</p>
+<p>Despite not having a valid <code>srcfile</code>, we can still use all
+of our favorite <code>srcref</code> functions because of the
+<code>with_pseudo_scref</code> subclass:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sourceutils.html" class="external-link">getSrcFilename</a></span><span class="op">(</span><span class="fu"><a href="../reference/test_srcrefs.html">test_srcrefs</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "test-complex-calls.R"</span></span></code></pre></div>
-<p>And finally, there is a corresponding <code>*_df</code> function to make this information easier to see at a glance:</p>
+<p>And finally, there is a corresponding <code>*_df</code> function to
+make this information easier to see at a glance:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/test_srcrefs_df.html">test_srcrefs_df</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                                        name                        srcref     type</span></span>
@@ -196,10 +235,15 @@
 <div class="section level4">
 <h4 id="extracting-trace-srcrefs">Extracting trace <code>srcref</code>s<a class="anchor" aria-label="anchor" href="#extracting-trace-srcrefs"></a>
 </h4>
-<p>The final piece of the puzzle is the coverage traces. These are the simplest to find, since <code>covr</code> stores this information with every coverage object. Even without any helper functions, you can find this information by indexing into a coverage object to explore for yourself.</p>
+<p>The final piece of the puzzle is the coverage traces. These are the
+simplest to find, since <code>covr</code> stores this information with
+every coverage object. Even without any helper functions, you can find
+this information by indexing into a coverage object to explore for
+yourself.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">examplepkg_cov</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">srcref</span></span></code></pre></div>
-<p>Nevertheless, we provide simple alternatives for restructuring this data into something more consistent with the rest of the pacakge.</p>
+<p>Nevertheless, we provide simple alternatives for restructuring this
+data into something more consistent with the rest of the pacakge.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/trace_srcrefs.html">trace_srcrefs</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="co">#&gt; $`complex_call_stack.R:22:7:22:13:7:13:22:22`</span></span>
@@ -211,7 +255,8 @@
 <span><span class="co">#&gt; 13</span></span>
 <span><span class="co">#&gt; 22</span></span>
 <span><span class="co">#&gt; 22</span></span></code></pre></div>
-<p>And just like the other functions in the family, this too comes with a <code>*_df</code> companion function.</p>
+<p>And just like the other functions in the family, this too comes with
+a <code>*_df</code> companion function.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/trace_srcrefs_df.html">trace_srcrefs_df</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                         name                          srcref</span></span>
@@ -227,7 +272,9 @@
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
-<p>With all of this information, we can match related code blocks to one another to retrospectively evaluate the relationship between package code and tests.</p>
+<p>With all of this information, we can match related code blocks to one
+another to retrospectively evaluate the relationship between package
+code and tests.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

@@ -70,7 +70,8 @@
 
 
 
-<script src="combining_srcref_data_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Combining srcref Data</h1>
             
@@ -83,11 +84,15 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/genentech/covtracer" class="external-link">covtracer</a></span><span class="op">)</span></span></code></pre></div>
-<p>There are two key relationships that we will explore. The first is a relationship of <code>srcref</code> objects, and the second is the relationship between namespace object definitions and their associated documentation.</p>
+<p>There are two key relationships that we will explore. The first is a
+relationship of <code>srcref</code> objects, and the second is the
+relationship between namespace object definitions and their associated
+documentation.</p>
 <div class="section level2">
 <h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
 </h2>
-<p>Before we begin, we’ll set up a demo coverage object and package namespace that we can use to showcase these relationships:</p>
+<p>Before we begin, we’ll set up a demo coverage object and package
+namespace that we can use to showcase these relationships:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://withr.r-lib.org" class="external-link">withr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://covr.r-lib.org" class="external-link">covr</a></span><span class="op">)</span></span>
@@ -108,23 +113,40 @@
 <div class="section level2">
 <h2 id="relational-srcref-data">Relational <code>srcref</code> data<a class="anchor" aria-label="anchor" href="#relational-srcref-data"></a>
 </h2>
-<p>First and foremost, we want to be able to associate <code>srcref</code> objects. These relationships are define the location of code. A <code>srecref</code> describes a region of code where the expression was pulled from, and we can compare these to determine whether a <code>srcref</code> is within, containing or independent of another.</p>
-<p>This vignette will gloss over each of these tables. For more details see the <em>Working with <code>srcref</code>s</em> vignette.</p>
+<p>First and foremost, we want to be able to associate
+<code>srcref</code> objects. These relationships are define the location
+of code. A <code>srecref</code> describes a region of code where the
+expression was pulled from, and we can compare these to determine
+whether a <code>srcref</code> is within, containing or independent of
+another.</p>
+<p>This vignette will gloss over each of these tables. For more details
+see the <em>Working with <code>srcref</code>s</em> vignette.</p>
 <div class="section level3">
-<h3 id="linking-covr-traces-to-package-object-srcrefs">Linking <code>covr</code> traces to package object <code>srcref</code>s<a class="anchor" aria-label="anchor" href="#linking-covr-traces-to-package-object-srcrefs"></a>
+<h3 id="linking-covr-traces-to-package-object-srcrefs">Linking <code>covr</code> traces to package object
+<code>srcref</code>s<a class="anchor" aria-label="anchor" href="#linking-covr-traces-to-package-object-srcrefs"></a>
 </h3>
-<p>It’s important to note that coverage traces always sit within a package namespace object. Where a namespace object might have a <code>srcref</code> to the full code for a function, coverage traces trace individual expressions within that function.</p>
-<p>To associate <code>srcref</code>s by this relation, we provide a special joining function to combine <code>data.frames</code> by <code>srcref</code> columns.</p>
+<p>It’s important to note that coverage traces always sit within a
+package namespace object. Where a namespace object might have a
+<code>srcref</code> to the full code for a function, coverage traces
+trace individual expressions within that function.</p>
+<p>To associate <code>srcref</code>s by this relation, we provide a
+special joining function to combine <code>data.frames</code> by
+<code>srcref</code> columns.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">traces_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trace_srcrefs_df.html">trace_srcrefs_df</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span></span>
 <span><span class="va">pkg_ns_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_srcrefs_df.html">pkg_srcrefs_df</a></span><span class="op">(</span><span class="va">examplepkg_ns</span><span class="op">)</span></span></code></pre></div>
-<p>Just looking at these two <code>data.frames</code>, we can use the first trace and package object to illustrate the relationship:</p>
+<p>Just looking at these two <code>data.frames</code>, we can use the
+first trace and package object to illustrate the relationship:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"pkg  : "</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">pkg_ns_df</span><span class="op">$</span><span class="va">srcref</span><span class="op">[</span><span class="st">"s3_example_func.list"</span><span class="op">]</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; pkg  :  s3_example.R:20:25:22:1</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"trace: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">traces_df</span><span class="op">$</span><span class="va">srcref</span><span class="op">[</span><span class="fl">1L</span><span class="op">]</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; trace:  complex_call_stack.R:22:7:22:13</span></span></code></pre></div>
-<p>Although still a little arcane, you can see that the package object code contains the coverage trace. The package code spans lines 19-21, whereas the coverage trace lies in line 20. With this information, we can couple each package object with the coverage traces contained within each.</p>
+<p>Although still a little arcane, you can see that the package object
+code contains the coverage trace. The package code spans lines 19-21,
+whereas the coverage trace lies in line 20. With this information, we
+can couple each package object with the coverage traces contained within
+each.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/join_on_containing_srcrefs.html">join_on_containing_srcrefs</a></span><span class="op">(</span><span class="va">traces_df</span>, <span class="va">pkg_ns_df</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                       name.x                        srcref.x                 name.y</span></span>
@@ -141,12 +163,20 @@
 <span><span class="co">#&gt; 4           r6_example.R:3:10:9:1  examplepkg</span></span>
 <span><span class="co">#&gt; 5         r6_example.R:72:13:77:5  examplepkg</span></span>
 <span><span class="co">#&gt; 6         r6_example.R:60:18:64:5  examplepkg</span></span></code></pre></div>
-<p>As expected, we can see that this test trace (now with the <code>".x"</code> suffix) is mapped to the expected corresponding package namespace object.</p>
+<p>As expected, we can see that this test trace (now with the
+<code>".x"</code> suffix) is mapped to the expected corresponding
+package namespace object.</p>
 </div>
 <div class="section level3">
 <h3 id="linking-unit-tests-to-evaluated-covr-traces">Linking unit tests to evaluated <code>covr</code> traces<a class="anchor" aria-label="anchor" href="#linking-unit-tests-to-evaluated-covr-traces"></a>
 </h3>
-<p>Although this relationship doesn’t require any fancy <code>srcref</code> joining, we can associate tests and traces by a simple mapping of indices. FOr this, the <code><a href="../reference/test_trace_mapping.html">test_trace_mapping()</a></code> function is provided which will reshape a <code>covr</code> object (produced using <code>options(covr.record_tests = TRUE)</code>) to create a unified table across all <code>covr</code> traces:</p>
+<p>Although this relationship doesn’t require any fancy
+<code>srcref</code> joining, we can associate tests and traces by a
+simple mapping of indices. FOr this, the
+<code><a href="../reference/test_trace_mapping.html">test_trace_mapping()</a></code> function is provided which will
+reshape a <code>covr</code> object (produced using
+<code>options(covr.record_tests = TRUE)</code>) to create a unified
+table across all <code>covr</code> traces:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/test_trace_mapping.html">test_trace_mapping</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      test depth i trace</span></span>
@@ -156,15 +186,35 @@
 <span><span class="co">#&gt; [4,]    1    40 4     1</span></span>
 <span><span class="co">#&gt; [5,]    1    40 5    23</span></span>
 <span><span class="co">#&gt; [6,]    1    41 6     1</span></span></code></pre></div>
-<p>The <code>test</code> and <code>trace</code> columns contain the row indices in the respective <code><a href="../reference/test_srcrefs_df.html">test_srcrefs_df()</a></code> and <code><a href="../reference/trace_srcrefs_df.html">trace_srcrefs_df()</a></code> <code>data.frame</code>s, allowing for this data to be joined. However, since it is easy for a testing suite to cause the evaluation of an enormous number of traces, this matrix can become extremely long. It is recommended to do some aggregation or subsetting of this matrix before trying to use it to join more data-rich data.</p>
-<p>You can also see that the evaluation order is stored (<code>i</code>), as well as the stack depth when it was evaluated (<code>depth</code>). With this added info, you might consider first filtering for only the first trace evaluated by each test, or to count all the times that a line of code was evaluated by each test by aggregating rows.</p>
+<p>The <code>test</code> and <code>trace</code> columns contain the row
+indices in the respective <code><a href="../reference/test_srcrefs_df.html">test_srcrefs_df()</a></code> and
+<code><a href="../reference/trace_srcrefs_df.html">trace_srcrefs_df()</a></code> <code>data.frame</code>s, allowing for
+this data to be joined. However, since it is easy for a testing suite to
+cause the evaluation of an enormous number of traces, this matrix can
+become extremely long. It is recommended to do some aggregation or
+subsetting of this matrix before trying to use it to join more data-rich
+data.</p>
+<p>You can also see that the evaluation order is stored
+(<code>i</code>), as well as the stack depth when it was evaluated
+(<code>depth</code>). With this added info, you might consider first
+filtering for only the first trace evaluated by each test, or to count
+all the times that a line of code was evaluated by each test by
+aggregating rows.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="relational-documentation-data">Relational documentation data<a class="anchor" aria-label="anchor" href="#relational-documentation-data"></a>
 </h2>
-<p>On the other side of the process, we also need to associate package objects with documentation. In many cases, this is trivial, and the name of the exported object can be used directly to find documentation as you have come to expect using <code>?&lt;object&gt;</code>. This holds for simple functions. However, some objects are aliased to different documentation files or are built at package build time into internal representations, as is with <code>S4</code> classes, and <code>R6</code> classes.</p>
-<p>To handle these cases, we can use the <code><a href="../reference/Rd_df.html">Rd_df()</a></code> function to associate any available source code with a documentation file.</p>
+<p>On the other side of the process, we also need to associate package
+objects with documentation. In many cases, this is trivial, and the name
+of the exported object can be used directly to find documentation as you
+have come to expect using <code>?&lt;object&gt;</code>. This holds for
+simple functions. However, some objects are aliased to different
+documentation files or are built at package build time into internal
+representations, as is with <code>S4</code> classes, and <code>R6</code>
+classes.</p>
+<p>To handle these cases, we can use the <code><a href="../reference/Rd_df.html">Rd_df()</a></code> function
+to associate any available source code with a documentation file.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># filter for interesting columns for display</span></span>
 <span><span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"file"</span>, <span class="st">"alias"</span>, <span class="st">"doctype"</span><span class="op">)</span></span>
@@ -194,7 +244,9 @@
 <span><span class="co">#&gt; 22         S4Example-class.Rd               S4Example   class</span></span>
 <span><span class="co">#&gt; 23        S4Example2-class.Rd        S4Example2-class   class</span></span>
 <span><span class="co">#&gt; 24        S4Example2-class.Rd              S4Example2   class</span></span></code></pre></div>
-<p>These aliases are also used when we use <code><a href="../reference/pkg_srcrefs_df.html">pkg_srcrefs_df()</a></code> and can be used to associate <code>srcrefs</code> with <code>.Rd</code> files.</p>
+<p>These aliases are also used when we use <code><a href="../reference/pkg_srcrefs_df.html">pkg_srcrefs_df()</a></code>
+and can be used to associate <code>srcrefs</code> with <code>.Rd</code>
+files.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/pkg_srcrefs_df.html">pkg_srcrefs_df</a></span><span class="op">(</span><span class="va">examplepkg_ns</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                       name                          srcref  namespace</span></span>
@@ -219,12 +271,18 @@
 <span><span class="co">#&gt; 20                  person                            &lt;NA&gt;      utils</span></span>
 <span><span class="co">#&gt; 21        reexport_example                            &lt;NA&gt;      utils</span></span>
 <span><span class="co">#&gt; 22             PersonPrime                            &lt;NA&gt;       &lt;NA&gt;</span></span></code></pre></div>
-<p>You’ll see that we don’t have any <code>srcref</code>s associated with the <code>"data"</code> and <code>"class"</code> doctype documentation because these objects do not themselves have source code, even if there is source code in that was used to create them at bulid time.</p>
+<p>You’ll see that we don’t have any <code>srcref</code>s associated
+with the <code>"data"</code> and <code>"class"</code> doctype
+documentation because these objects do not themselves have source code,
+even if there is source code in that was used to create them at bulid
+time.</p>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
-<p>With these relationships, we can build some really deep understandings of exactly what code a test evaluates and tie that test together with the documented behaviors.</p>
+<p>With these relationships, we can build some really deep
+understandings of exactly what code a test evaluates and tie that test
+together with the documented behaviors.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
