@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">covtracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9010</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,31 +125,34 @@ the numeric components of the <code>srcref</code> objects if <code>expand.srcref
 <span class="r-in"><span>  quiet <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>  INSTALL_opts <span class="op">=</span> <span class="st">"--with-keep.source"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Running `R CMD build`...</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="pkg_srcrefs.html">pkg_srcrefs</a></span><span class="op">(</span><span class="st">"examplepkg"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       name                          srcref</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  s3_example_func.default         s3_example.R:15:28:17:1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                    Rando        r6_example.R:95:12:102:3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                    adder           r6_example.R:3:10:9:1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                   Person         r6_example.R:60:18:64:5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                   Person         r6_example.R:72:13:77:5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   names,S4Example-method         s4_example.R:16:44:18:1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  names,S4Example2-method         s4_example.R:34:45:36:1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8               hypotenuse           hypotenuse.R:7:15:9:1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9              Accumulator         r6_example.R:29:16:32:3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10             Accumulator            r6_example.R:4:3:8:3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11         s3_example_func         s3_example.R:10:20:12:1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12      complex_call_stack   complex_call_stack.R:3:23:5:1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13      recursive_function complex_call_stack.R:21:23:24:1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14         nested_function  complex_call_stack.R:9:20:11:1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2              Accumulator         r6_example.R:29:16:32:3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3              Accumulator            r6_example.R:4:3:8:3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   names,S4Example-method         s4_example.R:17:44:19:1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  names,S4Example2-method         s4_example.R:35:45:37:1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                   Person         r6_example.R:60:18:64:5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                   Person         r6_example.R:72:13:77:5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8               rd_sampler         rd_sampler.R:56:15:58:1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9          s3_example_func         s3_example.R:10:20:12:1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10              hypotenuse           hypotenuse.R:7:15:9:1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    s3_example_func.list         s3_example.R:20:25:22:1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                   adder           r6_example.R:3:10:9:1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13               increment         s4_example.R:45:25:47:1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14      complex_call_stack   complex_call_stack.R:3:23:5:1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 15  deeper_nested_function complex_call_stack.R:15:27:17:1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16    s3_example_func.list         s3_example.R:20:25:22:1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17              rd_sampler         rd_sampler.R:56:15:58:1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18                    help                            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19         rd_data_sampler                            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20                  person                            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21        reexport_example                            &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22             PersonPrime                            &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16                   Rando        r6_example.R:95:12:102:3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17               increment         s4_example.R:50:35:52:1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18         nested_function  complex_call_stack.R:9:20:11:1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19      recursive_function complex_call_stack.R:21:23:24:1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20               S4Example                            &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21                  person                            &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22        reexport_example                            &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23              S4Example2                            &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24             PersonPrime                            &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25                    help                            &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26         rd_data_sampler                            &lt;NA&gt;</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

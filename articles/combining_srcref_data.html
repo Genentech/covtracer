@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">covtracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9010</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -149,20 +149,20 @@ can couple each package object with the coverage traces contained within
 each.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/join_on_containing_srcrefs.html">join_on_containing_srcrefs</a></span><span class="op">(</span><span class="va">traces_df</span>, <span class="va">pkg_ns_df</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                                       name.x                        srcref.x                 name.y</span></span>
-<span><span class="co">#&gt; 1 complex_call_stack.R:22:7:22:13:7:13:22:22 complex_call_stack.R:22:7:22:13     recursive_function</span></span>
-<span><span class="co">#&gt; 2       r6_example.R:74:7:74:23:7:23:111:111         r6_example.R:74:7:74:23                 Person</span></span>
-<span><span class="co">#&gt; 3       s4_example.R:17:3:17:15:3:15:284:284         s4_example.R:17:3:17:15 names,S4Example-method</span></span>
-<span><span class="co">#&gt; 4             r6_example.R:4:3:8:3:3:3:41:45            r6_example.R:4:3:8:3                  adder</span></span>
-<span><span class="co">#&gt; 5       r6_example.R:75:7:75:51:7:51:112:112         r6_example.R:75:7:75:51                 Person</span></span>
-<span><span class="co">#&gt; 6       r6_example.R:63:7:63:24:7:24:100:100         r6_example.R:63:7:63:24                 Person</span></span>
+<span><span class="co">#&gt;                                       name.x                        srcref.x             name.y</span></span>
+<span><span class="co">#&gt; 1 complex_call_stack.R:22:7:22:13:7:13:22:22 complex_call_stack.R:22:7:22:13 recursive_function</span></span>
+<span><span class="co">#&gt; 2       r6_example.R:74:7:74:23:7:23:111:111         r6_example.R:74:7:74:23             Person</span></span>
+<span><span class="co">#&gt; 3             r6_example.R:4:3:8:3:3:3:41:45            r6_example.R:4:3:8:3              adder</span></span>
+<span><span class="co">#&gt; 4       r6_example.R:75:7:75:51:7:51:112:112         r6_example.R:75:7:75:51             Person</span></span>
+<span><span class="co">#&gt; 5       r6_example.R:63:7:63:24:7:24:100:100         r6_example.R:63:7:63:24             Person</span></span>
+<span><span class="co">#&gt; 6         r6_example.R:97:9:97:22:9:22:97:97         r6_example.R:97:9:97:22              Rando</span></span>
 <span><span class="co">#&gt;                          srcref.y namespace.y</span></span>
 <span><span class="co">#&gt; 1 complex_call_stack.R:21:23:24:1  examplepkg</span></span>
 <span><span class="co">#&gt; 2         r6_example.R:72:13:77:5  examplepkg</span></span>
-<span><span class="co">#&gt; 3         s4_example.R:16:44:18:1  examplepkg</span></span>
-<span><span class="co">#&gt; 4           r6_example.R:3:10:9:1  examplepkg</span></span>
-<span><span class="co">#&gt; 5         r6_example.R:72:13:77:5  examplepkg</span></span>
-<span><span class="co">#&gt; 6         r6_example.R:60:18:64:5  examplepkg</span></span></code></pre></div>
+<span><span class="co">#&gt; 3           r6_example.R:3:10:9:1  examplepkg</span></span>
+<span><span class="co">#&gt; 4         r6_example.R:72:13:77:5  examplepkg</span></span>
+<span><span class="co">#&gt; 5         r6_example.R:60:18:64:5  examplepkg</span></span>
+<span><span class="co">#&gt; 6        r6_example.R:95:12:102:3  examplepkg</span></span></code></pre></div>
 <p>As expected, we can see that this test trace (now with the
 <code>".x"</code> suffix) is mapped to the expected corresponding
 package namespace object.</p>
@@ -181,10 +181,10 @@ table across all <code>covr</code> traces:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/test_trace_mapping.html">test_trace_mapping</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      test depth i trace</span></span>
 <span><span class="co">#&gt; [1,]    1    37 1    15</span></span>
-<span><span class="co">#&gt; [2,]    1    38 2    25</span></span>
-<span><span class="co">#&gt; [3,]    1    39 3     8</span></span>
+<span><span class="co">#&gt; [2,]    1    38 2    27</span></span>
+<span><span class="co">#&gt; [3,]    1    39 3     7</span></span>
 <span><span class="co">#&gt; [4,]    1    40 4     1</span></span>
-<span><span class="co">#&gt; [5,]    1    40 5    23</span></span>
+<span><span class="co">#&gt; [5,]    1    40 5    25</span></span>
 <span><span class="co">#&gt; [6,]    1    41 6     1</span></span></code></pre></div>
 <p>The <code>test</code> and <code>trace</code> columns contain the row
 indices in the respective <code><a href="../reference/test_srcrefs_df.html">test_srcrefs_df()</a></code> and
@@ -225,25 +225,26 @@ to associate any available source code with a documentation file.</p>
 <span><span class="co">#&gt; 3       complex_call_stack.Rd      complex_call_stack    &lt;NA&gt;</span></span>
 <span><span class="co">#&gt; 4   deeper_nested_function.Rd  deeper_nested_function    &lt;NA&gt;</span></span>
 <span><span class="co">#&gt; 5               hypotenuse.Rd              hypotenuse    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 6   names-S4Example-method.Rd  names,S4Example-method    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 7  names-S4Example2-method.Rd names,S4Example2-method    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 8          nested_function.Rd         nested_function    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 9                   Person.Rd                  Person    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 10             PersonPrime.Rd             PersonPrime    data</span></span>
-<span><span class="co">#&gt; 11                   Rando.Rd                   Rando    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 12         rd_data_sampler.Rd         rd_data_sampler    data</span></span>
-<span><span class="co">#&gt; 13              rd_sampler.Rd              rd_sampler    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 14      recursive_function.Rd      recursive_function    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 15        reexport_example.Rd        reexport_example    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 16               reexports.Rd               reexports  import</span></span>
-<span><span class="co">#&gt; 17               reexports.Rd                    help  import</span></span>
-<span><span class="co">#&gt; 18         s3_example_func.Rd         s3_example_func    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 19         s3_example_func.Rd s3_example_func.default    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 20         s3_example_func.Rd    s3_example_func.list    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 21         S4Example-class.Rd         S4Example-class   class</span></span>
-<span><span class="co">#&gt; 22         S4Example-class.Rd               S4Example   class</span></span>
-<span><span class="co">#&gt; 23        S4Example2-class.Rd        S4Example2-class   class</span></span>
-<span><span class="co">#&gt; 24        S4Example2-class.Rd              S4Example2   class</span></span></code></pre></div>
+<span><span class="co">#&gt; 6                increment.Rd               increment    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 7   names-S4Example-method.Rd  names,S4Example-method    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 8  names-S4Example2-method.Rd names,S4Example2-method    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 9          nested_function.Rd         nested_function    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 10                  Person.Rd                  Person    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 11             PersonPrime.Rd             PersonPrime    data</span></span>
+<span><span class="co">#&gt; 12                   Rando.Rd                   Rando    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 13         rd_data_sampler.Rd         rd_data_sampler    data</span></span>
+<span><span class="co">#&gt; 14              rd_sampler.Rd              rd_sampler    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 15      recursive_function.Rd      recursive_function    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 16        reexport_example.Rd        reexport_example    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 17               reexports.Rd               reexports  import</span></span>
+<span><span class="co">#&gt; 18               reexports.Rd                    help  import</span></span>
+<span><span class="co">#&gt; 19         s3_example_func.Rd         s3_example_func    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 20         s3_example_func.Rd s3_example_func.default    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 21         s3_example_func.Rd    s3_example_func.list    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 22         S4Example-class.Rd         S4Example-class   class</span></span>
+<span><span class="co">#&gt; 23         S4Example-class.Rd               S4Example   class</span></span>
+<span><span class="co">#&gt; 24        S4Example2-class.Rd        S4Example2-class   class</span></span>
+<span><span class="co">#&gt; 25        S4Example2-class.Rd              S4Example2   class</span></span></code></pre></div>
 <p>These aliases are also used when we use <code><a href="../reference/pkg_srcrefs_df.html">pkg_srcrefs_df()</a></code>
 and can be used to associate <code>srcrefs</code> with <code>.Rd</code>
 files.</p>
@@ -251,26 +252,30 @@ files.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/pkg_srcrefs_df.html">pkg_srcrefs_df</a></span><span class="op">(</span><span class="va">examplepkg_ns</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                       name                          srcref  namespace</span></span>
 <span><span class="co">#&gt; 1  s3_example_func.default         s3_example.R:15:28:17:1 examplepkg</span></span>
-<span><span class="co">#&gt; 2                    Rando        r6_example.R:95:12:102:3 examplepkg</span></span>
-<span><span class="co">#&gt; 3                    adder           r6_example.R:3:10:9:1 examplepkg</span></span>
-<span><span class="co">#&gt; 4                   Person         r6_example.R:60:18:64:5 examplepkg</span></span>
-<span><span class="co">#&gt; 5                   Person         r6_example.R:72:13:77:5 examplepkg</span></span>
-<span><span class="co">#&gt; 6   names,S4Example-method         s4_example.R:16:44:18:1 examplepkg</span></span>
-<span><span class="co">#&gt; 7  names,S4Example2-method         s4_example.R:34:45:36:1 examplepkg</span></span>
-<span><span class="co">#&gt; 8               hypotenuse           hypotenuse.R:7:15:9:1 examplepkg</span></span>
-<span><span class="co">#&gt; 9              Accumulator         r6_example.R:29:16:32:3 examplepkg</span></span>
-<span><span class="co">#&gt; 11         s3_example_func         s3_example.R:10:20:12:1 examplepkg</span></span>
-<span><span class="co">#&gt; 12      complex_call_stack   complex_call_stack.R:3:23:5:1 examplepkg</span></span>
-<span><span class="co">#&gt; 13      recursive_function complex_call_stack.R:21:23:24:1 examplepkg</span></span>
-<span><span class="co">#&gt; 14         nested_function  complex_call_stack.R:9:20:11:1 examplepkg</span></span>
+<span><span class="co">#&gt; 2              Accumulator         r6_example.R:29:16:32:3 examplepkg</span></span>
+<span><span class="co">#&gt; 4   names,S4Example-method         s4_example.R:17:44:19:1 examplepkg</span></span>
+<span><span class="co">#&gt; 5  names,S4Example2-method         s4_example.R:35:45:37:1 examplepkg</span></span>
+<span><span class="co">#&gt; 6                   Person         r6_example.R:60:18:64:5 examplepkg</span></span>
+<span><span class="co">#&gt; 7                   Person         r6_example.R:72:13:77:5 examplepkg</span></span>
+<span><span class="co">#&gt; 8               rd_sampler         rd_sampler.R:56:15:58:1 examplepkg</span></span>
+<span><span class="co">#&gt; 9          s3_example_func         s3_example.R:10:20:12:1 examplepkg</span></span>
+<span><span class="co">#&gt; 10              hypotenuse           hypotenuse.R:7:15:9:1 examplepkg</span></span>
+<span><span class="co">#&gt; 11    s3_example_func.list         s3_example.R:20:25:22:1 examplepkg</span></span>
+<span><span class="co">#&gt; 12                   adder           r6_example.R:3:10:9:1 examplepkg</span></span>
+<span><span class="co">#&gt; 13               increment         s4_example.R:45:25:47:1 examplepkg</span></span>
+<span><span class="co">#&gt; 14      complex_call_stack   complex_call_stack.R:3:23:5:1 examplepkg</span></span>
 <span><span class="co">#&gt; 15  deeper_nested_function complex_call_stack.R:15:27:17:1 examplepkg</span></span>
-<span><span class="co">#&gt; 16    s3_example_func.list         s3_example.R:20:25:22:1 examplepkg</span></span>
-<span><span class="co">#&gt; 17              rd_sampler         rd_sampler.R:56:15:58:1 examplepkg</span></span>
-<span><span class="co">#&gt; 18                    help                            &lt;NA&gt;      utils</span></span>
-<span><span class="co">#&gt; 19         rd_data_sampler                            &lt;NA&gt;       &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 20                  person                            &lt;NA&gt;      utils</span></span>
-<span><span class="co">#&gt; 21        reexport_example                            &lt;NA&gt;      utils</span></span>
-<span><span class="co">#&gt; 22             PersonPrime                            &lt;NA&gt;       &lt;NA&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; 16                   Rando        r6_example.R:95:12:102:3 examplepkg</span></span>
+<span><span class="co">#&gt; 17               increment         s4_example.R:50:35:52:1 examplepkg</span></span>
+<span><span class="co">#&gt; 18         nested_function  complex_call_stack.R:9:20:11:1 examplepkg</span></span>
+<span><span class="co">#&gt; 19      recursive_function complex_call_stack.R:21:23:24:1 examplepkg</span></span>
+<span><span class="co">#&gt; 20               S4Example                            &lt;NA&gt; examplepkg</span></span>
+<span><span class="co">#&gt; 21                  person                            &lt;NA&gt;      utils</span></span>
+<span><span class="co">#&gt; 22        reexport_example                            &lt;NA&gt;      utils</span></span>
+<span><span class="co">#&gt; 23              S4Example2                            &lt;NA&gt; examplepkg</span></span>
+<span><span class="co">#&gt; 24             PersonPrime                            &lt;NA&gt;       &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 25                    help                            &lt;NA&gt;      utils</span></span>
+<span><span class="co">#&gt; 26         rd_data_sampler                            &lt;NA&gt;       &lt;NA&gt;</span></span></code></pre></div>
 <p>You’ll see that we don’t have any <code>srcref</code>s associated
 with the <code>"data"</code> and <code>"class"</code> doctype
 documentation because these objects do not themselves have source code,

@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">covtracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9010</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,7 +89,7 @@
 <span><span class="co">#&gt; function(a, b) {</span></span>
 <span><span class="co">#&gt;   return(sqrt(a^2 + b^2))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x5595b0966a38&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x5576771a95d8&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:examplepkg&gt;</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="what-are-srcref-objects">What are <code>srcref</code> objects?<a class="anchor" aria-label="anchor" href="#what-are-srcref-objects"></a>
@@ -180,13 +180,13 @@ data.</p>
 <p>Viewing results as a <code>data.frame</code></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/pkg_srcrefs_df.html">pkg_srcrefs_df</a></span><span class="op">(</span><span class="va">examplepkg_ns</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                      name                   srcref  namespace</span></span>
-<span><span class="co">#&gt; 1 s3_example_func.default  s3_example.R:15:28:17:1 examplepkg</span></span>
-<span><span class="co">#&gt; 2                   Rando r6_example.R:95:12:102:3 examplepkg</span></span>
-<span><span class="co">#&gt; 3                   adder    r6_example.R:3:10:9:1 examplepkg</span></span>
-<span><span class="co">#&gt; 4                  Person  r6_example.R:60:18:64:5 examplepkg</span></span>
-<span><span class="co">#&gt; 5                  Person  r6_example.R:72:13:77:5 examplepkg</span></span>
-<span><span class="co">#&gt; 6  names,S4Example-method  s4_example.R:16:44:18:1 examplepkg</span></span></code></pre></div>
+<span><span class="co">#&gt;                      name                  srcref  namespace</span></span>
+<span><span class="co">#&gt; 1 s3_example_func.default s3_example.R:15:28:17:1 examplepkg</span></span>
+<span><span class="co">#&gt; 2             Accumulator r6_example.R:29:16:32:3 examplepkg</span></span>
+<span><span class="co">#&gt; 4  names,S4Example-method s4_example.R:17:44:19:1 examplepkg</span></span>
+<span><span class="co">#&gt; 5 names,S4Example2-method s4_example.R:35:45:37:1 examplepkg</span></span>
+<span><span class="co">#&gt; 6                  Person r6_example.R:60:18:64:5 examplepkg</span></span>
+<span><span class="co">#&gt; 7                  Person r6_example.R:72:13:77:5 examplepkg</span></span></code></pre></div>
 <p>Extracing individual <code>srcref</code>s from the resulting
 <code>data.frame</code></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -212,7 +212,7 @@ objects with a <code>with_pseudo_srcref</code>, allowing them to be
 treated like a <code>srcref</code>s for consistency.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/test_srcrefs.html">test_srcrefs</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
-<span><span class="co">#&gt; $`/tmp/Rtmp7SHcFF/R_LIBS40a66283d9e4/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`</span></span>
+<span><span class="co">#&gt; $`/tmp/Rtmp3653tu/R_LIBS3bfe49cb4efe/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`</span></span>
 <span><span class="co">#&gt; complex_call_stack("test")</span></span></code></pre></div>
 <p>Despite not having a valid <code>srcfile</code>, we can still use all
 of our favorite <code>srcref</code> functions because of the
@@ -262,10 +262,10 @@ a <code>*_df</code> companion function.</p>
 <span><span class="co">#&gt;                                         name                          srcref</span></span>
 <span><span class="co">#&gt; 1 complex_call_stack.R:22:7:22:13:7:13:22:22 complex_call_stack.R:22:7:22:13</span></span>
 <span><span class="co">#&gt; 2       r6_example.R:74:7:74:23:7:23:111:111         r6_example.R:74:7:74:23</span></span>
-<span><span class="co">#&gt; 3       s4_example.R:17:3:17:15:3:15:284:284         s4_example.R:17:3:17:15</span></span>
-<span><span class="co">#&gt; 4             r6_example.R:4:3:8:3:3:3:41:45            r6_example.R:4:3:8:3</span></span>
-<span><span class="co">#&gt; 5       r6_example.R:75:7:75:51:7:51:112:112         r6_example.R:75:7:75:51</span></span>
-<span><span class="co">#&gt; 6       r6_example.R:63:7:63:24:7:24:100:100         r6_example.R:63:7:63:24</span></span></code></pre></div>
+<span><span class="co">#&gt; 3             r6_example.R:4:3:8:3:3:3:41:45            r6_example.R:4:3:8:3</span></span>
+<span><span class="co">#&gt; 4       r6_example.R:75:7:75:51:7:51:112:112         r6_example.R:75:7:75:51</span></span>
+<span><span class="co">#&gt; 5       r6_example.R:63:7:63:24:7:24:100:100         r6_example.R:63:7:63:24</span></span>
+<span><span class="co">#&gt; 6         r6_example.R:97:9:97:22:9:22:97:97         r6_example.R:97:9:97:22</span></span></code></pre></div>
 </div>
 </div>
 </div>
