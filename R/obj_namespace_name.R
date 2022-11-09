@@ -46,6 +46,7 @@ obj_namespace_name.R6ClassGenerator <- function(x, ns) {
   env_ns_name(x$parent_env)
 }
 
+#' @importFrom methods packageSlot
 #' @exportS3Method
 obj_namespace_name.standardGeneric <- function(x, ns) {
   methods::packageSlot(x)

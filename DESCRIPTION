@@ -25,7 +25,8 @@ Depends:
     R (>= 3.2.0)
 Imports:
     tools,
-    stats
+    stats,
+    methods
 Suggests:
     testthat,
     remotes,
