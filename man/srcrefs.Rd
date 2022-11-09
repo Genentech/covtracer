@@ -7,6 +7,8 @@
 \alias{srcrefs.namespace}
 \alias{srcrefs.environment}
 \alias{srcrefs.R6ClassGenerator}
+\alias{srcrefs.standardGeneric}
+\alias{srcrefs.nonstandardGenericFunction}
 \alias{srcrefs.MethodDefinition}
 \title{Retrieve \code{srcref}s}
 \usage{
@@ -21,6 +23,10 @@ srcrefs(x, ...)
 \method{srcrefs}{environment}(x, ..., breadcrumbs = character())
 
 \method{srcrefs}{R6ClassGenerator}(x, ..., srcref_names = NULL, breadcrumbs = character())
+
+\method{srcrefs}{standardGeneric}(x, ..., srcref_names = NULL)
+
+\method{srcrefs}{nonstandardGenericFunction}(x, ..., srcref_names = NULL)
 
 \method{srcrefs}{MethodDefinition}(x, ..., srcref_names = NULL)
 }

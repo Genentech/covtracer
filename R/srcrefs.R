@@ -82,7 +82,7 @@ srcrefs.default <- function(x, ..., srcref_names = NULL, breadcrumbs = character
 srcrefs.list <- function(x, srcref_names = NULL, breadcrumbs = character()) {
   # The method is designed to handle lists and is later passed to the mapper
   # However if the object has other classes than list with set .[[ methods
-  # it could lead to unexpected results returned by the mapper. Thus, if 
+  # it could lead to unexpected results returned by the mapper. Thus, if
   # list was the class used for dispatch, we remove other classes.
   x <- unclass(x)
   flat_map_srcrefs(x, ns = srcref_names, breadcrumbs = breadcrumbs)
@@ -142,14 +142,44 @@ srcrefs.R6ClassGenerator <- function(x, ..., srcref_names = NULL,
 #' @exportS3Method
 #' @importFrom utils getSrcref
 #' @rdname srcrefs
+srcrefs.standardGeneric <- function(x, ..., srcref_names = NULL) {
+  if (is.null(sr <- getSrcref(x))) return(sr)
+
+  attr(sr, "namespace") <- obj_namespace_name(x)
+
+  objs <- list(sr)
+  names(objs) <- srcref_names
+  objs
+}
+
+#' @exportS3Method
+#' @importFrom utils getSrcref
+#' @rdname srcrefs
+srcrefs.nonstandardGenericFunction <- srcrefs.standardGeneric
+
+#' @exportS3Method
+#' @importFrom utils getSrcref
+#' @rdname srcrefs
 srcrefs.MethodDefinition <- function(x, ..., srcref_names = NULL) {
   # catch methods in methods tables from packages without srcref data
   if (is.null(sr <- getSrcref(x))) return(sr)
 
-  # as produced by `methods:::.methods_info`
-  signatures <- paste0(x@generic, ",", paste0(x@defined, collapse = ","), "-method")
+  # generic source package
+  generic_origin_ns <- attr(x@generic, "package")
+  ns <- env_ns_name(environment(x@.Data))
+
+  # if method is defined in same package as generic, use generic name as
+  # signature alias, otherwise use methods_info-style method alias name
+  if (generic_origin_ns == ns) {
+    signatures <- x@generic
+  } else {
+    # as produced by `methods:::.methods_info`
+    signatures <- paste0(x@generic, ",", paste0(x@defined, collapse = ","), "-method")
+  }
+
   signatures <- signatures[!duplicated(signatures)]
-  objs <- rep_len(list(getSrcref(x)), length(signatures))
+  objs <- rep_len(list(sr), length(signatures))
+
   names(objs) <- signatures
   ns <- env_ns_name(environment(x@.Data))
   for (i in seq_along(objs)) attr(objs[[i]], "namespace") <- ns
