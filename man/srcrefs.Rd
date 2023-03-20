@@ -16,7 +16,7 @@ srcrefs(x, ...)
 
 \method{srcrefs}{default}(x, ..., srcref_names = NULL, breadcrumbs = character())
 
-\method{srcrefs}{list}(x, srcref_names = NULL, breadcrumbs = character())
+\method{srcrefs}{list}(x, ..., srcref_names = NULL, breadcrumbs = character())
 
 \method{srcrefs}{namespace}(x, ..., breadcrumbs = character())
 
