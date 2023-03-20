@@ -170,7 +170,7 @@ srcrefs.MethodDefinition <- function(x, ..., srcref_names = NULL) {
 
   # if method is defined in same package as generic, use generic name as
   # signature alias, otherwise use methods_info-style method alias name
-  if (generic_origin_ns == ns) {
+  if (identical(generic_origin_ns, ns)) {
     signatures <- x@generic
   } else {
     # as produced by `methods:::.methods_info`
