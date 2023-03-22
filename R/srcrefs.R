@@ -79,7 +79,7 @@ srcrefs.default <- function(x, ..., srcref_names = NULL, breadcrumbs = character
 
 #' @exportS3Method
 #' @rdname srcrefs
-srcrefs.list <- function(x, srcref_names = NULL, breadcrumbs = character()) {
+srcrefs.list <- function(x, ..., srcref_names = NULL, breadcrumbs = character()) {
   # The method is designed to handle lists and is later passed to the mapper
   # However if the object has other classes than list with set .[[ methods
   # it could lead to unexpected results returned by the mapper. Thus, if
@@ -159,6 +159,7 @@ srcrefs.nonstandardGenericFunction <- srcrefs.standardGeneric
 
 #' @exportS3Method
 #' @importFrom utils getSrcref
+#' @importFrom methods getPackageName
 #' @rdname srcrefs
 srcrefs.MethodDefinition <- function(x, ..., srcref_names = NULL) {
   # catch methods in methods tables from packages without srcref data
@@ -166,11 +167,11 @@ srcrefs.MethodDefinition <- function(x, ..., srcref_names = NULL) {
 
   # generic source package
   generic_origin_ns <- attr(x@generic, "package")
-  ns <- env_ns_name(environment(x@.Data))
+  ns <- methods::getPackageName(environment(x))
 
   # if method is defined in same package as generic, use generic name as
   # signature alias, otherwise use methods_info-style method alias name
-  if (generic_origin_ns == ns) {
+  if (identical(generic_origin_ns, ns)) {
     signatures <- x@generic
   } else {
     # as produced by `methods:::.methods_info`
@@ -181,7 +182,6 @@ srcrefs.MethodDefinition <- function(x, ..., srcref_names = NULL) {
   objs <- rep_len(list(sr), length(signatures))
 
   names(objs) <- signatures
-  ns <- env_ns_name(environment(x@.Data))
   for (i in seq_along(objs)) attr(objs[[i]], "namespace") <- ns
   objs
 }
@@ -228,9 +228,6 @@ flat_map_srcrefs <- function(xs, ns = NULL, breadcrumbs = character()) {
 
   srcs
 }
-
-
-
 
 
 
