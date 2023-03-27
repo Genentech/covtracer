@@ -2,7 +2,7 @@
 
 * Improve handling of non-function package object aliases (#61, @dgkf)
 
-* Improved support for S4 generic functions (#58, #61, @dgkf)
+* Improved support for S4 generic functions (#58, #59, @dgkf)
 
 * Fix bug when producing a test-trace data.frame when package objects have an
   empty `srcfile`. This can happen when an object is documented, such as a
