@@ -19,14 +19,19 @@ dir.create(lib <- tempfile("ct_"), recursive = TRUE)
 tests <- normalizePath(testthat::test_path())
 pkg_dirs <- list(
   examplepkg = system.file("examplepkg", package = "covtracer"),
+  list.obj = file.path(tests, "packages", "list.obj"),
   no.evaluable.code = file.path(tests, "packages", "no.evaluable.code"),
   reexport.srcref = file.path(tests, "packages", "reexport.srcref")
 )
 
 # install our testing packages into a temp directory
 for (i in seq_along(pkg_dirs)) {
+  pkg_dir <- pkg_dirs[[i]]
+  pkg <- names(pkg_dirs)[[i]]
+  cli::cli_li("{.pkg {pkg}}")
+
   install.packages(
-    pkg_dirs[[i]],
+    pkg_dir,
     type = "source",
     lib = lib,
     repos = NULL,
@@ -34,18 +39,7 @@ for (i in seq_along(pkg_dirs)) {
     INSTALL_opts = c("--with-keep.source", "--install-tests"),
     quiet = TRUE
   )
+
+  assign(paste0(pkg, "_cov"), covr::package_coverage(pkg_dir))
+  assign(paste0(pkg, "_ns"), getNamespace(pkg))
 }
-
-# from inst/examplepkg
-cli::cli_li("{.pkg examplepkg}")
-examplepkg_cov <- covr::package_coverage(pkg_dirs$examplepkg)
-examplepkg_ns <- getNamespace("examplepkg")
-
-# from tests/testthat/packages/no.evaluable.code
-cli::cli_li("{.pkg no.evaluable.code}")
-no_evaluable_code_pkg_cov <- covr::package_coverage(pkg_dirs$no.evaluable.code)
-no_evaluable_code_pkg_ns <- getNamespace("no.evaluable.code")
-
-# from tests/testthat/packages/reexport.srcref
-cli::cli_li("{.pkg reexport.srcref}")
-reexport_srcref_pkg_ns <- getNamespace("reexport.srcref")
