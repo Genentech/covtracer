@@ -248,12 +248,7 @@ test_trace_mapping <- function(x) {
 
   # if no tests are present, return first available matrix with 0 rows
   if (!any(has_tests)) {
-    empty_result <- matrix(
-      integer(0L),
-      ncol = 5L,
-      dimnames = list(c(), c("test", "call", "depth", "i", "trace"))
-    )
-
+    empty_result <- new_empty_test_trace_tally()
     return(empty_result)
   }
 
