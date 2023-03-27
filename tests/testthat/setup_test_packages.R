@@ -18,16 +18,17 @@ dir.create(lib <- tempfile("ct_"), recursive = TRUE)
 
 tests <- normalizePath(testthat::test_path())
 pkg_dirs <- list(
-  examplepkg = system.file("examplepkg", package = "covtracer"),
-  list.obj = file.path(tests, "packages", "list.obj"),
-  no.evaluable.code = file.path(tests, "packages", "no.evaluable.code"),
-  reexport.srcref = file.path(tests, "packages", "reexport.srcref")
+ system.file("examplepkg", package = "covtracer"),
+ file.path(tests, "packages", "list.obj"),
+ file.path(tests, "packages", "no.evaluable.code"),
+ file.path(tests, "packages", "reexport.srcref")
 )
 
 # install our testing packages into a temp directory
 for (i in seq_along(pkg_dirs)) {
   pkg_dir <- pkg_dirs[[i]]
-  pkg <- names(pkg_dirs)[[i]]
+  pkg <- basename(pkg_dir)
+
   cli::cli_li("{.pkg {pkg}}")
 
   install.packages(

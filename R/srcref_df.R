@@ -250,8 +250,8 @@ test_trace_mapping <- function(x) {
   if (!any(has_tests)) {
     empty_result <- matrix(
       integer(0L),
-      ncol = 4L,
-      dimnames = list(c(), c("test", "depth", "i", "trace"))
+      ncol = 5L,
+      dimnames = list(c(), c("test", "call", "depth", "i", "trace"))
     )
 
     return(empty_result)

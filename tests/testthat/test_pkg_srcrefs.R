@@ -33,10 +33,15 @@ test_that("pkg_srcrefs discovers namespace of package objects", {
 
   # reexport from utils with a `NULL` object
   expect_true(is.null(attr(srcs$person, "namespace")))
-
 })
 
 test_that("pkg_srcrefs distinguish namespaces of reexported object srcrefs", {
-  expect_s3_class(srcs <- pkg_srcrefs(reexport_srcref_pkg_ns), "list_of_srcref")
+  expect_s3_class(srcs <- pkg_srcrefs(reexport.srcref_ns), "list_of_srcref")
   expect_true("examplepkg" %in% lapply(srcs, attr, "namespace"))
+})
+
+test_that("pkg_srcrefs names of list objects track originating srcrefs", {
+  expect_silent(list.obj_srcs <- pkg_srcrefs(list.obj_ns))
+  expect_true("fn" %in% names(list.obj_srcs))
+  expect_true(!"obj_fn" %in% names(list.obj_srcs))
 })
