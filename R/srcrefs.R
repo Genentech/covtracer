@@ -87,9 +87,9 @@ srcrefs.list <- function(x, ..., srcref_names = NULL, breadcrumbs = character())
   x <- unclass(x)
 
   # # propagate srcref names as element names
-  # if (!is.null(srcref_names)) names(x) <- rep_len(srcref_names, length(x))
+  if (!is.null(srcref_names)) names(x) <- rep_len(srcref_names, length(x))
 
-  # flat_map_srcrefs(x, breadcrumbs = breadcrumbs)
+  flat_map_srcrefs(x, breadcrumbs = breadcrumbs)
 }
 
 #' @exportS3Method
