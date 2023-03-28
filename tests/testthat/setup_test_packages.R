@@ -39,7 +39,12 @@ for (i in seq_along(pkg_dirs)) {
   pkg_dir <- pkg_dirs[[i]]
   pkg <- basename(pkg_dir)
 
-  cli::cli_li("{.pkg {pkg}} (derived {.code {pkg}_cov}, {.code {pkg}_ns})")
-  assign(paste0(pkg, "_cov"), covr::package_coverage(pkg_dir))
-  assign(paste0(pkg, "_ns"), getNamespace(pkg))
+  if (pkg == "reexport.srcref") {
+    cli::cli_li("{.pkg {pkg}} (derived {.code {pkg}_ns})")
+    assign(paste0(pkg, "_ns"), getNamespace(pkg))
+  } else {
+    cli::cli_li("{.pkg {pkg}} (derived {.code {pkg}_cov}, {.code {pkg}_ns})")
+    assign(paste0(pkg, "_cov"), covr::package_coverage(pkg_dir))
+    assign(paste0(pkg, "_ns"), getNamespace(pkg))
+  }
 }
