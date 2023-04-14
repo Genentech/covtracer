@@ -1,5 +1,7 @@
 # Unreleased (tentative 0.0.1)
 
+* Add handling for `testthat`'s `describe`-`it` syntax (#63, @dgkf)
+
 * Improve handling of non-function package object aliases (#61, @dgkf)
 
 * Improved support for S4 generic functions (#58, #59, @dgkf)
