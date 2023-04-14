@@ -20,6 +20,27 @@ get_namespace_object_names <- function(ns) {
 
 
 
+#' Build an empty covr-style test trace mapping
+#'
+#' @importFrom utils packageVersion
+new_empty_test_trace_tally <- function() {
+  if (utils::packageVersion("covr") < "3.6.3") {
+    matrix(
+      integer(0L),
+      ncol = 4L,
+      dimnames = list(c(), c("test", "depth", "i", "trace"))
+    )
+  } else {
+    matrix(
+      integer(0L),
+      ncol = 5L,
+      dimnames = list(c(), c("test", "call", "depth", "i", "trace"))
+    )
+  }
+}
+
+
+
 #' A simple alternative to `devtools::as.package`
 #'
 #' Functionally identical to `devtools`' `as.package`, but without interactive

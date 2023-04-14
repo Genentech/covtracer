@@ -246,16 +246,8 @@ test_trace_mapping <- function(x) {
     logical(1L)
   )
 
-  # if no tests are present, return first available matrix with 0 rows
-  if (!any(has_tests)) {
-    empty_result <- matrix(
-      integer(0L),
-      ncol = 4L,
-      dimnames = list(c(), c("test", "depth", "i", "trace"))
-    )
-
-    return(empty_result)
-  }
+  if (!any(has_tests))
+    return(new_empty_test_trace_tally())
 
   mat <- do.call(
     rbind,

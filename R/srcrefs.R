@@ -85,7 +85,11 @@ srcrefs.list <- function(x, ..., srcref_names = NULL, breadcrumbs = character())
   # it could lead to unexpected results returned by the mapper. Thus, if
   # list was the class used for dispatch, we remove other classes.
   x <- unclass(x)
-  flat_map_srcrefs(x, ns = srcref_names, breadcrumbs = breadcrumbs)
+
+  # propagate srcref names as element names
+  if (!is.null(srcref_names)) names(x) <- rep_len(srcref_names, length(x))
+
+  flat_map_srcrefs(x, breadcrumbs = breadcrumbs)
 }
 
 #' @exportS3Method
