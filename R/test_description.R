@@ -60,9 +60,36 @@ test_description.list <- function(x) {
     identical(test_call, quote(testthat::test_that))
   }, logical(1L))
 
+  is_describe_call <- vapply(test_calls, function(test_call) {
+    identical(test_call, quote(describe)) ||
+    identical(test_call, quote(testthat::describe))
+  }, logical(1L))
+
+  # only consider `it` calls within a `describe` call
+  is_it_call <- cumsum(is_describe_call) > 0 &
+    vapply(test_calls, identical, logical(1L), quote(it))
+
+  # handle testthat::test_that tests
   if (any(is_test_that_call)) {
     descs <- lapply(x[which(is_test_that_call)], test_description_test_that)
     return(as_testthat_desc(paste(descs, collapse = "; ")))
+  }
+
+  # handle testthat::describe tests
+  if (any(is_it_call)) {
+    descs <- rep_len(NA_character_, length(test_calls))
+    descs[which(is_describe_call)] <-lapply(
+      x[which(is_describe_call)],
+      test_description_test_that_describe
+    )
+
+    descs[which(is_it_call)] <- lapply(
+      x[which(is_it_call)],
+      test_description_test_that_describe_it
+    )
+
+    descs <- descs[!is.na(descs)]
+    return(as_testthat_desc(paste(descs, collapse = ": ")))
   }
 
   test_description(x[[length(x)]])
@@ -83,26 +110,54 @@ as_test_desc <- function(x, type = "call") {
   structure(x, type = type, class = "test_description")
 }
 
+
+
 #' Adds "testthat" style
 #'
 #' @rdname as_test_desc
 as_testthat_desc <- function(x) {
+  if (!is.character(x)) {
+    try_result <- try(eval(x, envir = baseenv()), silent = TRUE)
+    if (!inherits(try_result, "try-error")) x <- try_result
+    else return(as_test_desc(expr_str(x)))
+  }
+
   as_test_desc(x, type = "testthat")
 }
 
 
 
-#' Parse the test_that description from a test_that call
+#' Parse the test description from a `test_that` call
 #'
 #' @param x A test_that call object
 #' @param ... Additional arguments unused
 #'
 test_description_test_that <- function(x, ...) {
-  expr <- match.call(testthat::test_that, x)$desc
-  if (is.character(expr)) return(as_testthat_desc(expr))
-  try_expr <- try(eval(expr, envir = baseenv()), silent = TRUE)
-  if (!inherits(try_expr, "try-error")) return(as_testthat_desc(try_expr))
-  as_test_desc(expr_str(expr))
+  as_testthat_desc(match.call(testthat::test_that, x)$desc)
+}
+
+
+
+#' Parse the test description from a `describe` call
+#'
+#' @param x A test_that::describe call object
+#' @param ... Additional arguments unused
+#'
+test_description_test_that_describe <- function(x, ...) {
+  as_testthat_desc(match.call(testthat::describe, x)$description)
+}
+
+
+
+#' Parse the test description from a `it` call
+#'
+#' @param x A test_that::describe call object
+#' @param ... Additional arguments unused
+#'
+test_description_test_that_describe_it <- function(x, ...) {
+  # mock `it` function, defined in testthat::describe
+  f <- function(it_description, it_code = NULL) {}
+  as_testthat_desc(match.call(f, x)$it_description)
 }
 
 

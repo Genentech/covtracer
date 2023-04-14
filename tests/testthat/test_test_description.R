@@ -54,3 +54,53 @@ test_that("test_description safely handles non-standard input by returning NA", 
   expect_equal(test_description(expr), NA_character_)
   expect_null(attr(test_description(expr), "type"))
 })
+
+test_that("test_description can extract testthat describe-it style test descriptions", {
+  n_calls <- length(sys.calls())
+  log_call_stack <- function() utils::head(utils::tail(sys.calls(), -n_calls), -1L)
+
+  # mock `describe` and `it` to spoof a captured call stack
+  describe <- function(desc, expr) eval(expr)
+  it <- function(desc, expr) eval(expr)
+
+  # clean up our mocked versions of these functions on test completion
+  withr::defer(rm(list = c("describe", "it")))
+
+  # base case, single describe-it
+  call_stack <- describe("abc", {
+    it("does the thing", log_call_stack())
+  })
+
+  expect_silent(desc <- test_description(call_stack))
+  expect_s3_class(desc, "test_description")
+  expect_equal(as.character(desc), "abc: does the thing")
+  expect_equal(attr(desc, "type"), "testthat")
+
+  # add outer wrapping function, multiple describe calls
+  call_stack <- with(list(), {
+    describe("abc", {
+      describe("def", {
+        it("ghi", log_call_stack())
+      })
+    })
+  })
+
+  expect_silent(desc <- test_description(call_stack))
+  expect_s3_class(desc, "test_description")
+  expect_equal(as.character(desc), "abc: def: ghi")
+  expect_equal(attr(desc, "type"), "testthat")
+
+  # even if using bdd in unorthodox way, we want reasonable test names
+  call_stack <- describe("abc", {
+    it("does the thing", {
+      describe("... and this behavior", {
+        it("does another thing", log_call_stack())
+      })
+    })
+  })
+
+  expect_silent(desc <- test_description(call_stack))
+  expect_s3_class(desc, "test_description")
+  expect_equal(as.character(desc), "abc: does the thing: ... and this behavior: does another thing")
+  expect_equal(attr(desc, "type"), "testthat")
+})
