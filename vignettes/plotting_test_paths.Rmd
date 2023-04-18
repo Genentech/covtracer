@@ -115,7 +115,7 @@ differently for each class of vertex.
 test_names <- Filter(Negate(is.na), unique(ttdf$test_name))
 obj_names <- Filter(Negate(is.na), unique(ttdf$alias))
 
-stop(paste0(collapse = "\n", capture.output(list(test_names, obj_names))))
+stop(paste0(collapse = "\n", capture.output(ttdf)))
 
 n_tests <- length(test_names)
 n_objs  <- length(obj_names)
