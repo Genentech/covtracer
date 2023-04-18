@@ -115,21 +115,23 @@ differently for each class of vertex.
 test_names <- Filter(Negate(is.na), unique(ttdf$test_name))
 obj_names <- Filter(Negate(is.na), unique(ttdf$alias))
 
+n <- length(test_names)
+
 test_vertices <- data.frame(
   name = test_names,
-  color = "cornflowerblue",
+  color = rep_len("cornflowerblue", n),
   label = sprintf("Test #%d", seq_along(test_names)),
   test_id = seq_along(test_names),
-  is_test = TRUE,
-  is_exported = NA
+  is_test = rep_len(TRUE, n),
+  is_exported = rep_len(NA, n)
 )
 
 obj_vertices <- data.frame(
   name = obj_names,
   color = "darkgoldenrod",
-  label = obj_names,
-  test_id = NA,
-  is_test = FALSE,
+  label = rep_len(obj_names, n),
+  test_id = rep_len(NA, n),
+  is_test = rep_len(FALSE, n),
   is_exported = ttdf$is_exported[match(obj_names, ttdf$alias)]
 )
 

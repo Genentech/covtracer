@@ -2,7 +2,7 @@
 % Please edit documentation in R/test_description.R
 \name{test_description_test_that}
 \alias{test_description_test_that}
-\title{Parse the test_that description from a test_that call}
+\title{Parse the test description from a \code{test_that} call}
 \usage{
 test_description_test_that(x, ...)
 }
@@ -12,5 +12,5 @@ test_description_test_that(x, ...)
 \item{...}{Additional arguments unused}
 }
 \description{
-Parse the test_that description from a test_that call
+Parse the test description from a \code{test_that} call
 }
