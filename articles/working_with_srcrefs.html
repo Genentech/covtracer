@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">covtracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9012</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,7 +89,7 @@
 <span><span class="co">#&gt; function(a, b) {</span></span>
 <span><span class="co">#&gt;   return(sqrt(a^2 + b^2))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x55b52ffe1180&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x55bc1a1e4710&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:examplepkg&gt;</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="what-are-srcref-objects">What are <code>srcref</code> objects?<a class="anchor" aria-label="anchor" href="#what-are-srcref-objects"></a>
@@ -212,7 +212,7 @@ objects with a <code>with_pseudo_srcref</code>, allowing them to be
 treated like a <code>srcref</code>s for consistency.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/test_srcrefs.html">test_srcrefs</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
-<span><span class="co">#&gt; $`/tmp/Rtmp1f5lzR/R_LIBS242e4098261f/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`</span></span>
+<span><span class="co">#&gt; $`/tmp/RtmpXk8gsY/R_LIBS1f79261edf85/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`</span></span>
 <span><span class="co">#&gt; complex_call_stack("test")</span></span></code></pre></div>
 <p>Despite not having a valid <code>srcfile</code>, we can still use all
 of our favorite <code>srcref</code> functions because of the
