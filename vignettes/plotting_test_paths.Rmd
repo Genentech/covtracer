@@ -115,33 +115,28 @@ differently for each class of vertex.
 test_names <- Filter(Negate(is.na), unique(ttdf$test_name))
 obj_names <- Filter(Negate(is.na), unique(ttdf$alias))
 
-warning(paste0(collapse = "\n", capture.output(ttdf)))
-warning(paste0(collapse = "\n", capture.output(test_names)))
-warning(paste0(collapse = "\n", capture.output(obj_names)))
-
-n_tests <- length(test_names)
-n_objs  <- length(obj_names)
-
 test_vertices <- data.frame(
   name = test_names,
-  color = rep_len("cornflowerblue", n_tests),
+  color = "cornflowerblue",
   label = sprintf("Test #%d", seq_along(test_names)),
   test_id = seq_along(test_names),
-  is_test = rep_len(TRUE, n_tests),
-  is_exported = rep_len(NA, n_tests)
+  is_test = TRUE,
+  is_exported = NA
 )
 
 obj_vertices <- data.frame(
   name = obj_names,
-  color = rep_len("darkgoldenrod", n_objs),
-  label = rep_len(obj_names, n_objs),
-  test_id = rep_len(NA, n_objs),
-  is_test = rep_len(FALSE, n_objs),
+  color = "darkgoldenrod",
+  label = obj_names,
+  test_id = NA,
+  is_test = FALSE,
   is_exported = ttdf$is_exported[match(obj_names, ttdf$alias)]
 )
 
 vertices_df <- bind_rows(test_vertices, obj_vertices) %>%
   mutate(color = ifelse(is_exported, "goldenrod", color))
+
+stop(vertices_df)
 
 vertices_df %>%
   select(name, label) %>%
