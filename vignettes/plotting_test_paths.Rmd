@@ -136,8 +136,6 @@ obj_vertices <- data.frame(
 vertices_df <- bind_rows(test_vertices, obj_vertices) %>%
   mutate(color = ifelse(is_exported, "goldenrod", color))
 
-stop(paste0(collapse = "\n", capture.output(vertices_df)))
-
 vertices_df %>%
   select(name, label) %>%
   head()
