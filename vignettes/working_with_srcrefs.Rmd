@@ -163,7 +163,8 @@ Despite not having a valid `srcfile`, we can still use all of our favorite
 `srcref` functions because of the `with_pseudo_scref` subclass:
 
 ```{r, include = FALSE}
-test_srcrefs(examplepkg_cov)[[1]]
+test_srcs <- test_srcrefs(examplepkg_cov)
+test_srcs[[1]]
 ```
 
 ```{r}
