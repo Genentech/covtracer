@@ -118,7 +118,7 @@ obj_names <- Filter(Negate(is.na), unique(ttdf$alias))
 n_tests <- length(test_names)
 n_objs <- length(obj_names)
 
-vertices_df <- tibble(
+vertices_df <- data.frame(
   name = c(test_names, obj_names),
   color = rep(c("cornflowerblue", "darkgoldenrod"), times = c(n_tests, n_objs)),
   label = c(sprintf("Test #%d", seq_along(test_names)), obj_names),
@@ -139,14 +139,11 @@ vertices_df %>%
 
 Finally, we can plot this network of test executions, 
 
-```{r}
-g <- igraph::graph_from_data_frame(
-  edges_df,
-  vertices = vertices_df
-)
+```{r, fig.asp = 1, fig.width = 8L, out.width = "100%", error = TRUE}
+g <- igraph::graph_from_data_frame(edges_df, vertices = vertices_df)
 ```
 
-```{r, fig.asp = 1, fig.width = 8L, out.width = "100%"}
+```{r}
 par(mai = rep(0, 4), omi = rep(0, 4L))
 
 plot.igraph(g,
