@@ -162,9 +162,11 @@ test_srcrefs(examplepkg_cov)[1]
 Despite not having a valid `srcfile`, we can still use all of our favorite
 `srcref` functions because of the `with_pseudo_scref` subclass:
 
-```{r}
-stop(paste0(collapse = "\n", capture.output(test_srcrefs(examplepkg_cov))))
+```{r, include = FALSE}
+test_srcrefs(examplepkg_cov)[[1]]
+```
 
+```{r}
 getSrcFilename(test_srcrefs(examplepkg_cov)[[1]])
 ```
 
