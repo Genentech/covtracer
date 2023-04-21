@@ -136,6 +136,7 @@ vertices_df %>%
 ```
 
 ```{r, include = FALSE}
+# for whatever reason... this fixes errors when building vignettes on R-devel
 edges_df
 vertices_df
 ```
