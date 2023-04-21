@@ -38,7 +38,7 @@ library(remotes)
 ```
 
 ```{r libpaths, include = FALSE}
-init_libs = .libPaths()
+init_libs <- .libPaths()
 dir.create(lib <- tempfile("covtracer_pkgs_"))
 .libPaths(c(lib, .libPaths()))
 ```
@@ -118,7 +118,7 @@ obj_names <- Filter(Negate(is.na), unique(ttdf$alias))
 n_tests <- length(test_names)
 n_objs <- length(obj_names)
 
-vertices_df <- data.frame(
+vertices_df <- tibble(
   name = c(test_names, obj_names),
   color = rep(c("cornflowerblue", "darkgoldenrod"), times = c(n_tests, n_objs)),
   label = c(sprintf("Test #%d", seq_along(test_names)), obj_names),
