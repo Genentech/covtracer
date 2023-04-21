@@ -135,6 +135,11 @@ vertices_df %>%
   head()
 ```
 
+```{r, include = FALSE}
+edges_df
+vertices_df
+```
+
 ## Plotting Our Test Paths
 
 Finally, we can plot this network of test executions:
