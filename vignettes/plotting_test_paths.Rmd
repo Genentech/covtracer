@@ -140,6 +140,8 @@ vertices_df %>%
 Finally, we can plot this network of test executions, 
 
 ```{r, fig.asp = 1, fig.width = 8L, out.width = "100%"}
+stop(paste0(collapse = "\n", capture.output(vertices_df)))
+
 g <- igraph::graph_from_data_frame(edges_df, vertices = vertices_df)
 
 par(mai = rep(0, 4), omi = rep(0, 4L))
