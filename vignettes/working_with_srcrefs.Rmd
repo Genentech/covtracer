@@ -164,7 +164,10 @@ Despite not having a valid `srcfile`, we can still use all of our favorite
 
 ```{r, include = FALSE}
 test_srcs <- test_srcrefs(examplepkg_cov)
-test_srcs[[1]]
+stop(paste0(collapse = "\n", capture.output(list(
+  test_srcs = test_srcs,
+  n = length(test_srcs)  
+))))
 ```
 
 ```{r}
