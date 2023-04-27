@@ -161,6 +161,7 @@ examplepkg_test_srcrefs <- test_srcrefs(examplepkg_cov)
 
 ```{r, include = FALSE}
 examplepkg_test_srcrefs  # required for CI builds on R-devel
+examplepkg_test_srcrefs[[1]]
 ```
 
 Despite not having a valid `srcfile`, we can still use all of our favorite
