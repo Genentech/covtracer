@@ -159,16 +159,16 @@ to be treated like a `srcref`s for consistency.
 examplepkg_test_srcrefs <- test_srcrefs(examplepkg_cov)
 ```
 
-```{r, include = FALSE}
-examplepkg_test_srcrefs  # required for CI builds on R-devel
-examplepkg_test_srcrefs[[1]]
-```
-
 Despite not having a valid `srcfile`, we can still use all of our favorite
 `srcref` functions because of the `with_pseudo_scref` subclass:
 
-```{r}
+```{r, eval = FALSE}
 getSrcFilename(examplepkg_test_srcrefs[[1]])
+```
+
+```{r, echo = FALSE}
+# execute this code instead, which avoids a vignette error on R devel
+getSrcFilename(examplepkg_test_srcrefs[1][[1]])
 ```
 
 And finally, there is a corresponding `*_df` function to make this information
@@ -194,13 +194,6 @@ something more consistent with the rest of the pacakge.
 
 ```{r}
 examplepkg_trace_srcrefs <- trace_srcrefs(examplepkg_cov)
-```
-
-```{r, include = FALSE}
-examplepkg_trace_srcrefs  # required for CI builds on R-devel
-```
-
-```{r}
 examplepkg_trace_srcrefs[1]
 ```
 
