@@ -38,7 +38,7 @@ library(remotes)
 ```
 
 ```{r libpaths, include = FALSE}
-init_libs = .libPaths()
+init_libs <- .libPaths()
 dir.create(lib <- tempfile("covtracer_pkgs_"))
 .libPaths(c(lib, .libPaths()))
 ```
@@ -115,25 +115,19 @@ differently for each class of vertex.
 test_names <- Filter(Negate(is.na), unique(ttdf$test_name))
 obj_names <- Filter(Negate(is.na), unique(ttdf$alias))
 
-test_vertices <- data.frame(
-  name = test_names,
-  color = "cornflowerblue",
-  label = sprintf("Test #%d", seq_along(test_names)),
-  test_id = seq_along(test_names),
-  is_test = TRUE,
-  is_exported = NA
+n_tests <- length(test_names)
+n_objs <- length(obj_names)
+
+vertices_df <- data.frame(
+  name = c(test_names, obj_names),
+  color = rep(c("cornflowerblue", "darkgoldenrod"), times = c(n_tests, n_objs)),
+  label = c(sprintf("Test #%d", seq_along(test_names)), obj_names),
+  test_id = c(seq_along(test_names), rep_len(NA, n_objs)),
+  is_test = rep(c(TRUE, FALSE), times = c(n_tests, n_objs)),
+  is_exported = c(rep_len(NA, n_tests), ttdf$is_exported[match(obj_names, ttdf$alias)])
 )
 
-obj_vertices <- data.frame(
-  name = obj_names,
-  color = "darkgoldenrod",
-  label = obj_names,
-  test_id = NA,
-  is_test = FALSE,
-  is_exported = ttdf$is_exported[match(obj_names, ttdf$alias)]
-)
-
-vertices_df <- bind_rows(test_vertices, obj_vertices) %>%
+vertices_df <- vertices_df %>%
   mutate(color = ifelse(is_exported, "goldenrod", color))
 
 vertices_df %>%
@@ -141,15 +135,20 @@ vertices_df %>%
   head()
 ```
 
+```{r, include = FALSE}
+# for whatever reason... this fixes errors when building vignettes on R-devel
+edges_df
+vertices_df
+```
+
 ## Plotting Our Test Paths
 
-Finally, we can plot this network of test executions, 
+Finally, we can plot this network of test executions:
 
-```{r, fig.asp = 1, fig.width = 8L, out.width = "100%"}
+```{r, fig.asp = 1, fig.width = 8L, out.width = "100%", error = TRUE}
 g <- igraph::graph_from_data_frame(edges_df, vertices = vertices_df)
 
 par(mai = rep(0, 4), omi = rep(0, 4L))
-
 plot.igraph(g,
   vertex.size = 8,
   vertex.label = V(g)$label,

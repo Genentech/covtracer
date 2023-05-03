@@ -95,7 +95,7 @@ withr::with_temp_libpaths({
   options(keep.source = TRUE, keep.source.pkg = TRUE, covr.record_tests = TRUE)
   examplepkg_source_path <- system.file("examplepkg", package = "covtracer")
   remotes::install_local(
-    examplepkg_source_path, 
+    examplepkg_source_path,
     quiet = TRUE,
     INSTALL_opts = c("--with-keep.source", "--install-tests")
   )
@@ -156,21 +156,26 @@ the package into a temporary location for testing. Because of this, test
 to be treated like a `srcref`s for consistency.
 
 ```{r}
-test_srcrefs(examplepkg_cov)[1]
+examplepkg_test_srcrefs <- test_srcrefs(examplepkg_cov)
 ```
 
 Despite not having a valid `srcfile`, we can still use all of our favorite
 `srcref` functions because of the `with_pseudo_scref` subclass:
 
-```{r}
-getSrcFilename(test_srcrefs(examplepkg_cov)[[1]])
+```{r, eval = FALSE}
+getSrcFilename(examplepkg_test_srcrefs[[1]])
+```
+
+```{r, echo = FALSE}
+# execute this code instead, which avoids a vignette error on R devel
+getSrcFilename(examplepkg_test_srcrefs[1][[1]])
 ```
 
 And finally, there is a corresponding `*_df` function to make this information
 easier to see at a glance:
 
 ```{r}
-head(test_srcrefs_df(examplepkg_cov))
+head(examplepkg_test_srcrefs)
 ```
 
 ### Extracting trace `srcref`s
@@ -188,7 +193,8 @@ Nevertheless, we provide simple alternatives for restructuring this data into
 something more consistent with the rest of the pacakge.
 
 ```{r}
-trace_srcrefs(examplepkg_cov)[1]
+examplepkg_trace_srcrefs <- trace_srcrefs(examplepkg_cov)
+examplepkg_trace_srcrefs[1]
 ```
 
 And just like the other functions in the family, this too comes with a `*_df`
