@@ -89,7 +89,7 @@
 <span><span class="co">#&gt; function(a, b) {</span></span>
 <span><span class="co">#&gt;   return(sqrt(a^2 + b^2))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x55bc1a1e4710&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x5645d9bb6ac8&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:examplepkg&gt;</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="what-are-srcref-objects">What are <code>srcref</code> objects?<a class="anchor" aria-label="anchor" href="#what-are-srcref-objects"></a>
@@ -145,7 +145,7 @@ to avoid installing the package into our working library.</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>keep.source <span class="op">=</span> <span class="cn">TRUE</span>, keep.source.pkg <span class="op">=</span> <span class="cn">TRUE</span>, covr.record_tests <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  <span class="va">examplepkg_source_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examplepkg"</span>, package <span class="op">=</span> <span class="st">"covtracer"</span><span class="op">)</span></span>
 <span>  <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_local.html" class="external-link">install_local</a></span><span class="op">(</span></span>
-<span>    <span class="va">examplepkg_source_path</span>, </span>
+<span>    <span class="va">examplepkg_source_path</span>,</span>
 <span>    quiet <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    INSTALL_opts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"--with-keep.source"</span>, <span class="st">"--install-tests"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
@@ -180,20 +180,20 @@ data.</p>
 <p>Viewing results as a <code>data.frame</code></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/pkg_srcrefs_df.html">pkg_srcrefs_df</a></span><span class="op">(</span><span class="va">examplepkg_ns</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                      name                  srcref  namespace</span></span>
-<span><span class="co">#&gt; 1 s3_example_func.default s3_example.R:15:28:17:1 examplepkg</span></span>
-<span><span class="co">#&gt; 2             Accumulator r6_example.R:29:16:32:3 examplepkg</span></span>
-<span><span class="co">#&gt; 4  names,S4Example-method s4_example.R:17:44:19:1 examplepkg</span></span>
-<span><span class="co">#&gt; 5 names,S4Example2-method s4_example.R:35:45:37:1 examplepkg</span></span>
-<span><span class="co">#&gt; 6                  Person r6_example.R:60:18:64:5 examplepkg</span></span>
-<span><span class="co">#&gt; 7                  Person r6_example.R:72:13:77:5 examplepkg</span></span></code></pre></div>
+<span><span class="co">#&gt;                   name                          srcref  namespace</span></span>
+<span><span class="co">#&gt; 1      nested_function  complex_call_stack.R:9:20:11:1 examplepkg</span></span>
+<span><span class="co">#&gt; 2                adder           r6_example.R:3:10:9:1 examplepkg</span></span>
+<span><span class="co">#&gt; 3   recursive_function complex_call_stack.R:21:23:24:1 examplepkg</span></span>
+<span><span class="co">#&gt; 4          Accumulator         r6_example.R:29:16:32:3 examplepkg</span></span>
+<span><span class="co">#&gt; 6 s3_example_func.list         s3_example.R:20:25:22:1 examplepkg</span></span>
+<span><span class="co">#&gt; 7      s3_example_func         s3_example.R:10:20:12:1 examplepkg</span></span></code></pre></div>
 <p>Extracing individual <code>srcref</code>s from the resulting
 <code>data.frame</code></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pkg_srcrefs_df.html">pkg_srcrefs_df</a></span><span class="op">(</span><span class="va">examplepkg_ns</span><span class="op">)</span></span>
 <span><span class="va">df</span><span class="op">$</span><span class="va">srcref</span><span class="op">[[</span><span class="fl">1L</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt; function(x, ...) {</span></span>
-<span><span class="co">#&gt;   "default"</span></span>
+<span><span class="co">#&gt; function(x) {</span></span>
+<span><span class="co">#&gt;   deeper_nested_function(x)</span></span>
 <span><span class="co">#&gt; }</span></span></code></pre></div>
 </div>
 <div class="section level4">
@@ -211,26 +211,34 @@ testing. Because of this, test “srcrefs” are actually <code>call</code>
 objects with a <code>with_pseudo_srcref</code>, allowing them to be
 treated like a <code>srcref</code>s for consistency.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/test_srcrefs.html">test_srcrefs</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
-<span><span class="co">#&gt; $`/tmp/RtmpXk8gsY/R_LIBS1f79261edf85/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`</span></span>
-<span><span class="co">#&gt; complex_call_stack("test")</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">examplepkg_test_srcrefs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/test_srcrefs.html">test_srcrefs</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span></span></code></pre></div>
 <p>Despite not having a valid <code>srcfile</code>, we can still use all
 of our favorite <code>srcref</code> functions because of the
 <code>with_pseudo_scref</code> subclass:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sourceutils.html" class="external-link">getSrcFilename</a></span><span class="op">(</span><span class="fu"><a href="../reference/test_srcrefs.html">test_srcrefs</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "test-complex-calls.R"</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sourceutils.html" class="external-link">getSrcFilename</a></span><span class="op">(</span><span class="va">examplepkg_test_srcrefs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; [1] "test-complex-calls.R"</span></span></code></pre>
 <p>And finally, there is a corresponding <code>*_df</code> function to
 make this information easier to see at a glance:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/test_srcrefs_df.html">test_srcrefs_df</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                                                        name                        srcref     type</span></span>
-<span><span class="co">#&gt; 1              Calling a deeply nested series of functions. test-complex-calls.R:2:3:2:50 testthat</span></span>
-<span><span class="co">#&gt; 2            Calling a function halfway through call stack. test-complex-calls.R:6:3:6:54 testthat</span></span>
-<span><span class="co">#&gt; 3                        hypotenuse is calculated correctly    test-hypotenuse.R:2:3:2:35 testthat</span></span>
-<span><span class="co">#&gt; 4 hypotenuse is calculated correctly; with negative lengths    test-hypotenuse.R:5:5:5:39 testthat</span></span>
-<span><span class="co">#&gt; 5        Example R6 Accumulator class constructor is traced    test-r6-example.R:2:3:2:43 testthat</span></span>
-<span><span class="co">#&gt; 6           Example R6 Accumulator class methods are traced    test-r6-example.R:7:3:7:43 testthat</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">examplepkg_test_srcrefs</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $`/tmp/Rtmpe9uYW7/R_LIBS1db85970bdeb/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`</span></span>
+<span><span class="co">#&gt; complex_call_stack("test")</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`/tmp/Rtmpe9uYW7/R_LIBS1db85970bdeb/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:6:3:6:54:3:54:6:6`</span></span>
+<span><span class="co">#&gt; deeper_nested_function("test")</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`/tmp/Rtmpe9uYW7/R_LIBS1db85970bdeb/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:2:3:2:35:3:35:2:2`</span></span>
+<span><span class="co">#&gt; hypotenuse(3, 4)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`/tmp/Rtmpe9uYW7/R_LIBS1db85970bdeb/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:5:5:5:39:5:39:5:5`</span></span>
+<span><span class="co">#&gt; hypotenuse(-3, -4)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`/tmp/Rtmpe9uYW7/R_LIBS1db85970bdeb/examplepkg/examplepkg-tests/testthat/test-r6-example.R:2:3:2:43:3:43:2:2`</span></span>
+<span><span class="co">#&gt; initialize(...)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`/tmp/Rtmpe9uYW7/R_LIBS1db85970bdeb/examplepkg/examplepkg-tests/testthat/test-r6-example.R:7:3:7:43:3:43:7:7`</span></span>
+<span><span class="co">#&gt; initialize(...)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="extracting-trace-srcrefs">Extracting trace <code>srcref</code>s<a class="anchor" aria-label="anchor" href="#extracting-trace-srcrefs"></a>
@@ -240,32 +248,34 @@ simplest to find, since <code>covr</code> stores this information with
 every coverage object. Even without any helper functions, you can find
 this information by indexing into a coverage object to explore for
 yourself.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">examplepkg_cov</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">srcref</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">examplepkg_cov</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">srcref</span></span>
+<span><span class="co">#&gt; private$age &lt;- age</span></span></code></pre></div>
 <p>Nevertheless, we provide simple alternatives for restructuring this
 data into something more consistent with the rest of the pacakge.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/trace_srcrefs.html">trace_srcrefs</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
-<span><span class="co">#&gt; $`complex_call_stack.R:22:7:22:13:7:13:22:22`</span></span>
-<span><span class="co">#&gt; 22</span></span>
-<span><span class="co">#&gt;  7</span></span>
-<span><span class="co">#&gt; 22</span></span>
-<span><span class="co">#&gt; 13</span></span>
-<span><span class="co">#&gt;  7</span></span>
-<span><span class="co">#&gt; 13</span></span>
-<span><span class="co">#&gt; 22</span></span>
-<span><span class="co">#&gt; 22</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">examplepkg_trace_srcrefs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trace_srcrefs.html">trace_srcrefs</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span></span>
+<span><span class="va">examplepkg_trace_srcrefs</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="co">#&gt; $`r6_example.R:63:7:63:24:7:24:100:100`</span></span>
+<span><span class="co">#&gt;  63</span></span>
+<span><span class="co">#&gt;   7</span></span>
+<span><span class="co">#&gt;  63</span></span>
+<span><span class="co">#&gt;  24</span></span>
+<span><span class="co">#&gt;   7</span></span>
+<span><span class="co">#&gt;  24</span></span>
+<span><span class="co">#&gt; 100</span></span>
+<span><span class="co">#&gt; 100</span></span></code></pre></div>
 <p>And just like the other functions in the family, this too comes with
 a <code>*_df</code> companion function.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/trace_srcrefs_df.html">trace_srcrefs_df</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                                         name                          srcref</span></span>
-<span><span class="co">#&gt; 1 complex_call_stack.R:22:7:22:13:7:13:22:22 complex_call_stack.R:22:7:22:13</span></span>
-<span><span class="co">#&gt; 2       r6_example.R:74:7:74:23:7:23:111:111         r6_example.R:74:7:74:23</span></span>
-<span><span class="co">#&gt; 3             r6_example.R:4:3:8:3:3:3:41:45            r6_example.R:4:3:8:3</span></span>
-<span><span class="co">#&gt; 4       r6_example.R:75:7:75:51:7:51:112:112         r6_example.R:75:7:75:51</span></span>
-<span><span class="co">#&gt; 5       r6_example.R:63:7:63:24:7:24:100:100         r6_example.R:63:7:63:24</span></span>
-<span><span class="co">#&gt; 6         r6_example.R:97:9:97:22:9:22:97:97         r6_example.R:97:9:97:22</span></span></code></pre></div>
+<span><span class="co">#&gt;                                   name                  srcref</span></span>
+<span><span class="co">#&gt; 1 r6_example.R:63:7:63:24:7:24:100:100 r6_example.R:63:7:63:24</span></span>
+<span><span class="co">#&gt; 2   s3_example.R:21:3:21:8:3:8:265:265  s3_example.R:21:3:21:8</span></span>
+<span><span class="co">#&gt; 3 r6_example.R:74:7:74:23:7:23:111:111 r6_example.R:74:7:74:23</span></span>
+<span><span class="co">#&gt; 4       r6_example.R:4:3:8:3:3:3:41:45    r6_example.R:4:3:8:3</span></span>
+<span><span class="co">#&gt; 5   r6_example.R:97:9:97:22:9:22:97:97 r6_example.R:97:9:97:22</span></span>
+<span><span class="co">#&gt; 6 s3_example.R:11:3:11:30:3:30:255:255 s3_example.R:11:3:11:30</span></span></code></pre></div>
 </div>
 </div>
 </div>
