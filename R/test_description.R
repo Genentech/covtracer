@@ -78,7 +78,7 @@ test_description.list <- function(x) {
   # handle testthat::describe tests
   if (any(is_it_call)) {
     descs <- rep_len(NA_character_, length(test_calls))
-    descs[which(is_describe_call)] <-lapply(
+    descs[which(is_describe_call)] <- lapply(
       x[which(is_describe_call)],
       test_description_test_that_describe
     )
@@ -187,6 +187,20 @@ srcref_str <- function(ref) {
 #' @param ref a \code{srcref}
 #'
 expr_str <- function(ref) {
+  # special case naked generic calls (see: inst/examplepkg/tests/non-testthat.R)
+  if (inherits(ref[[1]], "standardGeneric")) {
+    generic <- ref[[1]]@generic
+    arg_types <- vapply(ref[-1], function(i) class(i)[[1]], character(1L))
+
+    str <- paste0(
+      "S4 Generic Call: ", 
+      generic, 
+      "(", paste0("<", arg_types, ">", collapse = ", "), ")"
+    )
+
+    return(str)
+  }
+
   if (is.expression(ref)) ref <- as.call(ref)
   gsub("\\s{2,}", " ", paste0(deparse(ref), collapse = "; "))
 }

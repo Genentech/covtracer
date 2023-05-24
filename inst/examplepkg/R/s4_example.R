@@ -18,6 +18,14 @@ setMethod("names", signature("S4Example"), function(x) {
   names(x@data)
 })
 
+#' Provide show of the data slot in an S4Example object
+#'
+#' @param x An x
+#'
+setMethod("show", signature("S4Example"), function(object) {
+  print(object@data)
+})
+
 
 #' Another example S4 class
 #'
