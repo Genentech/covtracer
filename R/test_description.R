@@ -189,16 +189,7 @@ srcref_str <- function(ref) {
 expr_str <- function(ref) {
   # special case naked generic calls (see: inst/examplepkg/tests/non-testthat.R)
   if (inherits(ref[[1]], "standardGeneric")) {
-    generic <- ref[[1]]@generic
-    arg_types <- vapply(ref[-1], function(i) class(i)[[1]], character(1L))
-
-    str <- paste0(
-      "S4 Generic Call: ", 
-      generic, 
-      "(", paste0("<", arg_types, ">", collapse = ", "), ")"
-    )
-
-    return(str)
+    return(paste0("S4 Generic Call: ", format_standardGeneric_call(ref)))
   }
 
   if (is.expression(ref)) ref <- as.call(ref)
