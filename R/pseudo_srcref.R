@@ -26,5 +26,15 @@ as.double.with_pseudo_srcref <- function(x, ...) {
 
 #' @export
 format.with_pseudo_srcref <- function(x, ...) {
+  if (inherits(x[[1]], "standardGeneric")) {
+    return(format_standardGeneric_call(x))
+  }
+
   format(unclass(x), ...)
+}
+
+format_standardGeneric_call <- function(x, ...) {
+  generic <- x[[1]]@generic
+  arg_types <- vapply(x[-1], function(i) class(i)[[1]], character(1L))
+  paste0(generic, "(", paste0("<", arg_types, ">", collapse = ", "), ")")
 }
