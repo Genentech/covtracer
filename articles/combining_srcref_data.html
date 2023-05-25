@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">covtracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9013</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -180,12 +180,12 @@ table across all <code>covr</code> traces:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/test_trace_mapping.html">test_trace_mapping</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      test depth i trace</span></span>
-<span><span class="co">#&gt; [1,]    1    37 1    17</span></span>
-<span><span class="co">#&gt; [2,]    1    38 2    14</span></span>
-<span><span class="co">#&gt; [3,]    1    39 3    23</span></span>
-<span><span class="co">#&gt; [4,]    1    40 4    21</span></span>
-<span><span class="co">#&gt; [5,]    1    40 5    25</span></span>
-<span><span class="co">#&gt; [6,]    1    41 6    21</span></span></code></pre></div>
+<span><span class="co">#&gt; [1,]    1     1 1    24</span></span>
+<span><span class="co">#&gt; [2,]    2    37 1    19</span></span>
+<span><span class="co">#&gt; [3,]    2    38 2    15</span></span>
+<span><span class="co">#&gt; [4,]    2    39 3    23</span></span>
+<span><span class="co">#&gt; [5,]    2    40 4    22</span></span>
+<span><span class="co">#&gt; [6,]    2    40 5    26</span></span></code></pre></div>
 <p>The <code>test</code> and <code>trace</code> columns contain the row
 indices in the respective <code><a href="../reference/test_srcrefs_df.html">test_srcrefs_df()</a></code> and
 <code><a href="../reference/trace_srcrefs_df.html">trace_srcrefs_df()</a></code> <code>data.frame</code>s, allowing for
@@ -244,7 +244,8 @@ to associate any available source code with a documentation file.</p>
 <span><span class="co">#&gt; 22         S4Example-class.Rd         S4Example-class   class</span></span>
 <span><span class="co">#&gt; 23         S4Example-class.Rd               S4Example   class</span></span>
 <span><span class="co">#&gt; 24        S4Example2-class.Rd        S4Example2-class   class</span></span>
-<span><span class="co">#&gt; 25        S4Example2-class.Rd              S4Example2   class</span></span></code></pre></div>
+<span><span class="co">#&gt; 25        S4Example2-class.Rd              S4Example2   class</span></span>
+<span><span class="co">#&gt; 26   show-S4Example-method.Rd   show,S4Example-method    &lt;NA&gt;</span></span></code></pre></div>
 <p>These aliases are also used when we use <code><a href="../reference/pkg_srcrefs_df.html">pkg_srcrefs_df()</a></code>
 and can be used to associate <code>srcrefs</code> with <code>.Rd</code>
 files.</p>
@@ -259,23 +260,24 @@ files.</p>
 <span><span class="co">#&gt; 7          s3_example_func         s3_example.R:10:20:12:1 examplepkg</span></span>
 <span><span class="co">#&gt; 8                   Person         r6_example.R:60:18:64:5 examplepkg</span></span>
 <span><span class="co">#&gt; 9                   Person         r6_example.R:72:13:77:5 examplepkg</span></span>
-<span><span class="co">#&gt; 10               increment         s4_example.R:50:35:52:1 examplepkg</span></span>
+<span><span class="co">#&gt; 10               increment         s4_example.R:58:35:60:1 examplepkg</span></span>
 <span><span class="co">#&gt; 11              rd_sampler         rd_sampler.R:56:15:58:1 examplepkg</span></span>
 <span><span class="co">#&gt; 12  deeper_nested_function complex_call_stack.R:15:27:17:1 examplepkg</span></span>
 <span><span class="co">#&gt; 13              hypotenuse           hypotenuse.R:7:15:9:1 examplepkg</span></span>
 <span><span class="co">#&gt; 14                   Rando        r6_example.R:95:12:102:3 examplepkg</span></span>
-<span><span class="co">#&gt; 15               increment         s4_example.R:45:25:47:1 examplepkg</span></span>
+<span><span class="co">#&gt; 15               increment         s4_example.R:53:25:55:1 examplepkg</span></span>
 <span><span class="co">#&gt; 16 s3_example_func.default         s3_example.R:15:28:17:1 examplepkg</span></span>
 <span><span class="co">#&gt; 17  names,S4Example-method         s4_example.R:17:44:19:1 examplepkg</span></span>
-<span><span class="co">#&gt; 18 names,S4Example2-method         s4_example.R:35:45:37:1 examplepkg</span></span>
-<span><span class="co">#&gt; 19      complex_call_stack   complex_call_stack.R:3:23:5:1 examplepkg</span></span>
-<span><span class="co">#&gt; 20             PersonPrime                            &lt;NA&gt;       &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 21                    help                            &lt;NA&gt;      utils</span></span>
-<span><span class="co">#&gt; 22        reexport_example                            &lt;NA&gt;      utils</span></span>
-<span><span class="co">#&gt; 23              S4Example2                            &lt;NA&gt; examplepkg</span></span>
-<span><span class="co">#&gt; 24               S4Example                            &lt;NA&gt; examplepkg</span></span>
-<span><span class="co">#&gt; 25                  person                            &lt;NA&gt;      utils</span></span>
-<span><span class="co">#&gt; 26         rd_data_sampler                            &lt;NA&gt;       &lt;NA&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; 18 names,S4Example2-method         s4_example.R:43:45:45:1 examplepkg</span></span>
+<span><span class="co">#&gt; 19   show,S4Example-method         s4_example.R:25:43:27:1 examplepkg</span></span>
+<span><span class="co">#&gt; 20      complex_call_stack   complex_call_stack.R:3:23:5:1 examplepkg</span></span>
+<span><span class="co">#&gt; 21             PersonPrime                            &lt;NA&gt;       &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 22                    help                            &lt;NA&gt;      utils</span></span>
+<span><span class="co">#&gt; 23        reexport_example                            &lt;NA&gt;      utils</span></span>
+<span><span class="co">#&gt; 24              S4Example2                            &lt;NA&gt; examplepkg</span></span>
+<span><span class="co">#&gt; 25               S4Example                            &lt;NA&gt; examplepkg</span></span>
+<span><span class="co">#&gt; 26                  person                            &lt;NA&gt;      utils</span></span>
+<span><span class="co">#&gt; 27         rd_data_sampler                            &lt;NA&gt;       &lt;NA&gt;</span></span></code></pre></div>
 <p>You’ll see that we don’t have any <code>srcref</code>s associated
 with the <code>"data"</code> and <code>"class"</code> doctype
 documentation because these objects do not themselves have source code,
