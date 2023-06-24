@@ -182,12 +182,15 @@ srcref_str <- function(ref) {
 
 
 
-#' Convert an expression or call to a single-line string
+#' Convert an expression, call or symbol to a single-line string
 #'
 #' @param ref a \code{srcref}
 #'
 expr_str <- function(ref) {
   # special case naked generic calls (see: inst/examplepkg/tests/non-testthat.R)
+  if (is.symbol(ref)) {
+    return(paste0("symbol: ", as.character(ref)))
+  }
   if (inherits(ref[[1]], "standardGeneric")) {
     return(paste0("S4 Generic Call: ", format_standardGeneric_call(ref)))
   }
