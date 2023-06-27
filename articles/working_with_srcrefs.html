@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">covtracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9014</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,7 +89,7 @@
 <span><span class="co">#&gt; function(a, b) {</span></span>
 <span><span class="co">#&gt;   return(sqrt(a^2 + b^2))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x56305419d188&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x5635669b2958&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:examplepkg&gt;</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="what-are-srcref-objects">What are <code>srcref</code> objects?<a class="anchor" aria-label="anchor" href="#what-are-srcref-objects"></a>
@@ -225,20 +225,20 @@ make this information easier to see at a glance:</p>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; show(&lt;myS4Example&gt;)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`/tmp/RtmpvYJSK1/R_LIBS1f05304e8e29/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`</span></span>
+<span><span class="co">#&gt; $`/tmp/RtmpLptp6e/R_LIBS1e86200c2dcf/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`</span></span>
 <span><span class="co">#&gt; complex_call_stack("test")</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`/tmp/RtmpvYJSK1/R_LIBS1f05304e8e29/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:6:3:6:54:3:54:6:6`</span></span>
+<span><span class="co">#&gt; $`/tmp/RtmpLptp6e/R_LIBS1e86200c2dcf/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:6:3:6:54:3:54:6:6`</span></span>
 <span><span class="co">#&gt; deeper_nested_function("test")</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`/tmp/RtmpvYJSK1/R_LIBS1f05304e8e29/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:2:3:2:35:3:35:2:2`</span></span>
-<span><span class="co">#&gt; hypotenuse(3, 4)</span></span>
+<span><span class="co">#&gt; $`/tmp/RtmpLptp6e/R_LIBS1e86200c2dcf/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:15:7:15:54:7:54:15:15`</span></span>
+<span><span class="co">#&gt; complex_call_stack("test")</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`/tmp/RtmpvYJSK1/R_LIBS1f05304e8e29/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:5:5:5:39:5:39:5:5`</span></span>
-<span><span class="co">#&gt; hypotenuse(-3, -4)</span></span>
+<span><span class="co">#&gt; $`/tmp/RtmpLptp6e/R_LIBS1e86200c2dcf/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:15:7:15:54:7:54:15:15`</span></span>
+<span><span class="co">#&gt; complex_call_stack("test")</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`/tmp/RtmpvYJSK1/R_LIBS1f05304e8e29/examplepkg/examplepkg-tests/testthat/test-r6-example.R:2:3:2:43:3:43:2:2`</span></span>
-<span><span class="co">#&gt; initialize(...)</span></span></code></pre></div>
+<span><span class="co">#&gt; $`/tmp/RtmpLptp6e/R_LIBS1e86200c2dcf/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:15:7:15:54:7:54:15:15`</span></span>
+<span><span class="co">#&gt; complex_call_stack("test")</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="extracting-trace-srcrefs">Extracting trace <code>srcref</code>s<a class="anchor" aria-label="anchor" href="#extracting-trace-srcrefs"></a>
