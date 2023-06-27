@@ -2,7 +2,7 @@
 % Please edit documentation in R/test_description.R
 \name{expr_str}
 \alias{expr_str}
-\title{Convert an expression or call to a single-line string}
+\title{Convert an expression, call or symbol to a single-line string}
 \usage{
 expr_str(ref)
 }
@@ -10,5 +10,5 @@ expr_str(ref)
 \item{ref}{a \code{srcref}}
 }
 \description{
-Convert an expression or call to a single-line string
+Convert an expression, call or symbol to a single-line string
 }
