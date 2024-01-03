@@ -1,5 +1,7 @@
 # Unreleased (tentative 0.0.1)
 
+* Fix handling for packages with no objects (#73, @dgkf)
+
 * Add handling for `testthat`'s `describe`-`it` syntax (#63, @dgkf)
 
 * Improve handling of non-function package object aliases (#61, @dgkf)
