@@ -24,7 +24,8 @@ get_namespace_object_names <- function(ns) {
 #'
 #' @importFrom utils packageVersion
 new_empty_test_trace_tally <- function() {
-  if (utils::packageVersion("covr") < "3.6.4.9000") {
+  # version needs to be updated until changes are merged
+  if (utils::packageVersion("covr") <= "3.6.4.9000") {
     matrix(
       integer(0L),
       ncol = 4L,

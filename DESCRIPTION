@@ -30,7 +30,7 @@ Imports:
 Suggests:
     testthat,
     remotes,
-    covr (>= 3.5.1.9003),
+    covr (>= 3.5.2),
     withr,
     R6,
     cli,
