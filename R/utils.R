@@ -15,7 +15,7 @@
 get_namespace_object_names <- function(ns) {
   out <- getNamespaceExports(ns)
   # filter private S4 methods tables and class definitions
-  out[!grepl("^\\.__(T|C)__", out)]
+  out[!grepl("^\\.__[TC]__", out)]
 }
 
 
@@ -24,7 +24,7 @@ get_namespace_object_names <- function(ns) {
 #'
 #' @importFrom utils packageVersion
 new_empty_test_trace_tally <- function() {
-  if (utils::packageVersion("covr") < "3.6.3") {
+  if (utils::packageVersion("covr") < "3.6.4.9000") {
     matrix(
       integer(0L),
       ncol = 4L,
