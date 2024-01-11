@@ -21,6 +21,7 @@ pkg_dirs <- list(
   system.file("examplepkg", package = "covtracer"),
   file.path(tests, "packages", "list.obj"),
   file.path(tests, "packages", "no.evaluable.code"),
+  file.path(tests, "packages", "no.exports"),
   file.path(tests, "packages", "reexport.srcref")
 )
 

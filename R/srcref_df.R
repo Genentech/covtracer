@@ -90,7 +90,7 @@ pkg_srcrefs_df <- function(x) {
   srcs <- pkg_srcrefs(x)
   df <- as.data.frame(srcs)
   has_srcref <- vapply(df$srcref, inherits, logical(1L), "srcref")
-  df[, "namespace"] <- NA_character_
+  df$namespace[] <- NA_character_
 
   df[has_srcref, "namespace"] <- vapply(
     srcs[has_srcref],
@@ -107,7 +107,7 @@ pkg_srcrefs_df <- function(x) {
   )
 
   # filter srcrefs pulled from other files (often through class constructors)
-  df <- df[is.na(df$srcref) | !is.na(df$namespace),, drop = FALSE]
+  df <- df[is.na(df$srcref) | !is.na(df$namespace), , drop = FALSE]
 
   df
 }
