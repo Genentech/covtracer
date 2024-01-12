@@ -1,0 +1,17 @@
+Package: no.exports
+Title: A test package modelled after "assertive" with no evaluable code
+Version: 1.0.0
+Authors@R: 
+    person("Author", "McAuthor",
+      role = c("aut", "cre"),
+      email = "author.mcauthor@example.com"
+    )
+Description: 
+    A package which contains no exports.
+License:
+    Inheritted From Parent Package
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Suggests:
+    testthat
