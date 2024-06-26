@@ -2,13 +2,16 @@
 % Please edit documentation in R/test_description.R
 \name{srcref_str}
 \alias{srcref_str}
-\title{Parse the expression associated with a srcref}
+\title{Convert a srcref into a string}
 \usage{
 srcref_str(ref)
 }
 \arguments{
 \item{ref}{a \code{srcref}}
 }
+\value{
+A string representing the \code{srcref}
+}
 \description{
-Parse the expression associated with a srcref
+Convert a srcref into a string
 }

@@ -9,6 +9,11 @@ coverage_has_recorded_tests(coverage)
 \arguments{
 \item{coverage}{a \code{\link[covr]{covr}} coverage object}
 }
+\value{
+A \code{logical} value, indicating whether the coverage object has
+recorded tests, or \code{NA} when it does not appear to have traced any test
+code.
+}
 \description{
 Test whether the coverage object has expected fields produced when coverage
 was captured with \code{option(covr.record_tests = TRUE)}.

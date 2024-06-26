@@ -11,6 +11,9 @@ test_description_test_that(x, ...)
 
 \item{...}{Additional arguments unused}
 }
+\value{
+A \code{character} description, parsed from a \code{test_that::test_that} call
+}
 \description{
 Parse the test description from a \code{test_that} call
 }

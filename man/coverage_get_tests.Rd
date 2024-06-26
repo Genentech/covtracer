@@ -9,6 +9,9 @@ coverage_get_tests(coverage)
 \arguments{
 \item{coverage}{a \code{\link[covr]{covr}} coverage object}
 }
+\value{
+A \code{list} of tests evaluated when using \code{covr}
+}
 \description{
 Assumes the coverage object was produced while
 \code{option(covr.record_tests = TRUE)}.

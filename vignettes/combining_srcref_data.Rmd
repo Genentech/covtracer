@@ -32,14 +32,14 @@ we can use to showcase these relationships:
 ```{r, message = FALSE, warning = FALSE}
 library(withr)
 library(covr)
-library(remotes)
 
 withr::with_temp_libpaths({
   options(keep.source = TRUE, keep.source.pkg = TRUE, covr.record_tests = TRUE)
   examplepkg_source_path <- system.file("examplepkg", package = "covtracer")
-  remotes::install_local(
-    examplepkg_source_path, 
-    quiet = TRUE,
+  install.packages(
+    examplepkg_source_path,
+    type = "source",
+    repos = NULL,
     INSTALL_opts = c("--with-keep.source", "--install-tests")
   )
   examplepkg_cov <- covr::package_coverage(examplepkg_source_path)

@@ -12,7 +12,9 @@ getSrcFilepath.default <- function(x) {
   path <- getSrcFilename(x, full.names = TRUE)
   wd <- attr(getSrcref(x), "srcfile")$wd
   if (!is.null(wd)) path <- file.path(wd, path)
-  if (!length(path)) return(NA_character_)
+  if (!length(path)) {
+    return(NA_character_)
+  }
   normalizePath(path, winslash = "/", mustWork = FALSE)
 }
 

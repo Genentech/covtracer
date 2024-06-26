@@ -13,6 +13,11 @@ coverage_check_has_recorded_tests(coverage, warn = TRUE)
 recorded. It may be uncertain if tests were recorded if there are no tested
 R code traces.}
 }
+\value{
+Used for side-effects of emitting an error when a coverage object
+does not contain recorded traces, or a warning when a coverage object
+appears to have no tests.
+}
 \description{
 Check whether the coverage object has expected fields produced when coverage
 was captured with \code{option(covr.record_tests = TRUE)}, throwing an error

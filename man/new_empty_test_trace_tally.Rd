@@ -6,6 +6,9 @@
 \usage{
 new_empty_test_trace_tally()
 }
+\value{
+An empty test-trace matrix, as provided by \code{covr}
+}
 \description{
 Build an empty covr-style test trace mapping
 }

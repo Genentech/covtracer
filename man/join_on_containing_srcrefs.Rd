@@ -19,6 +19,9 @@ The name should be the name of the column from the left \code{data.frame}
 containing a \code{list_of_srcref} column, and the value should be the name of a
 column from the right \code{data.frame} containing a \code{list_of_srcref} column.}
 }
+\value{
+A \code{data.frame} of \code{x} joined on \code{y} by spanning \code{srcref}
+}
 \description{
 References to source code are defined by the source code line and column span
 of the relevant source code. This function takes data frames containing that

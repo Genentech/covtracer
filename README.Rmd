@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 
 options(
-  tibble.print_min = 5, 
+  tibble.print_min = 5,
   tibble.print_max = 5,
   width = 120L
 )
@@ -80,15 +80,16 @@ library(covtracer)
 library(dplyr)
 library(withr)
 library(covr)
-library(remotes)
 
 withr::with_temp_libpaths({
   pkg <- system.file("examplepkg", package = "covtracer")
-  remotes::install_local(
-    pkg, 
-    force = TRUE, 
-    quiet = TRUE, 
-    INSTALL_opts = "--with-keep.source"
+
+  install.packages(
+    pkg,
+    type = "source",
+    repos = NULL,
+    quiet = TRUE,
+    INSTALL_opts = c("--with-keep.source", "--install-tests")
   )
 
   options(covr.record_tests = TRUE)
@@ -109,7 +110,7 @@ objects.
 
 ```{r}
 traceability_matrix <- ttdf %>%
-  filter(!doctype %in% c("data", "class")) %>%  # ignore objects without testable code
+  filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
   select(test_name, file) %>%
   filter(!duplicated(.)) %>%
   arrange(file)
@@ -132,7 +133,7 @@ behaviors.
 
 ```{r}
 ttdf %>%
-  filter(!doctype %in% c("data", "class")) %>%  # ignore objects without testable code
+  filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
   select(test_name, file) %>%
   filter(!duplicated(.)) %>%
   arrange(file)
@@ -145,7 +146,7 @@ documentation that is not covered by any test.
 
 ```{r}
 ttdf %>%
-  filter(!doctype %in% c("data", "class")) %>%  # ignore objects without testable code
+  filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
   select(test_name, count, alias, file) %>%
   filter(is.na(count)) %>%
   arrange(alias)
@@ -162,7 +163,7 @@ consider only the coverage of directly tested functions.
 
 ```{r}
 ttdf %>%
-  filter(!doctype %in% c("data", "class")) %>%  # ignore objects without testable code
+  filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
   select(direct, alias) %>%
   group_by(alias) %>%
   summarize(any_direct_tests = any(direct, na.rm = TRUE)) %>%

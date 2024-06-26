@@ -12,10 +12,12 @@
 #' @param call Any code object, most often a `call` object
 #' @param file A filepath to bind as a `srcfile` object
 #' @param lloc A `srcef`-like `lloc` numeric vector
+#' @return A `with_pseudo_srcref` object, mimicking the structure of `srcref`
 #'
 with_pseudo_srcref <- function(call, file, lloc) {
-  if (!is.null(srcfile) && !is.null(lloc))
+  if (!is.null(srcfile) && !is.null(lloc)) {
     attr(call, "srcref") <- structure(lloc, srcfile = srcfile(file), class = "pseudo_srcref")
+  }
   structure(call, class = c("with_pseudo_srcref", class(call)))
 }
 

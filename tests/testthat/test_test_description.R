@@ -1,18 +1,18 @@
 test_that("test_description can build a test descriptions a call with a srcref", {
   # parsing from an expression with src file
   parse_content <- parse(file = file.path(test_path(), "test_test_description.R"), keep.source = TRUE)
-  x_list <- getSrcref(parse_content)  # list of file expressions
+  x_list <- getSrcref(parse_content) # list of file expressions
   expect_equal(class(x_list), "list")
-  x_srcref <- x_list[[1L]]  # first expression (this test)
+  x_srcref <- x_list[[1L]] # first expression (this test)
   expect_s3_class(x_srcref, "srcref")
-  expect_match(test_description(parse_content), "test_description can build")  # full expression
-  expect_match(test_description(x_srcref), "\\[test_test_description.R#L\\d+\\]")  # a single srcref
-  expect_match(test_description(x_srcref), "test_that\\(\"test_description can build")  # a single srcref
+  expect_match(test_description(parse_content), "test_description can build") # full expression
+  expect_match(test_description(x_srcref), "\\[test_test_description.R#L\\d+\\]") # a single srcref
+  expect_match(test_description(x_srcref), "test_that\\(\"test_description can build") # a single srcref
 
   # parsing from an expression without src file
   parse_content <- parse(file = file.path(test_path(), "test_test_description.R"), keep.source = FALSE)
-  expect_equal(getSrcref(parse_content), NULL)  # content without srcref
-  expect_match(test_description(parse_content), "^[^[]")  # does not start with file name
+  expect_equal(getSrcref(parse_content), NULL) # content without srcref
+  expect_match(test_description(parse_content), "^[^[]") # does not start with file name
   expect_match(test_description(parse_content), "test_description can build")
 })
 

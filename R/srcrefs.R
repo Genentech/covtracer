@@ -1,6 +1,7 @@
 #' Test whether an object is a \code{srcref} object
 #'
 #' @param x Any object
+#' @return A `logical` indicating whether object is a `srcref`
 #'
 is_srcref <- function(x) {
   inherits(x, "srcref")
@@ -96,8 +97,9 @@ srcrefs.list <- function(x, ..., srcref_names = NULL, breadcrumbs = character())
 #' @rdname srcrefs
 srcrefs.namespace <- function(x, ..., breadcrumbs = character()) {
   # short circuit on recursive environment traversal
-  if (env_name(x) %in% breadcrumbs)
+  if (env_name(x) %in% breadcrumbs) {
     return(NULL)
+  }
 
   flat_map_srcrefs(
     as.list(x, all.names = TRUE),
@@ -109,15 +111,17 @@ srcrefs.namespace <- function(x, ..., breadcrumbs = character()) {
 #' @exportS3Method
 #' @rdname srcrefs
 srcrefs.environment <- function(x, ..., breadcrumbs = character()) {
-  if (isNamespace(x))
+  if (isNamespace(x)) {
     return(srcrefs.namespace(x, ..., breadcrumbs = breadcrumbs))
+  }
 
   # short circuit on recursive environment traversal
-  if (env_name(x) %in% breadcrumbs)
+  if (env_name(x) %in% breadcrumbs) {
     return(NULL)
+  }
 
   objs <- as.list(x, all.names = TRUE)
-  objs <- Filter(function(i) !identical(i, x), objs)  # prevent direct recursion
+  objs <- Filter(function(i) !identical(i, x), objs) # prevent direct recursion
   flat_map_srcrefs(
     objs,
     ns = env_ns_name(x),
@@ -129,9 +133,9 @@ srcrefs.environment <- function(x, ..., breadcrumbs = character()) {
 
 #' @exportS3Method
 #' @rdname srcrefs
-srcrefs.R6ClassGenerator <- function(x, ..., srcref_names = NULL,
-  breadcrumbs = character()) {
-
+srcrefs.R6ClassGenerator <- function(
+    x, ..., srcref_names = NULL,
+    breadcrumbs = character()) {
   objs <- c(list(x$new), x$public_methods, x$private_methods, x$active)
   names(objs) <- rep_len(srcref_names, length(objs))
   flat_map_srcrefs(
@@ -147,7 +151,9 @@ srcrefs.R6ClassGenerator <- function(x, ..., srcref_names = NULL,
 #' @importFrom utils getSrcref
 #' @rdname srcrefs
 srcrefs.standardGeneric <- function(x, ..., srcref_names = NULL) {
-  if (is.null(sr <- getSrcref(x))) return(sr)
+  if (is.null(sr <- getSrcref(x))) {
+    return(sr)
+  }
 
   attr(sr, "namespace") <- obj_namespace_name(x)
 
@@ -167,7 +173,9 @@ srcrefs.nonstandardGenericFunction <- srcrefs.standardGeneric
 #' @rdname srcrefs
 srcrefs.MethodDefinition <- function(x, ..., srcref_names = NULL) {
   # catch methods in methods tables from packages without srcref data
-  if (is.null(sr <- getSrcref(x))) return(sr)
+  if (is.null(sr <- getSrcref(x))) {
+    return(sr)
+  }
 
   # generic source package
   generic_origin_ns <- attr(x@generic, "package")
@@ -199,6 +207,7 @@ srcrefs.MethodDefinition <- function(x, ..., srcref_names = NULL) {
 #'   `xs` objects themselves have namespaces attributed already to them, the
 #'   namespace will not be replaced.
 #' @inheritParams srcrefs
+#' @return A `list` of `srcref`s
 #'
 flat_map_srcrefs <- function(xs, ns = NULL, breadcrumbs = character()) {
   srcs <- mapply(
@@ -241,12 +250,14 @@ flat_map_srcrefs <- function(xs, ns = NULL, breadcrumbs = character()) {
 #'   a namespace environment, or a \code{link[covr]{package_coverage}} result
 #'   from which a package name is discovered. When package names are provided, a
 #'   namespace available in the current environment is used.
+#' @return A `list_of_srcref`
 #'
 #' @examples
 #' pkg <- system.file("examplepkg", package = "covtracer")
-#' remotes::install_local(
+#' install.packages(
 #'   pkg,
-#'   force = TRUE,
+#'   type = "source",
+#'   repos = NULL,
 #'   quiet = TRUE,
 #'   INSTALL_opts = "--with-keep.source"
 #' )
@@ -304,6 +315,8 @@ pkg_srcrefs.coverage <- function(x) {
 #'
 #' @param env A package namespace environment or iterable collection of package
 #'   objects
+#' @return Used for side effect of throwing an error when a package was not
+#'   installed with `srcref`s.
 #'
 package_check_has_keep_source <- function(env) {
   has_srcref <- function(x) !is.null(getSrcref(x))
@@ -323,6 +336,7 @@ package_check_has_keep_source <- function(env) {
 #' Extract test srcref objects
 #'
 #' @param x A package coverage object or similar.
+#' @return A `list_of_srcref`
 #'
 #' @examples
 #' options(covr.record_tests = TRUE)
@@ -368,6 +382,7 @@ test_srcrefs.coverage <- function(x) {
 #'
 #' @param x (\code{link[covr]{package_coverage}}) A \code{\link[covr]{covr}}
 #'   coverage object produced with \code{options(covr.record_tests = TRUE)}.
+#' @return A `list_of_srcref`
 #'
 #' @family srcrefs
 #' @seealso as.data.frame.list_of_srcref

@@ -37,7 +37,7 @@ Rd_df <- function(x) {
     if (length(doctype)) doctype else NA_character_
   }, character(1L))
 
-  aliases <- aliases[sort(names(aliases))]  # avoid OS-specific file sorting
+  aliases <- aliases[sort(names(aliases))] # avoid OS-specific file sorting
   naliases <- vapply(aliases, length, integer(1L))
   files <- rep(names(db), times = naliases)
   doctype <- rep(doctype, times = naliases)

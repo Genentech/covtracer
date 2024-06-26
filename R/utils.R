@@ -11,6 +11,8 @@
 #' Get namespace exports, filtering methods tables and definitions
 #'
 #' @param ns A namespace object
+#' @return The names of exported objects, filtering internal method tables and
+#'   metadata.
 #'
 get_namespace_object_names <- function(ns) {
   out <- getNamespaceExports(ns)
@@ -21,6 +23,8 @@ get_namespace_object_names <- function(ns) {
 
 
 #' Build an empty covr-style test trace mapping
+#'
+#' @return An empty test-trace matrix, as provided by `covr`
 #'
 #' @importFrom utils packageVersion
 new_empty_test_trace_tally <- function() {
@@ -51,9 +55,12 @@ new_empty_test_trace_tally <- function() {
 #' edits to further reduce `devtools` dependencies.
 #'
 #' @param x A package object to coerce
+#' @return A `package` object
 #'
 as.package <- function(x) {
-  if (inherits(x, "package")) return(x)
+  if (inherits(x, "package")) {
+    return(x)
+  }
   info <- read.dcf(file.path(x, "DESCRIPTION"))[1L, ]
   Encoding(info) <- "UTF-8"
   desc <- as.list(info)
@@ -64,13 +71,9 @@ as.package <- function(x) {
 
 
 
-#' Loading unexported helpers from tools
-#'
+#' Loading select unexported helpers from tools
+#' @noRd
 #' @import tools
-#'
 .tools <- as.list(getNamespace("tools"), all.names = TRUE)[c(
-  "compareDependsPkgVersion",
-  "processRdSexprs",
-  "initialRdMacros",
   ".Rd_get_metadata"
 )]

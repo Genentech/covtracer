@@ -63,15 +63,16 @@ library(covtracer)
 library(dplyr)
 library(withr)
 library(covr)
-library(remotes)
 
 withr::with_temp_libpaths({
   pkg <- system.file("examplepkg", package = "covtracer")
-  remotes::install_local(
-    pkg, 
-    force = TRUE, 
-    quiet = TRUE, 
-    INSTALL_opts = "--with-keep.source"
+
+  install.packages(
+    pkg,
+    type = "source",
+    repos = NULL,
+    quiet = TRUE,
+    INSTALL_opts = c("--with-keep.source", "--install-tests")
   )
 
   options(covr.record_tests = TRUE)
@@ -93,37 +94,34 @@ to evaluated, documented objects.
 
 ``` r
 traceability_matrix <- ttdf %>%
-  filter(!doctype %in% c("data", "class")) %>%  # ignore objects without testable code
+  filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
   select(test_name, file) %>%
   filter(!duplicated(.)) %>%
   arrange(file)
 
 traceability_matrix
-#>                                                    test_name                       file
-#> 1            Example R6 Accumulator class methods are traced             Accumulator.Rd
-#> 2         Example R6 Accumulator class constructor is traced             Accumulator.Rd
-#> 3                                                       <NA>                   adder.Rd
-#> 4            Example R6 Accumulator class methods are traced                   adder.Rd
-#> 5               Calling a deeply nested series of functions.      complex_call_stack.Rd
-#> 6             Calling a function halfway through call stack.  deeper_nested_function.Rd
-#> 7               Calling a deeply nested series of functions.  deeper_nested_function.Rd
-#> 8  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd
-#> 9                         hypotenuse is calculated correctly              hypotenuse.Rd
-#> 10                  S4Example increment generic method works               increment.Rd
-#> 11                              S4Example names method works  names-S4Example-method.Rd
-#> 12                                                      <NA> names-S4Example2-method.Rd
-#> 13              Calling a deeply nested series of functions.         nested_function.Rd
-#> 14         Example R6 Person class public methods are traced                  Person.Rd
-#> 15                                                      <NA>                   Rando.Rd
-#> 16  Example R6 Rando class active field functions are traced                   Rando.Rd
-#> 17                                                      <NA>              rd_sampler.Rd
-#> 18            Calling a function halfway through call stack.      recursive_function.Rd
-#> 19              Calling a deeply nested series of functions.      recursive_function.Rd
-#> 20                                                      <NA>        reexport_example.Rd
-#> 21                                                      <NA>               reexports.Rd
-#> 22                 s3_example_func works using list dispatch         s3_example_func.Rd
-#> 23              s3_example_func works using default dispatch         s3_example_func.Rd
-#> 24                                                      <NA>                       <NA>
+#>                                            test_name                       file
+#> 1  Example R6 Person class public methods are traced             Accumulator.Rd
+#> 2           S4Example increment generic method works                  Person.Rd
+#> 3  Example R6 Person class public methods are traced                  Person.Rd
+#> 4           S4Example increment generic method works                   Rando.Rd
+#> 5                                               <NA>                   Rando.Rd
+#> 6                                               <NA>                   adder.Rd
+#> 7           S4Example increment generic method works                   adder.Rd
+#> 8           S4Example increment generic method works      complex_call_stack.Rd
+#> 9           S4Example increment generic method works  deeper_nested_function.Rd
+#> 10          S4Example increment generic method works              hypotenuse.Rd
+#> 11          S4Example increment generic method works               increment.Rd
+#> 12                      S4Example names method works  names-S4Example-method.Rd
+#> 13                                              <NA> names-S4Example2-method.Rd
+#> 14          S4Example increment generic method works         nested_function.Rd
+#> 15                                              <NA>              rd_sampler.Rd
+#> 16          S4Example increment generic method works      recursive_function.Rd
+#> 17                                              <NA>        reexport_example.Rd
+#> 18                                              <NA>               reexports.Rd
+#> 19          S4Example increment generic method works         s3_example_func.Rd
+#> 20              S4 Generic Call: show(<myS4Example>)   show-S4Example-method.Rd
+#> 21                                              <NA>                       <NA>
 ```
 
 We can quickly see which functions or methods are entirely untested.
@@ -141,35 +139,32 @@ behaviors.
 
 ``` r
 ttdf %>%
-  filter(!doctype %in% c("data", "class")) %>%  # ignore objects without testable code
+  filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
   select(test_name, file) %>%
   filter(!duplicated(.)) %>%
   arrange(file)
-#>                                                    test_name                       file
-#> 1            Example R6 Accumulator class methods are traced             Accumulator.Rd
-#> 2         Example R6 Accumulator class constructor is traced             Accumulator.Rd
-#> 3                                                       <NA>                   adder.Rd
-#> 4            Example R6 Accumulator class methods are traced                   adder.Rd
-#> 5               Calling a deeply nested series of functions.      complex_call_stack.Rd
-#> 6             Calling a function halfway through call stack.  deeper_nested_function.Rd
-#> 7               Calling a deeply nested series of functions.  deeper_nested_function.Rd
-#> 8  hypotenuse is calculated correctly; with negative lengths              hypotenuse.Rd
-#> 9                         hypotenuse is calculated correctly              hypotenuse.Rd
-#> 10                  S4Example increment generic method works               increment.Rd
-#> 11                              S4Example names method works  names-S4Example-method.Rd
-#> 12                                                      <NA> names-S4Example2-method.Rd
-#> 13              Calling a deeply nested series of functions.         nested_function.Rd
-#> 14         Example R6 Person class public methods are traced                  Person.Rd
-#> 15                                                      <NA>                   Rando.Rd
-#> 16  Example R6 Rando class active field functions are traced                   Rando.Rd
-#> 17                                                      <NA>              rd_sampler.Rd
-#> 18            Calling a function halfway through call stack.      recursive_function.Rd
-#> 19              Calling a deeply nested series of functions.      recursive_function.Rd
-#> 20                                                      <NA>        reexport_example.Rd
-#> 21                                                      <NA>               reexports.Rd
-#> 22                 s3_example_func works using list dispatch         s3_example_func.Rd
-#> 23              s3_example_func works using default dispatch         s3_example_func.Rd
-#> 24                                                      <NA>                       <NA>
+#>                                            test_name                       file
+#> 1  Example R6 Person class public methods are traced             Accumulator.Rd
+#> 2           S4Example increment generic method works                  Person.Rd
+#> 3  Example R6 Person class public methods are traced                  Person.Rd
+#> 4           S4Example increment generic method works                   Rando.Rd
+#> 5                                               <NA>                   Rando.Rd
+#> 6                                               <NA>                   adder.Rd
+#> 7           S4Example increment generic method works                   adder.Rd
+#> 8           S4Example increment generic method works      complex_call_stack.Rd
+#> 9           S4Example increment generic method works  deeper_nested_function.Rd
+#> 10          S4Example increment generic method works              hypotenuse.Rd
+#> 11          S4Example increment generic method works               increment.Rd
+#> 12                      S4Example names method works  names-S4Example-method.Rd
+#> 13                                              <NA> names-S4Example2-method.Rd
+#> 14          S4Example increment generic method works         nested_function.Rd
+#> 15                                              <NA>              rd_sampler.Rd
+#> 16          S4Example increment generic method works      recursive_function.Rd
+#> 17                                              <NA>        reexport_example.Rd
+#> 18                                              <NA>               reexports.Rd
+#> 19          S4Example increment generic method works         s3_example_func.Rd
+#> 20              S4 Generic Call: show(<myS4Example>)   show-S4Example-method.Rd
+#> 21                                              <NA>                       <NA>
 ```
 
 ### Finding Untested Behaviors
@@ -179,16 +174,16 @@ only documentation that is not covered by any test.
 
 ``` r
 ttdf %>%
-  filter(!doctype %in% c("data", "class")) %>%  # ignore objects without testable code
+  filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
   select(test_name, count, alias, file) %>%
   filter(is.na(count)) %>%
   arrange(alias)
 #>   test_name count                   alias                       file
-#> 1      <NA>    NA                   adder                   adder.Rd
-#> 2      <NA>    NA                    help               reexports.Rd
-#> 3      <NA>    NA names,S4Example2-method names-S4Example2-method.Rd
-#> 4      <NA>    NA                  person                       <NA>
-#> 5      <NA>    NA                   Rando                   Rando.Rd
+#> 1      <NA>    NA                   Rando                   Rando.Rd
+#> 2      <NA>    NA                   adder                   adder.Rd
+#> 3      <NA>    NA                    help               reexports.Rd
+#> 4      <NA>    NA names,S4Example2-method names-S4Example2-method.Rd
+#> 5      <NA>    NA                  person                       <NA>
 #> 6      <NA>    NA              rd_sampler              rd_sampler.Rd
 #> 7      <NA>    NA        reexport_example        reexport_example.Rd
 #> 8      <NA>    NA               reexports               reexports.Rd
@@ -206,18 +201,18 @@ functions.
 
 ``` r
 ttdf %>%
-  filter(!doctype %in% c("data", "class")) %>%  # ignore objects without testable code
+  filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
   select(direct, alias) %>%
   group_by(alias) %>%
   summarize(any_direct_tests = any(direct, na.rm = TRUE)) %>%
   arrange(alias)
-#> # A tibble: 20 × 2
-#>   alias                  any_direct_tests
-#>   <chr>                  <lgl>           
-#> 1 Accumulator            TRUE            
-#> 2 adder                  TRUE            
-#> 3 complex_call_stack     TRUE            
-#> 4 deeper_nested_function TRUE            
-#> 5 help                   FALSE           
-#> # … with 15 more rows
+#> # A tibble: 21 × 2
+#>   alias              any_direct_tests
+#>   <chr>              <lgl>           
+#> 1 Accumulator        TRUE            
+#> 2 Person             TRUE            
+#> 3 Rando              TRUE            
+#> 4 adder              TRUE            
+#> 5 complex_call_stack TRUE            
+#> # ℹ 16 more rows
 ```

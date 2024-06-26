@@ -13,6 +13,9 @@ trace_srcrefs(x)
 \item{x}{(\code{link[covr]{package_coverage}}) A \code{\link[covr]{covr}}
 coverage object produced with \code{options(covr.record_tests = TRUE)}.}
 }
+\value{
+A \code{list_of_srcref}
+}
 \description{
 Extract srcref objects from coverage object traces
 }

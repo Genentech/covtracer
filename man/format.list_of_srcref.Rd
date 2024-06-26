@@ -17,6 +17,9 @@ paths when formatting \code{srcref}s.}
 \item{full.num}{A \code{logical} value indicating whether to use all numeric
 \code{srcref} components when formatting \code{srcref}s.}
 }
+\value{
+A \code{character} vector of formatted strings
+}
 \description{
 Format list_of_srcref as character
 }

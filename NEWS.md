@@ -1,4 +1,8 @@
-# Unreleased (tentative 0.0.1)
+# covtracer 0.0.1
+
+* initial CRAN release
+
+# covtracer 0.0.0.9000
 
 * Fix handling for packages with no objects (#73, @dgkf)
 

@@ -13,6 +13,9 @@ test_srcrefs(x)
 \item{x}{A \code{\link[covr]{package_coverage}} coverage object, from which
 the test \code{srcref}s are extracted.}
 }
+\value{
+A \code{list_of_srcref}
+}
 \description{
 Extract test srcref objects
 }

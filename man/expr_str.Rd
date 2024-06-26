@@ -9,6 +9,10 @@ expr_str(ref)
 \arguments{
 \item{ref}{a \code{srcref}}
 }
+\value{
+The given expression, formatted as a string with prefixes for
+symbols and generics.
+}
 \description{
 Convert an expression, call or symbol to a single-line string
 }
