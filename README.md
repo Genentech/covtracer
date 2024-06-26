@@ -8,7 +8,7 @@
 [![CRAN](https://img.shields.io/cran/v/covtracer.svg)](https://cran.r-project.org/package=covtracer)
 [![R-CMD-check](https://github.com/Genentech/covtracer/workflows/R-CMD-check/badge.svg)](https://github.com/Genentech/covtracer/actions)
 [![Code
-Coverage](https://img.shields.io/codecov/c/github/genentech/covtracer/main.svg)](https://codecov.io/gh/genentech/covtracer)
+Coverage](https://img.shields.io/codecov/c/github/genentech/covtracer/main.svg)](https://app.codecov.io/gh/genentech/covtracer)
 <!-- badges: end -->
 
 Tools for contextualizing tests, built using `covr` test traces. This
@@ -24,7 +24,7 @@ flowchart LR
 ## Installation
 
 To install, use `remotes` to install directly from
-[GitHub](https://www.github.com/Genentech/covtracer)
+[GitHub](https://github.com/Genentech/covtracer)
 
 Functionality hinges heavily on coverage objects prepared using `covr`
 (≥ 3.5.1.9003). To ensure suggested dependency requirements are met,

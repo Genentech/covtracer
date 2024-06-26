@@ -24,11 +24,11 @@ Authors@R:
       )
     )
 Description: 
-    Provides tools for dissecting a package namespace or "covr" coverage object
-    in order to cross reference tested code with the lines that are evaluated, as
-    well as linking those evaluated lines to the documentation that they are
-    described within. Connecting these three pieces of information provides a
-    mechanism of linking tests to documented behaviors.
+    Provides tools for dissecting a package environment or 'covr' coverage
+	object in order to cross reference tested code with the lines that are
+	evaluated, as well as linking those evaluated lines to the documentation
+	that they are described within. Connecting these three pieces of
+	information provides a mechanism of linking tests to documented behaviors.
 URL: https://github.com/genentech/covtracer
 BugReports: https://github.com/genentech/covtracer/issues
 Depends:
@@ -47,8 +47,6 @@ Suggests:
     igraph,
     knitr,
     rmarkdown
-Remotes:
-    github::r-lib/covr
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
