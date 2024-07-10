@@ -17,6 +17,7 @@ reexport_example(
   setRNG = FALSE,
   ask = getOption("example.ask"),
   prompt.prefix = abbreviate(topic, 6),
+  catch.aborts = FALSE,
   run.dontrun = FALSE,
   run.donttest = interactive()
 )

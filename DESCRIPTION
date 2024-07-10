@@ -1,5 +1,5 @@
 Package: covtracer
-Title: Tools for Contextualizing Tests
+Title: Contextualizing Tests
 Version: 0.0.1
 Authors@R:
     c(
@@ -21,14 +21,18 @@ Authors@R:
         family = "McNeil",
         role = c("aut"),
         email = "andrew.richard.mcneil@gmail.com"
-      )
+      ),
+      person(
+	    "F. Hoffmann-La Roche AG", 
+		role = c("cph", "fnd")
+	  )
     )
 Description: 
-    Provides tools for dissecting a package environment or 'covr' coverage
-	object in order to cross reference tested code with the lines that are
-	evaluated, as well as linking those evaluated lines to the documentation
-	that they are described within. Connecting these three pieces of
-	information provides a mechanism of linking tests to documented behaviors.
+    Dissects a package environment or 'covr' coverage object in order to cross
+    reference tested code with the lines that are evaluated, as well as linking
+    those evaluated lines to the documentation that they are described within.
+    Connecting these three pieces of information provides a mechanism of 
+	linking tests to documented behaviors.
 URL: https://github.com/genentech/covtracer
 BugReports: https://github.com/genentech/covtracer/issues
 Depends:

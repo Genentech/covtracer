@@ -13,7 +13,15 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-options(width = 120L)
+local({
+  source_hook <- knitr::knit_hooks$get("source")
+  knitr::knit_hooks$set(source = function(x, options) {
+    old_opts <- options(width = 120L)
+    on.exit(options(old_opts))
+
+    source_hook(x, options)
+  })
+})
 ```
 
 ```{r setup}
@@ -39,11 +47,11 @@ withr::with_temp_libpaths({
 })
 ```
 
+# What are `srcref` objects?
+
 ```{r}
 print(examplepkg_ns$hypotenuse)
 ```
-
-# What are `srcref` objects?
 
 `srcref`s are a base R data type that is used frequently for working with
 package code. When you install a package using the `--with-keep.source` flag,

@@ -52,7 +52,6 @@
 #' @author R.D. Sampler.
 #'
 #' @export
-#'
 rd_sampler <- function(x, y = TRUE, ...) {
   TRUE
 }
