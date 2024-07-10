@@ -1,144 +1,49 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/articles/combining_srcref_data.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/plotting_test_paths.html</loc>
-  </url>
-  <url>
-    <loc>/articles/working_with_srcrefs.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Rd_df.html</loc>
-  </url>
-  <url>
-    <loc>/reference/as.data.frame.list_of_srcref.html</loc>
-  </url>
-  <url>
-    <loc>/reference/as.package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/as_list_of_srcref.html</loc>
-  </url>
-  <url>
-    <loc>/reference/as_test_desc.html</loc>
-  </url>
-  <url>
-    <loc>/reference/coverage_check_has_recorded_tests.html</loc>
-  </url>
-  <url>
-    <loc>/reference/coverage_get_tests.html</loc>
-  </url>
-  <url>
-    <loc>/reference/coverage_has_recorded_tests.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dot-tools.html</loc>
-  </url>
-  <url>
-    <loc>/reference/expr_str.html</loc>
-  </url>
-  <url>
-    <loc>/reference/flat_map_srcrefs.html</loc>
-  </url>
-  <url>
-    <loc>/reference/format.list_of_srcref.html</loc>
-  </url>
-  <url>
-    <loc>/reference/getSrcFilepath.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_namespace_object_names.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/is_srcref.html</loc>
-  </url>
-  <url>
-    <loc>/reference/join_on_containing_srcrefs.html</loc>
-  </url>
-  <url>
-    <loc>/reference/match_containing_srcrefs.html</loc>
-  </url>
-  <url>
-    <loc>/reference/new_empty_test_trace_tally.html</loc>
-  </url>
-  <url>
-    <loc>/reference/obj_namespace_name.html</loc>
-  </url>
-  <url>
-    <loc>/reference/package_check_has_keep_source.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pkg_srcrefs.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pkg_srcrefs_df.html</loc>
-  </url>
-  <url>
-    <loc>/reference/srcref_expr.html</loc>
-  </url>
-  <url>
-    <loc>/reference/srcref_str.html</loc>
-  </url>
-  <url>
-    <loc>/reference/srcrefs.html</loc>
-  </url>
-  <url>
-    <loc>/reference/test_description.html</loc>
-  </url>
-  <url>
-    <loc>/reference/test_description_test_that.html</loc>
-  </url>
-  <url>
-    <loc>/reference/test_description_test_that_describe.html</loc>
-  </url>
-  <url>
-    <loc>/reference/test_description_test_that_describe_it.html</loc>
-  </url>
-  <url>
-    <loc>/reference/test_srcrefs.html</loc>
-  </url>
-  <url>
-    <loc>/reference/test_srcrefs_df.html</loc>
-  </url>
-  <url>
-    <loc>/reference/test_trace_df.html</loc>
-  </url>
-  <url>
-    <loc>/reference/test_trace_mapping.html</loc>
-  </url>
-  <url>
-    <loc>/reference/trace_srcrefs.html</loc>
-  </url>
-  <url>
-    <loc>/reference/trace_srcrefs_df.html</loc>
-  </url>
-  <url>
-    <loc>/reference/with_pseudo_srcref.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/articles/combining_srcref_data.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/plotting_test_paths.html</loc></url>
+<url><loc>/articles/working_with_srcrefs.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/Rd_df.html</loc></url>
+<url><loc>/reference/as.data.frame.list_of_srcref.html</loc></url>
+<url><loc>/reference/as.package.html</loc></url>
+<url><loc>/reference/as_list_of_srcref.html</loc></url>
+<url><loc>/reference/as_test_desc.html</loc></url>
+<url><loc>/reference/coverage_check_has_recorded_tests.html</loc></url>
+<url><loc>/reference/coverage_get_tests.html</loc></url>
+<url><loc>/reference/coverage_has_recorded_tests.html</loc></url>
+<url><loc>/reference/expr_str.html</loc></url>
+<url><loc>/reference/flat_map_srcrefs.html</loc></url>
+<url><loc>/reference/format.list_of_srcref.html</loc></url>
+<url><loc>/reference/getSrcFilepath.html</loc></url>
+<url><loc>/reference/get_namespace_object_names.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/is_srcref.html</loc></url>
+<url><loc>/reference/join_on_containing_srcrefs.html</loc></url>
+<url><loc>/reference/match_containing_srcrefs.html</loc></url>
+<url><loc>/reference/new_empty_test_trace_tally.html</loc></url>
+<url><loc>/reference/obj_namespace_name.html</loc></url>
+<url><loc>/reference/package_check_has_keep_source.html</loc></url>
+<url><loc>/reference/pkg_srcrefs.html</loc></url>
+<url><loc>/reference/pkg_srcrefs_df.html</loc></url>
+<url><loc>/reference/srcref_expr.html</loc></url>
+<url><loc>/reference/srcref_str.html</loc></url>
+<url><loc>/reference/srcrefs.html</loc></url>
+<url><loc>/reference/test_description.html</loc></url>
+<url><loc>/reference/test_description_test_that.html</loc></url>
+<url><loc>/reference/test_description_test_that_describe.html</loc></url>
+<url><loc>/reference/test_description_test_that_describe_it.html</loc></url>
+<url><loc>/reference/test_srcrefs.html</loc></url>
+<url><loc>/reference/test_srcrefs_df.html</loc></url>
+<url><loc>/reference/test_trace_df.html</loc></url>
+<url><loc>/reference/test_trace_mapping.html</loc></url>
+<url><loc>/reference/trace_srcrefs.html</loc></url>
+<url><loc>/reference/trace_srcrefs_df.html</loc></url>
+<url><loc>/reference/with_pseudo_srcref.html</loc></url>
 </urlset>
+
