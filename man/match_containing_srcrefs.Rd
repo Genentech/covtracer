@@ -11,6 +11,10 @@ match_containing_srcrefs(l, r)
 
 \item{r}{A \code{list_of_srcref} object}
 }
+\value{
+A \code{integer} vector of the first index in \code{r} that fully encapsulate
+the respective element in \code{l}
+}
 \description{
 Provided two lists of \code{srcref} objects, find the first \code{srcrefs} in \code{r} that
 entirely encapsulate each respective \code{srcref} in \code{l}, returning a list of

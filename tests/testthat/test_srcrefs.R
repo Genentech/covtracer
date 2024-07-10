@@ -100,6 +100,8 @@ test_that("srcrefs return lists uses names which can be linked to object docs", 
 test_that("srcrefs does not recursve into self-referential envs", {
   env <- new.env()
   env$self <- env
-  env$fn <- function(a = 1) { print(a) }
+  env$fn <- function(a = 1) {
+    print(a)
+  }
   expect_length(names(srcrefs(env)), 1L)
 })

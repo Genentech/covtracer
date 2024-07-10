@@ -10,6 +10,7 @@
 #'   as the bases of tracing tests. Coverage results must have been produced
 #'   using `options(covr.record_tests = TRUE)`.
 #' @param ... Additional arguments unused
+#' @return A `data.frame` of tests and corresponding traces
 #'
 #' @export
 #' @rdname test_trace_df
@@ -26,10 +27,10 @@ test_trace_df <- function(x, ...) {
 #' @importFrom stats aggregate
 #' @export
 #' @rdname test_trace_df
-test_trace_df.coverage <- function(x, ...,
-  pkg = as.package(attr(x, "package")$path),
-  aggregate_by = sum) {
-
+test_trace_df.coverage <- function(
+    x, ...,
+    pkg = as.package(attr(x, "package")$path),
+    aggregate_by = sum) {
   coverage_check_has_recorded_tests(x)
   pkgname <- pkg$package
 
@@ -111,8 +112,10 @@ test_trace_df.coverage <- function(x, ...,
   # Reorder columns
   df$is_reexported <- !(is.na(df$namespace) | df$namespace == pkgname)
   cols <- setdiff(names(df), c("trace_name", "trace", "test", "depth"))
-  col_order <- c("alias", "srcref", "test_name", "test_srcref", "trace_srcref",
-    "count", "direct", "is_exported", "is_reexported")
+  col_order <- c(
+    "alias", "srcref", "test_name", "test_srcref", "trace_srcref",
+    "count", "direct", "is_exported", "is_reexported"
+  )
   col_order <- c(col_order, setdiff(cols, col_order))
   df <- df[, col_order]
 
@@ -127,8 +130,9 @@ test_trace_df.coverage <- function(x, ...,
 #' \code{option(covr.record_tests = TRUE)}.
 #'
 #' @param coverage a \code{\link[covr]{covr}} coverage object
-#' @family coverage_tests
+#' @return A `list` of tests evaluated when using `covr`
 #'
+#' @family coverage_tests
 coverage_get_tests <- function(coverage) {
   attr(coverage, "tests")
 }
@@ -141,10 +145,12 @@ coverage_get_tests <- function(coverage) {
 #' was captured with \code{option(covr.record_tests = TRUE)}.
 #'
 #' @param coverage a \code{\link[covr]{covr}} coverage object
+#' @return A `logical` value, indicating whether the coverage object has
+#'   recorded tests, or `NA` when it does not appear to have traced any test
+#'   code.
+#'
 #' @family coverage_tests
-#'
 #' @importFrom utils getSrcDirectory
-#'
 coverage_has_recorded_tests <- function(coverage) {
   has_tests_attr <- !is.null(attr(coverage, "tests"))
 
@@ -158,9 +164,13 @@ coverage_has_recorded_tests <- function(coverage) {
     coverage
   ))
 
-  if (has_tests_attr || has_trace_tests) return(TRUE)
-  else if (!has_r_dir_traces) return(NA)
-  else return(FALSE)
+  if (has_tests_attr || has_trace_tests) {
+    return(TRUE)
+  } else if (!has_r_dir_traces) {
+    return(NA)
+  } else {
+    return(FALSE)
+  }
 }
 
 
@@ -175,9 +185,11 @@ coverage_has_recorded_tests <- function(coverage) {
 #' @param warn Whether to warn when it is uncertain whether the tests were
 #'   recorded. It may be uncertain if tests were recorded if there are no tested
 #'   R code traces.
+#' @return Used for side-effects of emitting an error when a coverage object
+#'   does not contain recorded traces, or a warning when a coverage object
+#'   appears to have no tests.
 #'
 #' @family coverage_tests
-#'
 coverage_check_has_recorded_tests <- function(coverage, warn = TRUE) {
   has_recorded_tests <- coverage_has_recorded_tests(coverage)
 

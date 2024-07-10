@@ -18,6 +18,9 @@ namespace will not be replaced.}
 traversing the namespace used as a memory of what we've seen already),
 which is used for short-circuiting recursive environment traversal.}
 }
+\value{
+A \code{list} of \code{srcref}s
+}
 \description{
 Map \code{srcrefs} over an iterable object, Filtering non-srcref results
 }

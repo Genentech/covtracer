@@ -7,9 +7,12 @@
 test_description_test_that_describe_it(x, ...)
 }
 \arguments{
-\item{x}{A test_that::describe call object}
+\item{x}{A \code{test_that::it} call object}
 
 \item{...}{Additional arguments unused}
+}
+\value{
+A \code{character} description, parsed from a \code{test_that::it} call
 }
 \description{
 Parse the test description from a \code{it} call

@@ -11,6 +11,9 @@ obj_namespace_name(x, ns)
 
 \item{ns}{A package namespace}
 }
+\value{
+A \code{character} string representing a namespace or similar
+}
 \description{
 For most objects, this will be identical to the namespace name provided, but
 reexports will retain their originating package's namespace name. This helper

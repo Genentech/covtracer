@@ -34,7 +34,6 @@ library(covtracer)
 
 library(withr)
 library(covr)
-library(remotes)
 ```
 
 ```{r libpaths, include = FALSE}
@@ -47,10 +46,11 @@ dir.create(lib <- tempfile("covtracer_pkgs_"))
 options(keep.source = TRUE, keep.source.pkg = TRUE, covr.record_tests = TRUE)
 examplepkg_source_path <- system.file("examplepkg", package = "covtracer")
 
-remotes::install_local(
+install.packages(
   examplepkg_source_path,
+  type = "source",
+  repos = NULL,
   quiet = TRUE,
-  force = TRUE,
   INSTALL_opts = c("--with-keep.source", "--install-tests")
 )
 
@@ -156,7 +156,7 @@ plot.igraph(g,
   vertex.label.family = "sans",
   vertex.label.color = "black",
   vertex.label.dist = 1,
-  vertex.label.degree = - pi / 2,
+  vertex.label.degree = -pi / 2,
   vertex.label.cex = 0.8,
   mark.border = NA,
   margin = c(0, 0.2, 0, 0.2)

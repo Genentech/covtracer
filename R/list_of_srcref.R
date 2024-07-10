@@ -1,6 +1,7 @@
 #' Create an S3 list of srcref objects
 #'
-#' @param x A list or single srcref to coerce to a list_of_srcref
+#' @param x A list or single srcref to coerce to a `list_of_srcref`
+#' @return A `list_of_srcref` class object
 #'
 #' @rdname as_list_of_srcref
 as_list_of_srcref <- function(x) {
@@ -41,15 +42,20 @@ as_list_of_srcref.list <- function(x) {
 #'   paths when formatting `srcref`s.
 #' @param full.num A \code{logical} value indicating whether to use all numeric
 #'   `srcref` components when formatting `srcref`s.
+#' @return A `character` vector of formatted strings
 #'
 #' @export
 format.list_of_srcref <- function(x, ..., full.names = FALSE, full.num = FALSE) {
   out <- rep_len(NA_character_, length(x))
-  if (!length(x)) return(out)
+  if (!length(x)) {
+    return(out)
+  }
   xnull <- vapply(x, is.null, logical(1L))
   srcnull <- vapply(x, function(i) is.null(getSrcref(i)), logical(1L))
   isnull <- xnull | srcnull
-  if (all(isnull)) return(out)
+  if (all(isnull)) {
+    return(out)
+  }
   fps <- if (full.names) getSrcFilepath(x[!isnull]) else vapply(x[!isnull], getSrcFilename, character(1L))
   srcref_num_rep_len <- length(as.numeric(x[!isnull][[1]]))
   nums <- t(vapply(x[!isnull], as.numeric, numeric(srcref_num_rep_len)))
@@ -71,7 +77,8 @@ print.list_of_srcref <- function(x, ...) {
     sprintf("$%s", ifelse(
       grepl("^[a-zA-Z0-9_.]*$", names(x)),
       names(x),
-      sprintf("`%s`", names(x))))
+      sprintf("`%s`", names(x))
+    ))
   )
   xfmt <- sprintf(
     "%s\n%s\n\n",

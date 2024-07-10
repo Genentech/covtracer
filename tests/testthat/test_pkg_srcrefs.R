@@ -36,6 +36,7 @@ test_that("pkg_srcrefs discovers namespace of package objects", {
 })
 
 test_that("pkg_srcrefs distinguish namespaces of reexported object srcrefs", {
+  skip_on_cran()
   expect_s3_class(srcs <- pkg_srcrefs(reexport.srcref_ns), "list_of_srcref")
   expect_true("examplepkg" %in% lapply(srcs, attr, "namespace"))
 })

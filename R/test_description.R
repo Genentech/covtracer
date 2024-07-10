@@ -42,8 +42,11 @@ test_description.expression <- function(x) {
 #' @importFrom utils getSrcref
 test_description.call <- function(x) {
   src <- getSrcref(x)
-  if (is.null(src)) test_description(expr_str(x))
-  else test_description(src)
+  if (is.null(src)) {
+    test_description(expr_str(x))
+  } else {
+    test_description(src)
+  }
 }
 
 #' @exportS3Method
@@ -57,12 +60,12 @@ test_description.list <- function(x) {
   test_calls <- lapply(x, `[[`, 1L)
   is_test_that_call <- vapply(test_calls, function(test_call) {
     identical(test_call, quote(test_that)) ||
-    identical(test_call, quote(testthat::test_that))
+      identical(test_call, quote(testthat::test_that))
   }, logical(1L))
 
   is_describe_call <- vapply(test_calls, function(test_call) {
     identical(test_call, quote(describe)) ||
-    identical(test_call, quote(testthat::describe))
+      identical(test_call, quote(testthat::describe))
   }, logical(1L))
 
   # only consider `it` calls within a `describe` call
@@ -118,8 +121,11 @@ as_test_desc <- function(x, type = "call") {
 as_testthat_desc <- function(x) {
   if (!is.character(x)) {
     try_result <- try(eval(x, envir = baseenv()), silent = TRUE)
-    if (!inherits(try_result, "try-error")) x <- try_result
-    else return(as_test_desc(expr_str(x)))
+    if (!inherits(try_result, "try-error")) {
+      x <- try_result
+    } else {
+      return(as_test_desc(expr_str(x)))
+    }
   }
 
   as_test_desc(x, type = "testthat")
@@ -131,6 +137,7 @@ as_testthat_desc <- function(x) {
 #'
 #' @param x A test_that call object
 #' @param ... Additional arguments unused
+#' @return A `character` description, parsed from a `test_that::test_that` call
 #'
 test_description_test_that <- function(x, ...) {
   as_testthat_desc(match.call(testthat::test_that, x)$desc)
@@ -140,8 +147,9 @@ test_description_test_that <- function(x, ...) {
 
 #' Parse the test description from a `describe` call
 #'
-#' @param x A test_that::describe call object
+#' @param x A `test_that::describe` call object
 #' @param ... Additional arguments unused
+#' @return A `character` description, parsed from a `test_that::describe` call
 #'
 test_description_test_that_describe <- function(x, ...) {
   as_testthat_desc(match.call(testthat::describe, x)$description)
@@ -151,8 +159,9 @@ test_description_test_that_describe <- function(x, ...) {
 
 #' Parse the test description from a `it` call
 #'
-#' @param x A test_that::describe call object
+#' @param x A `test_that::it` call object
 #' @param ... Additional arguments unused
+#' @return A `character` description, parsed from a `test_that::it` call
 #'
 test_description_test_that_describe_it <- function(x, ...) {
   # mock `it` function, defined in testthat::describe
@@ -164,7 +173,8 @@ test_description_test_that_describe_it <- function(x, ...) {
 
 #' Parse the expression associated with a srcref
 #'
-#' @param ref a \code{srcref}
+#' @param ref a `srcref`
+#' @return A parsed `srcref` object
 #'
 srcref_expr <- function(ref) {
   parse(text = srcref_str(ref))
@@ -172,9 +182,10 @@ srcref_expr <- function(ref) {
 
 
 
-#' Parse the expression associated with a srcref
+#' Convert a srcref into a string
 #'
-#' @param ref a \code{srcref}
+#' @param ref a `srcref`
+#' @return A string representing the `srcref`
 #'
 srcref_str <- function(ref) {
   paste0(as.character(ref), collapse = "\n")
@@ -185,9 +196,11 @@ srcref_str <- function(ref) {
 #' Convert an expression, call or symbol to a single-line string
 #'
 #' @param ref a \code{srcref}
+#' @return The given expression, formatted as a string with prefixes for
+#'   symbols and generics.
 #'
 expr_str <- function(ref) {
-  # used when description of the test is given by a variable 
+  # used when description of the test is given by a variable
   # (see: inst/examplepkg/tests/testthat/test-complex-calls.R)
   if (is.symbol(ref)) {
     return(paste0("symbol: ", as.character(ref)))

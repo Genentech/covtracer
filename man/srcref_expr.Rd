@@ -9,6 +9,9 @@ srcref_expr(ref)
 \arguments{
 \item{ref}{a \code{srcref}}
 }
+\value{
+A parsed \code{srcref} object
+}
 \description{
 Parse the expression associated with a srcref
 }

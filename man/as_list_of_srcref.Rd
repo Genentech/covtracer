@@ -13,7 +13,10 @@ as_list_of_srcref(x)
 \method{as_list_of_srcref}{list}(x)
 }
 \arguments{
-\item{x}{A list or single srcref to coerce to a list_of_srcref}
+\item{x}{A list or single srcref to coerce to a \code{list_of_srcref}}
+}
+\value{
+A \code{list_of_srcref} class object
 }
 \description{
 Create an S3 list of srcref objects

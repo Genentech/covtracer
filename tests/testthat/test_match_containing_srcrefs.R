@@ -24,9 +24,9 @@ test_that("match_containing_srcrefs matches tests to appropriate code by file", 
       (trace_beg_line > pkgsrc_beg_line ||
         trace_beg_line == pkgsrc_beg_line && trace_beg_byte >= pkgsrc_beg_byte) &&
 
-      # and trace ends at or before end of srcref region
-      (trace_end_line < pkgsrc_end_line ||
-        trace_end_line == pkgsrc_end_line && trace_end_byte <= pkgsrc_end_byte)
+        # and trace ends at or before end of srcref region
+        (trace_end_line < pkgsrc_end_line ||
+          trace_end_line == pkgsrc_end_line && trace_end_byte <= pkgsrc_end_byte)
     }
   )))
 })
@@ -35,16 +35,16 @@ test_that("match_containing_srcrefs matches tests even when some objects have no
   # may be the case for reexports from packages built --without-keep.source"
 
   traces <- as_list_of_srcref.list(list(
-      "a" = srcref(srcfile = srcfile("a"), c(1,0,1,10,0,10,0,0)),  # from a file not in the package
-      "c" = srcref(srcfile = srcfile("c"), c(2,0,2,10,0,10,0,0))
+    "a" = srcref(srcfile = srcfile("a"), c(1, 0, 1, 10, 0, 10, 0, 0)), # from a file not in the package
+    "c" = srcref(srcfile = srcfile("c"), c(2, 0, 2, 10, 0, 10, 0, 0))
   ))
 
   # spoof a package with missing srcrefs
   pkgsrcs <- as_list_of_srcref.list(list(
-      NA,
-      "b" = srcref(srcfile = srcfile("b"), c(1,0,1,10,0,10,0,0)),
-      "c" = srcref(srcfile = srcfile("c"), c(1,0,3, 1,0, 1,0,0)),
-      NA
+    NA,
+    "b" = srcref(srcfile = srcfile("b"), c(1, 0, 1, 10, 0, 10, 0, 0)),
+    "c" = srcref(srcfile = srcfile("c"), c(1, 0, 3, 1, 0, 1, 0, 0)),
+    NA
   ))
 
   expect_silent(m <- match_containing_srcrefs(traces, pkgsrcs))

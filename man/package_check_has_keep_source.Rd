@@ -10,6 +10,10 @@ package_check_has_keep_source(env)
 \item{env}{A package namespace environment or iterable collection of package
 objects}
 }
+\value{
+Used for side effect of throwing an error when a package was not
+installed with \code{srcref}s.
+}
 \description{
 Test whether the package object collection contains srcref attributes.
 }

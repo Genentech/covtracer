@@ -1,5 +1,7 @@
 env_ns_name <- function(e) {
-  if (is.null(e) || !isNamespace(e)) return(NA_character_)
+  if (is.null(e) || !isNamespace(e)) {
+    return(NA_character_)
+  }
   unname(getNamespaceName(e))
 }
 
@@ -24,6 +26,7 @@ env_name <- function(e) {
 #'
 #' @param x A value to find within namespace `ns`
 #' @param ns A package namespace
+#' @return A `character` string representing a namespace or similar
 #'
 obj_namespace_name <- function(x, ns) {
   UseMethod("obj_namespace_name")
@@ -37,7 +40,9 @@ obj_namespace_name.default <- function(x, ns) {
 #' @exportS3Method
 obj_namespace_name.character <- function(x, ns) {
   is_exported <- x %in% getNamespaceExports(ns)
-  if (!is_exported) return(NA_character_)
+  if (!is_exported) {
+    return(NA_character_)
+  }
   env_ns_name(environment(getExportedValue(ns, x)))
 }
 

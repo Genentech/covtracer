@@ -9,6 +9,9 @@ is_srcref(x)
 \arguments{
 \item{x}{Any object}
 }
+\value{
+A \code{logical} indicating whether object is a \code{srcref}
+}
 \description{
 Test whether an object is a \code{srcref} object
 }

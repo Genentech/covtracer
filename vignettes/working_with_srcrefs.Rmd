@@ -13,7 +13,15 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-options(width = 120L)
+local({
+  source_hook <- knitr::knit_hooks$get("source")
+  knitr::knit_hooks$set(source = function(x, options) {
+    old_opts <- options(width = 120L)
+    on.exit(options(old_opts))
+
+    source_hook(x, options)
+  })
+})
 ```
 
 ```{r setup}
@@ -23,13 +31,14 @@ library(covtracer)
 ```{r, include = FALSE}
 library(withr)
 library(covr)
-library(remotes)
 
 withr::with_temp_libpaths({
   options(keep.source = TRUE, keep.source.pkg = TRUE, covr.record_tests = TRUE)
   examplepkg_source_path <- system.file("examplepkg", package = "covtracer")
-  remotes::install_local(
+  install.packages(
     examplepkg_source_path,
+    type = "source",
+    repos = NULL,
     quiet = TRUE,
     INSTALL_opts = c("--with-keep.source", "--install-tests")
   )
@@ -38,11 +47,11 @@ withr::with_temp_libpaths({
 })
 ```
 
+# What are `srcref` objects?
+
 ```{r}
 print(examplepkg_ns$hypotenuse)
 ```
-
-# What are `srcref` objects?
 
 `srcref`s are a base R data type that is used frequently for working with
 package code. When you install a package using the `--with-keep.source` flag,
@@ -89,14 +98,14 @@ into our working library.
 ```{r, eval = FALSE}
 library(withr)
 library(covr)
-library(remotes)
 
 withr::with_temp_libpaths({
   options(keep.source = TRUE, keep.source.pkg = TRUE, covr.record_tests = TRUE)
   examplepkg_source_path <- system.file("examplepkg", package = "covtracer")
-  remotes::install_local(
+  install.packages(
     examplepkg_source_path,
-    quiet = TRUE,
+    type = "source",
+    repos = NULL,
     INSTALL_opts = c("--with-keep.source", "--install-tests")
   )
   examplepkg_cov <- covr::package_coverage(examplepkg_source_path)
@@ -122,7 +131,7 @@ and readability.
 Getting a `list` of `srcref`s
 
 ```{r, include = FALSE}
-pkg_srcrefs(examplepkg_ns)[1]  # for brevity, only showing first srcref
+pkg_srcrefs(examplepkg_ns)[1] # for brevity, only showing first srcref
 ```
 
 ```{r, eval = FALSE}

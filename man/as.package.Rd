@@ -9,6 +9,9 @@ as.package(x)
 \arguments{
 \item{x}{A package object to coerce}
 }
+\value{
+A \code{package} object
+}
 \description{
 Functionally identical to \code{devtools}' \code{as.package}, but without interactive
 options for package creation.

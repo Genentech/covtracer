@@ -21,34 +21,40 @@
 #'
 #' @examples
 #' pkg <- system.file("examplepkg", package = "covtracer")
-#' remotes::install_local(
+#' install.packages(
 #'   pkg,
-#'   force = TRUE,
+#'   type = "source",
+#'   repos = NULL,
 #'   quiet = TRUE,
 #'   INSTALL_opts = "--with-keep.source"
 #' )
 #' as.data.frame(pkg_srcrefs("examplepkg"))
 #' @export
-as.data.frame.list_of_srcref <- function(x, ..., use.names = TRUE,
+as.data.frame.list_of_srcref <- function(
+    x, ..., use.names = TRUE,
     expand.srcref = FALSE, row.names = NULL) {
-
   if (expand.srcref) {
     df <- data.frame(
       srcfile = getSrcFilepath(x),
       matrix(
         t(vapply(lapply(x, as.numeric), `[`, numeric(8L), 1:8)),
         ncol = 8L,
-        dimnames = list(c(), c("line1", "byte1", "line2",
-          "byte2", "col1", "col2", "parsed1", "parsed2"))),
+        dimnames = list(c(), c(
+          "line1", "byte1", "line2",
+          "byte2", "col1", "col2", "parsed1", "parsed2"
+        ))
+      ),
       stringsAsFactors = FALSE,
       row.names = row.names,
-      ...)
+      ...
+    )
   } else {
     df <- data.frame(
       srcref = I(x),
       stringsAsFactors = FALSE,
       row.names = row.names,
-      ...)
+      ...
+    )
     class(df$srcref) <- setdiff(class(df$srcref), "AsIs")
   }
 
@@ -74,9 +80,10 @@ as.data.frame.list_of_srcref <- function(x, ..., use.names = TRUE,
 #'
 #' @examples
 #' pkg <- system.file("examplepkg", package = "covtracer")
-#' remotes::install_local(
+#' install.packages(
 #'   pkg,
-#'   force = TRUE,
+#'   type = "source",
+#'   repos = NULL,
 #'   quiet = TRUE,
 #'   INSTALL_opts = "--with-keep.source"
 #' )
@@ -246,8 +253,9 @@ test_trace_mapping <- function(x) {
     logical(1L)
   )
 
-  if (!any(has_tests))
+  if (!any(has_tests)) {
     return(new_empty_test_trace_tally())
+  }
 
   mat <- do.call(
     rbind,
@@ -259,7 +267,7 @@ test_trace_mapping <- function(x) {
     )
   )
 
-  mat <- mat[order(mat[, "test"], mat[, "i"]),, drop = FALSE]
+  mat <- mat[order(mat[, "test"], mat[, "i"]), , drop = FALSE]
   mat
 }
 
@@ -273,6 +281,8 @@ test_trace_mapping <- function(x) {
 #'
 #' @param l A `list_of_srcref` object
 #' @param r A `list_of_srcref` object
+#' @return A `integer` vector of the first index in `r` that fully encapsulate
+#'   the respective element in `l`
 #'
 match_containing_srcrefs <- function(l, r) {
   # NOTE:
@@ -311,11 +321,11 @@ match_containing_srcrefs <- function(l, r) {
 
     l_start_gte_r_start <- (ldf[[li, "line1"]] > rdf[[ri, "line1"]]) ||
       (ldf[[li, "line1"]] == rdf[[ri, "line1"]] &&
-       ldf[[li, "col1"]] >= rdf[[ri, "col1"]])
+        ldf[[li, "col1"]] >= rdf[[ri, "col1"]])
 
     l_end_lte_r_end <- (ldf[[li, "line2"]] < rdf[[ri, "line2"]]) ||
       (ldf[[li, "line2"]] == rdf[[ri, "line2"]] &&
-       ldf[[li, "col2"]] <= rdf[[ri, "col2"]])
+        ldf[[li, "col2"]] <= rdf[[ri, "col2"]])
 
     if (!is.na(l_start_gte_r_start) && l_start_gte_r_start) {
       if (!is.na(l_end_lte_r_end) && l_end_lte_r_end) {
@@ -358,12 +368,14 @@ match_containing_srcrefs <- function(l, r) {
 #'   The name should be the name of the column from the left `data.frame`
 #'   containing a `list_of_srcref` column, and the value should be the name of a
 #'   column from the right `data.frame` containing a `list_of_srcref` column.
+#' @return A `data.frame` of `x` joined on `y` by spanning `srcref`
 #'
 #' @export
 join_on_containing_srcrefs <- function(x, y, by = c("srcref" = "srcref")) {
   by <- by[1L]
-  if (!names(by) %in% names(x) || !by %in% names(y))
+  if (!names(by) %in% names(x) || !by %in% names(y)) {
     stop("joining columns defined in `by` not found in provided data.frames")
+  }
 
   idx <- match_containing_srcrefs(x[[names(by)[[1L]]]], y[[by[[1L]]]])
   if (any(names(y) %in% names(x))) {

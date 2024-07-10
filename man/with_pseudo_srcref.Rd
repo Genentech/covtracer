@@ -13,6 +13,9 @@ with_pseudo_srcref(call, file, lloc)
 
 \item{lloc}{A \code{srcef}-like \code{lloc} numeric vector}
 }
+\value{
+A \code{with_pseudo_srcref} object, mimicking the structure of \code{srcref}
+}
 \description{
 Most relevant data can be traced to an existing srcref. However, some data,
 such as test traces from coverage objects, are likely cleaned up and their

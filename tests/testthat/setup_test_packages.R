@@ -2,6 +2,14 @@ cli::cli_alert_info("Installing test packages")
 cli::cli_ul()
 cli::cli_ul()
 
+on_cran <- tryCatch(
+  {
+    testthat::skip_on_cran()
+    FALSE
+  },
+  condition = function(c) TRUE
+)
+
 opts <- list(
   "keep.source" = TRUE,
   "keep.source.pkgs" = TRUE,
@@ -17,13 +25,13 @@ dir.create(lib <- tempfile("ct_"), recursive = TRUE)
 .libPaths(c(lib, .libPaths()))
 
 tests <- normalizePath(testthat::test_path())
-pkg_dirs <- list(
+pkg_dirs <- Filter(Negate(is.null), list(
   system.file("examplepkg", package = "covtracer"),
   file.path(tests, "packages", "list.obj"),
   file.path(tests, "packages", "no.evaluable.code"),
   file.path(tests, "packages", "no.exports"),
-  file.path(tests, "packages", "reexport.srcref")
-)
+  if (!on_cran) file.path(tests, "packages", "reexport.srcref")
+))
 
 # install our testing packages into a temp directory
 install.packages(

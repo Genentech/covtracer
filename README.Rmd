@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 
 options(
-  tibble.print_min = 5, 
+  tibble.print_min = 5,
   tibble.print_max = 5,
   width = 120L
 )
@@ -27,7 +27,7 @@ suppressPackageStartupMessages(library(dplyr))
 <!-- badges: start -->
 [![CRAN](https://img.shields.io/cran/v/covtracer.svg)](https://cran.r-project.org/package=covtracer) 
 [![R-CMD-check](https://github.com/Genentech/covtracer/workflows/R-CMD-check/badge.svg)](https://github.com/Genentech/covtracer/actions) 
-[![Code Coverage](https://img.shields.io/codecov/c/github/genentech/covtracer/main.svg)](https://codecov.io/gh/genentech/covtracer)
+[![Code Coverage](https://img.shields.io/codecov/c/github/genentech/covtracer/main.svg)](https://app.codecov.io/gh/genentech/covtracer)
 <!-- badges: end -->
 
 Tools for contextualizing tests, built using `covr` test traces. This 
@@ -43,7 +43,7 @@ flowchart LR
 ## Installation
 
 To install, use `remotes` to install directly from
-[GitHub](https://www.github.com/Genentech/covtracer)
+[GitHub](https://github.com/Genentech/covtracer)
 
 Functionality hinges heavily on coverage objects prepared using `covr` 
 (≥ 3.5.1.9003). To ensure suggested dependency requirements are met, 
@@ -80,15 +80,16 @@ library(covtracer)
 library(dplyr)
 library(withr)
 library(covr)
-library(remotes)
 
 withr::with_temp_libpaths({
   pkg <- system.file("examplepkg", package = "covtracer")
-  remotes::install_local(
-    pkg, 
-    force = TRUE, 
-    quiet = TRUE, 
-    INSTALL_opts = "--with-keep.source"
+
+  install.packages(
+    pkg,
+    type = "source",
+    repos = NULL,
+    quiet = TRUE,
+    INSTALL_opts = c("--with-keep.source", "--install-tests")
   )
 
   options(covr.record_tests = TRUE)
@@ -109,7 +110,7 @@ objects.
 
 ```{r}
 traceability_matrix <- ttdf %>%
-  filter(!doctype %in% c("data", "class")) %>%  # ignore objects without testable code
+  filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
   select(test_name, file) %>%
   filter(!duplicated(.)) %>%
   arrange(file)
@@ -132,7 +133,7 @@ behaviors.
 
 ```{r}
 ttdf %>%
-  filter(!doctype %in% c("data", "class")) %>%  # ignore objects without testable code
+  filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
   select(test_name, file) %>%
   filter(!duplicated(.)) %>%
   arrange(file)
@@ -145,7 +146,7 @@ documentation that is not covered by any test.
 
 ```{r}
 ttdf %>%
-  filter(!doctype %in% c("data", "class")) %>%  # ignore objects without testable code
+  filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
   select(test_name, count, alias, file) %>%
   filter(is.na(count)) %>%
   arrange(alias)
@@ -162,7 +163,7 @@ consider only the coverage of directly tested functions.
 
 ```{r}
 ttdf %>%
-  filter(!doctype %in% c("data", "class")) %>%  # ignore objects without testable code
+  filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
   select(direct, alias) %>%
   group_by(alias) %>%
   summarize(any_direct_tests = any(direct, na.rm = TRUE)) %>%

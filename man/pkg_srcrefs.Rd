@@ -19,14 +19,18 @@ pkg_srcrefs(x)
 \item{x}{A \code{\link[covr]{package_coverage}} coverage object, from which
 the name of the package used is extracted.}
 }
+\value{
+A \code{list_of_srcref}
+}
 \description{
 Extract all the srcref objects of objects within a package namespace
 }
 \examples{
 pkg <- system.file("examplepkg", package = "covtracer")
-remotes::install_local(
+install.packages(
   pkg,
-  force = TRUE,
+  type = "source",
+  repos = NULL,
   quiet = TRUE,
   INSTALL_opts = "--with-keep.source"
 )

@@ -28,6 +28,9 @@ package object is to be used for inspecting the package namespace.}
 \code{counts} and \code{direct} columns from a test to a trace. If \code{NULL}, no
 aggregation will be applied. (Default \code{sum})}
 }
+\value{
+A \code{data.frame} of tests and corresponding traces
+}
 \description{
 Intercept unit test coverage reports and process results to link evaluated
 functions to the unit tests which trigger their evaluation. In doing so,

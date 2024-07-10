@@ -9,6 +9,10 @@ get_namespace_object_names(ns)
 \arguments{
 \item{ns}{A namespace object}
 }
+\value{
+The names of exported objects, filtering internal method tables and
+metadata.
+}
 \description{
 Get namespace exports, filtering methods tables and definitions
 }
