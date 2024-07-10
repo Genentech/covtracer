@@ -61,7 +61,7 @@
       <h1>Working with srcrefs</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/genentech/covtracer/blob/main/vignettes/working_with_srcrefs.Rmd" class="external-link"><code>vignettes/working_with_srcrefs.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/genentech/covtracer/blob/v0.0.1/vignettes/working_with_srcrefs.Rmd" class="external-link"><code>vignettes/working_with_srcrefs.Rmd</code></a></small>
       <div class="d-none name"><code>working_with_srcrefs.Rmd</code></div>
     </div>
 
@@ -77,7 +77,7 @@
 <span><span class="co">#&gt; function(a, b) {</span></span>
 <span><span class="co">#&gt;   return(sqrt(a^2 + b^2))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x56512783c298&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x5621512c8258&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:examplepkg&gt;</span></span></code></pre></div>
 <p><code>srcref</code>s are a base R data type that is used frequently
 for working with package code. When you install a package using the
@@ -210,19 +210,19 @@ make this information easier to see at a glance:</p>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; show(&lt;myS4Example&gt;)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`/tmp/RtmpFq7s7M/R_LIBS20f17096735c/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`</span></span>
+<span><span class="co">#&gt; $`/tmp/RtmpLMKskc/R_LIBS201d59a9f463/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`</span></span>
 <span><span class="co">#&gt; complex_call_stack("test")</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`/tmp/RtmpFq7s7M/R_LIBS20f17096735c/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:6:3:6:54:3:54:6:6`</span></span>
+<span><span class="co">#&gt; $`/tmp/RtmpLMKskc/R_LIBS201d59a9f463/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:6:3:6:54:3:54:6:6`</span></span>
 <span><span class="co">#&gt; deeper_nested_function("test")</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`/tmp/RtmpFq7s7M/R_LIBS20f17096735c/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:15:7:15:54:7:54:15:15`</span></span>
+<span><span class="co">#&gt; $`/tmp/RtmpLMKskc/R_LIBS201d59a9f463/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:15:7:15:54:7:54:15:15`</span></span>
 <span><span class="co">#&gt; complex_call_stack("test")</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`/tmp/RtmpFq7s7M/R_LIBS20f17096735c/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:15:7:15:54:7:54:15:15`</span></span>
+<span><span class="co">#&gt; $`/tmp/RtmpLMKskc/R_LIBS201d59a9f463/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:15:7:15:54:7:54:15:15`</span></span>
 <span><span class="co">#&gt; complex_call_stack("test")</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`/tmp/RtmpFq7s7M/R_LIBS20f17096735c/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:15:7:15:54:7:54:15:15`</span></span>
+<span><span class="co">#&gt; $`/tmp/RtmpLMKskc/R_LIBS201d59a9f463/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:15:7:15:54:7:54:15:15`</span></span>
 <span><span class="co">#&gt; complex_call_stack("test")</span></span></code></pre></div>
 </div>
 <div class="section level4">
