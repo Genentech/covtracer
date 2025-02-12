@@ -6,9 +6,9 @@
 <!-- badges: start -->
 
 [![CRAN](https://img.shields.io/cran/v/covtracer.svg)](https://cran.r-project.org/package=covtracer)
-[![R-CMD-check](https://github.com/Genentech/covtracer/workflows/R-CMD-check/badge.svg)](https://github.com/Genentech/covtracer/actions)
-[![Code
-Coverage](https://img.shields.io/codecov/c/github/genentech/covtracer/main.svg)](https://app.codecov.io/gh/genentech/covtracer)
+[![R-CMD-check](https://github.com/genentech/covtracer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/genentech/covtracer/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/genentech/covtracer/graph/badge.svg)](https://app.codecov.io/gh/genentech/covtracer)
 <!-- badges: end -->
 
 Tools for contextualizing tests, built using `covr` test traces. This
