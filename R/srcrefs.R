@@ -359,14 +359,26 @@ test_srcrefs <- function(x) {
 #' @rdname test_srcrefs
 #' @export
 test_srcrefs.coverage <- function(x) {
+  re <- "(:\\d+){8}$"
   cov_tests <- attr(x, "tests")
   test_calls <- lapply(cov_tests, function(i) tail(i, 1L)[[1L]])
+
+  # mask for calls with srcref
+  m <- grepl(re, names(test_calls))
+
+  test_llocs <- test_files <- character(length(test_calls))
   test_srckeys <- names(test_calls) %||% rep_len("", length(test_calls))
-  test_files <- as.list(gsub("(:\\d+){8}$", "", test_srckeys))
-  test_llocs <- strsplit(gsub("^.*:((\\d+:){7}\\d+)$", "\\1", test_srckeys), ":")
+
+  test_files[m] <- as.list(gsub(re, "", test_srckeys[m]))
+  test_llocs[m] <- strsplit(
+    gsub("^.*:((\\d+:){7}\\d+)$", "\\1", test_srckeys[m]),
+    ":"
+  )
+
   test_llocs <- lapply(test_llocs, as.numeric)
-  test_files[test_srckeys == ""] <- list(NULL)
-  test_llocs[test_srckeys == ""] <- list(NULL)
+  test_files[!m] <- list(NULL)
+  test_llocs[!m] <- list(NULL)
+
   as_list_of_srcref(mapply(
     function(call, file, lloc) with_pseudo_srcref(call, file, lloc),
     test_calls,
