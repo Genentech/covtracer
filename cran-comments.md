@@ -1,3 +1,8 @@
+> New mainteiner
+
+There is new maintainer of the package.
+Transition was agreed upon prior between both former and a new maintainer.
+
 > Examples with CPU (user + system) or elapsed time > 5
 
 Some examples (roughly 4, depending on CPU speed) take just slightly over 5s to

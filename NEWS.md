@@ -1,7 +1,9 @@
-# covtracer (dev)
+# covtracer 0.0.2
 
 * Fix `test_trace_df()` when recorded tests were unable to discover `srcref`s
   (#78, @dgkf)
+
+* Szymon Maksymiuk is now a maintainer
 
 # covtracer 0.0.1
 

@@ -1,18 +1,18 @@
 Package: covtracer
 Title: Contextualizing Tests
-Version: 0.0.1.9000
+Version: 0.0.2
 Authors@R:
     c(
       person(
         "Doug", "Kelkhoff", , 
         "doug.kelkhoff@gmail.com", 
-        role = c("cre", "aut"),
+        role = c("aut"),
         comment = c(ORCID = "0009-0003-7845-4061")
       ),
       person(
         given = "Szymon",
         family = "Maksymiuk",
-        role = c("aut"),
+        role = c("aut", "cre"),
         email = "sz.maksymiuk@gmail.com",
         comment = c(ORCID = "0000-0002-3120-1601")
       ),
