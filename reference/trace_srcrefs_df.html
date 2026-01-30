@@ -13,7 +13,7 @@ a package's source code."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">covtracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,8 +84,8 @@ which are <code>srcref</code> "keys".</p></dd>
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>srcrefs test_trace_mapping</p>
 <p>Other srcrefs_df:
-<code><a href="pkg_srcrefs_df.html">pkg_srcrefs_df</a>()</code>,
-<code><a href="test_srcrefs_df.html">test_srcrefs_df</a>()</code></p></div>
+<code><a href="pkg_srcrefs_df.html">pkg_srcrefs_df()</a></code>,
+<code><a href="test_srcrefs_df.html">test_srcrefs_df()</a></code></p></div>
     </div>
 
     <div class="section level2">
@@ -98,7 +98,7 @@ which are <code>srcref</code> "keys".</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1          r6_example.R:63:7:63:24:7:24:100:100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2          r6_example.R:74:7:74:23:7:23:111:111</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3                r6_example.R:4:3:8:3:3:3:41:45</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          r6_example.R:97:9:97:22:9:22:134:134</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4            r6_example.R:97:9:97:22:9:22:97:97</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5          s3_example.R:16:3:16:11:3:11:259:259</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6              hypotenuse.R:8:3:8:25:3:25:35:35</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7            r6_example.R:31:5:31:19:5:19:68:68</span>
@@ -115,13 +115,13 @@ which are <code>srcref</code> "keys".</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 18       complex_call_stack.R:4:3:4:20:3:20:6:6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 19         s4_example.R:54:3:54:30:3:30:320:320</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 20         r6_example.R:75:7:75:51:7:51:112:112</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21         s4_example.R:18:3:18:15:3:15:284:284</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22         s4_example.R:44:3:44:15:3:15:310:310</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23   complex_call_stack.R:16:3:16:23:3:23:18:18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24   complex_call_stack.R:22:7:22:13:7:13:24:24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25           s4_example.R:59:3:59:7:3:7:325:325</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26   complex_call_stack.R:23:3:23:31:3:31:25:25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 complex_call_stack.R:22:16:22:24:16:24:24:24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21   complex_call_stack.R:22:7:22:13:7:13:22:22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22         s4_example.R:18:3:18:15:3:15:284:284</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23         s4_example.R:44:3:44:15:3:15:310:310</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24   complex_call_stack.R:16:3:16:23:3:23:18:18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25 complex_call_stack.R:22:16:22:24:16:24:22:22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26           s4_example.R:59:3:59:7:3:7:325:325</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27   complex_call_stack.R:23:3:23:31:3:31:25:25</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 28             r6_example.R:7:5:7:19:5:19:44:44</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                              srcref</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1           r6_example.R:63:7:63:24</span>
@@ -144,13 +144,13 @@ which are <code>srcref</code> "keys".</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 18    complex_call_stack.R:4:3:4:20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 19          s4_example.R:54:3:54:30</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 20          r6_example.R:75:7:75:51</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21          s4_example.R:18:3:18:15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22          s4_example.R:44:3:44:15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23  complex_call_stack.R:16:3:16:23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24  complex_call_stack.R:22:7:22:13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25           s4_example.R:59:3:59:7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26  complex_call_stack.R:23:3:23:31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 complex_call_stack.R:22:16:22:24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21  complex_call_stack.R:22:7:22:13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22          s4_example.R:18:3:18:15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23          s4_example.R:44:3:44:15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24  complex_call_stack.R:16:3:16:23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25 complex_call_stack.R:22:16:22:24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26           s4_example.R:59:3:59:7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27  complex_call_stack.R:23:3:23:31</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 28            r6_example.R:7:5:7:19</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
@@ -164,7 +164,7 @@ which are <code>srcref</code> "keys".</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">covtracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -138,7 +138,7 @@ each.</p>
 <span><span class="co">#&gt; 1 r6_example.R:63:7:63:24:7:24:100:100 r6_example.R:63:7:63:24                  Person  r6_example.R:60:18:64:5</span></span>
 <span><span class="co">#&gt; 2 r6_example.R:74:7:74:23:7:23:111:111 r6_example.R:74:7:74:23                  Person  r6_example.R:72:13:77:5</span></span>
 <span><span class="co">#&gt; 3       r6_example.R:4:3:8:3:3:3:41:45    r6_example.R:4:3:8:3                   adder    r6_example.R:3:10:9:1</span></span>
-<span><span class="co">#&gt; 4 r6_example.R:97:9:97:22:9:22:134:134 r6_example.R:97:9:97:22                   Rando r6_example.R:95:12:102:3</span></span>
+<span><span class="co">#&gt; 4   r6_example.R:97:9:97:22:9:22:97:97 r6_example.R:97:9:97:22                   Rando r6_example.R:95:12:102:3</span></span>
 <span><span class="co">#&gt; 5 s3_example.R:16:3:16:11:3:11:259:259 s3_example.R:16:3:16:11 s3_example_func.default  s3_example.R:15:28:17:1</span></span>
 <span><span class="co">#&gt; 6     hypotenuse.R:8:3:8:25:3:25:35:35   hypotenuse.R:8:3:8:25              hypotenuse    hypotenuse.R:7:15:9:1</span></span>
 <span><span class="co">#&gt;   namespace.y</span></span>
@@ -164,13 +164,13 @@ reshape a <code>covr</code> object (produced using
 table across all <code>covr</code> traces:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/test_trace_mapping.html">test_trace_mapping</a></span><span class="op">(</span><span class="va">examplepkg_cov</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      test depth i trace</span></span>
-<span><span class="co">#&gt; [1,]    1     1 1     9</span></span>
-<span><span class="co">#&gt; [2,]    2    37 1    18</span></span>
-<span><span class="co">#&gt; [3,]    2    38 2    14</span></span>
-<span><span class="co">#&gt; [4,]    2    39 3    23</span></span>
-<span><span class="co">#&gt; [5,]    2    40 4    24</span></span>
-<span><span class="co">#&gt; [6,]    2    40 5    26</span></span></code></pre></div>
+<span><span class="co">#&gt;      test call depth i trace</span></span>
+<span><span class="co">#&gt; [1,]    1    1     1 1     9</span></span>
+<span><span class="co">#&gt; [2,]    2    1    37 1    18</span></span>
+<span><span class="co">#&gt; [3,]    2    1    38 2    14</span></span>
+<span><span class="co">#&gt; [4,]    2    1    39 3    24</span></span>
+<span><span class="co">#&gt; [5,]    2    1    40 4    21</span></span>
+<span><span class="co">#&gt; [6,]    2    1    40 5    27</span></span></code></pre></div>
 <p>The <code>test</code> and <code>trace</code> columns contain the row
 indices in the respective <code><a href="../reference/test_srcrefs_df.html">test_srcrefs_df()</a></code> and
 <code><a href="../reference/trace_srcrefs_df.html">trace_srcrefs_df()</a></code> <code>data.frame</code>s, allowing for
@@ -287,7 +287,7 @@ together with the documented behaviors.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

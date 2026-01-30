@@ -1,0 +1,367 @@
+# covtracer [![](reference/figures/hex.png)](https://github.com/genentech/covtracer)
+
+Tools for contextualizing tests, built using `covr` test traces. This
+package provides utilities for linking an assortment of test and package
+information to paint a more complete picture of how a test was
+performed.
+
+``` mermaid
+flowchart LR
+    tests[Tests] <--> traces[Traced Exprs] <--> code[Package Code] <--> docs[Package Documentation]
+```
+
+## Installation
+
+To install, use `remotes` to install directly from
+[GitHub](https://github.com/Genentech/covtracer)
+
+Functionality hinges heavily on coverage objects prepared using `covr`
+(≥ 3.5.1.9003). To ensure suggested dependency requirements are met,
+install with `dependencies = TRUE` (satisfy all dependencies).
+
+``` r
+# will install covr >= v3.5.1.9003 for examples
+remotes::install_github("Genentech/covtracer", dependencies = TRUE)
+```
+
+## Motivation
+
+Tests are not black boxes. When it comes to verifying behaviors of code,
+we can use observations about the code that is executed by a test to
+build a more complete picture of exactly what the test does. This is a
+core part of software validation. By combining information about each
+test, the tested package code and linking that code to package
+documentation, we can link documented behaviors to their respective
+tests.
+
+## Getting Started
+
+Test traces are connected to evaluated code using `covr` (≥ 3.5.1.9003).
+Likewise, a new option flag (`covr.record_tests`) must be set in order
+to record tests alongside the coverage traces. Finally, the package to
+evaluate must be installed with source references in order to map all
+the components together.
+
+That’s a lot to configure, but if you’re in a position where this test
+data is valuable hopefully it’s worth the setup.
+
+``` r
+library(covtracer)
+
+# additional demo packages
+library(dplyr)
+library(withr)
+library(covr)
+
+withr::with_temp_libpaths({
+  pkg <- system.file("examplepkg", package = "covtracer")
+
+  install.packages(
+    pkg,
+    type = "source",
+    repos = NULL,
+    quiet = TRUE,
+    INSTALL_opts = c("--with-keep.source", "--install-tests")
+  )
+
+  options(covr.record_tests = TRUE)
+  cov <- covr::package_coverage(pkg)
+
+  ttdf <- test_trace_df(cov)
+})
+```
+
+There’s a lot of info in the resulting `data.frame`, but we’ll focus on
+just the critical piece, showing which tests evaluate code related to
+which documented behaviors. Below we show how one might map unit tests
+to evaluated, documented objects.
+
+> **Note:** Below we ignore documentation for datasets and S4 class
+> constructors. Although these are defined in the package, they don’t
+> map to testable lines of code because they are constructed when the
+> package is built.
+
+``` r
+traceability_matrix <- ttdf %>%
+  filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
+  select(test_name, file) %>%
+  filter(!duplicated(.)) %>%
+  arrange(file)
+
+traceability_matrix
+#>                                            test_name                       file
+#> 1  Example R6 Person class public methods are traced             Accumulator.Rd
+#> 2           S4Example increment generic method works                  Person.Rd
+#> 3  Example R6 Person class public methods are traced                  Person.Rd
+#> 4           S4Example increment generic method works                   Rando.Rd
+#> 5                                               <NA>                   Rando.Rd
+#> 6                                               <NA>                   adder.Rd
+#> 7           S4Example increment generic method works                   adder.Rd
+#> 8           S4Example increment generic method works      complex_call_stack.Rd
+#> 9           S4Example increment generic method works  deeper_nested_function.Rd
+#> 10          S4Example increment generic method works              hypotenuse.Rd
+#> 11          S4Example increment generic method works               increment.Rd
+#> 12                      S4Example names method works  names-S4Example-method.Rd
+#> 13                                              <NA> names-S4Example2-method.Rd
+#> 14          S4Example increment generic method works         nested_function.Rd
+#> 15                                              <NA>              rd_sampler.Rd
+#> 16          S4Example increment generic method works      recursive_function.Rd
+#> 17                                              <NA>        reexport_example.Rd
+#> 18                                              <NA>               reexports.Rd
+#> 19          S4Example increment generic method works         s3_example_func.Rd
+#> 20              S4 Generic Call: show(<myS4Example>)   show-S4Example-method.Rd
+#> 21                                              <NA>                       <NA>
+```
+
+We can quickly see which functions or methods are entirely untested.
+
+## Use Cases
+
+The `data.frame` returned by `test_trace_df` contains a ton of
+information, and we can measure a few dimensions of the quality of tests
+with some relatively straightforward analysis.
+
+### Traceability Matrix
+
+Perhaps the most immediate use case is to map unit tests to documented
+behaviors.
+
+``` r
+ttdf %>%
+  filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
+  select(test_name, file) %>%
+  filter(!duplicated(.)) %>%
+  arrange(file)
+#>                                            test_name                       file
+#> 1  Example R6 Person class public methods are traced             Accumulator.Rd
+#> 2           S4Example increment generic method works                  Person.Rd
+#> 3  Example R6 Person class public methods are traced                  Person.Rd
+#> 4           S4Example increment generic method works                   Rando.Rd
+#> 5                                               <NA>                   Rando.Rd
+#> 6                                               <NA>                   adder.Rd
+#> 7           S4Example increment generic method works                   adder.Rd
+#> 8           S4Example increment generic method works      complex_call_stack.Rd
+#> 9           S4Example increment generic method works  deeper_nested_function.Rd
+#> 10          S4Example increment generic method works              hypotenuse.Rd
+#> 11          S4Example increment generic method works               increment.Rd
+#> 12                      S4Example names method works  names-S4Example-method.Rd
+#> 13                                              <NA> names-S4Example2-method.Rd
+#> 14          S4Example increment generic method works         nested_function.Rd
+#> 15                                              <NA>              rd_sampler.Rd
+#> 16          S4Example increment generic method works      recursive_function.Rd
+#> 17                                              <NA>        reexport_example.Rd
+#> 18                                              <NA>               reexports.Rd
+#> 19          S4Example increment generic method works         s3_example_func.Rd
+#> 20              S4 Generic Call: show(<myS4Example>)   show-S4Example-method.Rd
+#> 21                                              <NA>                       <NA>
+```
+
+### Finding Untested Behaviors
+
+Once we can map unit testing to documentation, we can filter down to
+only documentation that is not covered by any test.
+
+``` r
+ttdf %>%
+  filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
+  select(test_name, count, alias, file) %>%
+  filter(is.na(count)) %>%
+  arrange(alias)
+#>   test_name count                   alias                       file
+#> 1      <NA>    NA                   Rando                   Rando.Rd
+#> 2      <NA>    NA                   adder                   adder.Rd
+#> 3      <NA>    NA                    help               reexports.Rd
+#> 4      <NA>    NA names,S4Example2-method names-S4Example2-method.Rd
+#> 5      <NA>    NA                  person                       <NA>
+#> 6      <NA>    NA              rd_sampler              rd_sampler.Rd
+#> 7      <NA>    NA        reexport_example        reexport_example.Rd
+#> 8      <NA>    NA               reexports               reexports.Rd
+```
+
+### Filter For Only Directly Tested Behaviors
+
+Some tests evaluate a broad set of functionality by calling functions
+that themselves call out to internal package functions. This is often
+perfectly fine, since the mechanisms of calling those internal functions
+are limited by the surfaced user-facing functions. Nevertheless, whether
+a function is called directly is a good indication of the “unit”-ness of
+a unit test. You may consider only the coverage of directly tested
+functions.
+
+``` r
+ttdf %>%
+  filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
+  select(direct, alias) %>%
+  group_by(alias) %>%
+  summarize(any_direct_tests = any(direct, na.rm = TRUE)) %>%
+  arrange(alias)
+#> # A tibble: 21 × 2
+#>   alias              any_direct_tests
+#>   <chr>              <lgl>           
+#> 1 Accumulator        TRUE            
+#> 2 Person             TRUE            
+#> 3 Rando              TRUE            
+#> 4 adder              TRUE            
+#> 5 complex_call_stack TRUE            
+#> # ℹ 16 more rows
+```
+
+# Package index
+
+## Mapping Tests to Documentation
+
+The primary user-facing functionality provided by the package.
+
+- [`test_trace_df()`](test_trace_df.md) : Build a traceability matrix
+  that links documented behaviors to unit tests
+
+## Working with `srcrefs`
+
+Want to dig deeper? This functions will help you tease apart the
+internals of package objects, documentation and tests.
+
+- [`pkg_srcrefs()`](pkg_srcrefs.md) : Extract all the srcref objects of
+  objects within a package namespace
+- [`test_srcrefs()`](test_srcrefs.md) : Extract test srcref objects
+- [`trace_srcrefs()`](trace_srcrefs.md) : Extract srcref objects from
+  coverage object traces
+- [`as.data.frame(`*`<list_of_srcref>`*`)`](as.data.frame.list_of_srcref.md)
+  : Coerce a list_of_srcref object to a data.frame
+- [`match_containing_srcrefs()`](match_containing_srcrefs.md) : Match
+  srcrefs against srcrefs that contain them
+- [`join_on_containing_srcrefs()`](join_on_containing_srcrefs.md) : Join
+  srcref data.frames by intersection of srcref spans
+- [`Rd_df()`](Rd_df.md) : Create a tabular representation of man file
+  information
+
+## Extracting Unit Test Descriptions
+
+An extensible interface for extracting test information from test calls.
+
+- [`test_description()`](test_description.md) : Parse a test description
+  from the calling expression
+
+## Miscellaneous Internals
+
+Everthing that happens behind-the-scenes.
+
+- [`Rd_df()`](Rd_df.md) : Create a tabular representation of man file
+  information
+
+- [`as.data.frame(`*`<list_of_srcref>`*`)`](as.data.frame.list_of_srcref.md)
+  : Coerce a list_of_srcref object to a data.frame
+
+- [`as.package()`](as.package.md) :
+
+  A simple alternative to `devtools::as.package`
+
+- [`as_list_of_srcref()`](as_list_of_srcref.md) : Create an S3 list of
+  srcref objects
+
+- [`as_test_desc()`](as_test_desc.md)
+  [`as_testthat_desc()`](as_test_desc.md) : Wrap object in test
+  description derivation data
+
+- [`coverage_check_has_recorded_tests()`](coverage_check_has_recorded_tests.md)
+  : Check that the coverage object retains testing information
+
+- [`coverage_get_tests()`](coverage_get_tests.md) : Retrieve test traces
+  from a coverage object
+
+- [`coverage_has_recorded_tests()`](coverage_has_recorded_tests.md) :
+  Test that the coverage object retains testing information
+
+- [`expr_str()`](expr_str.md) : Convert an expression, call or symbol to
+  a single-line string
+
+- [`flat_map_srcrefs()`](flat_map_srcrefs.md) :
+
+  Map `srcrefs` over an iterable object, Filtering non-srcref results
+
+- [`format(`*`<list_of_srcref>`*`)`](format.list_of_srcref.md) : Format
+  a list_of_srcref object
+
+- [`getSrcFilepath()`](getSrcFilepath.md) : Get the full path to the
+  srcref file
+
+- [`get_namespace_object_names()`](get_namespace_object_names.md) : Get
+  namespace exports, filtering methods tables and definitions
+
+- [`is_srcref()`](is_srcref.md) :
+
+  Test whether an object is a `srcref` object
+
+- [`join_on_containing_srcrefs()`](join_on_containing_srcrefs.md) : Join
+  srcref data.frames by intersection of srcref spans
+
+- [`match_containing_srcrefs()`](match_containing_srcrefs.md) : Match
+  srcrefs against srcrefs that contain them
+
+- [`new_empty_test_trace_tally()`](new_empty_test_trace_tally.md) :
+  Build an empty covr-style test trace mapping
+
+- [`obj_namespace_name()`](obj_namespace_name.md) : Get namespace export
+  namespace name
+
+- [`package_check_has_keep_source()`](package_check_has_keep_source.md)
+  : Verify that the package collection contains srcref information
+
+- [`pkg_srcrefs()`](pkg_srcrefs.md) : Extract all the srcref objects of
+  objects within a package namespace
+
+- [`pkg_srcrefs_df()`](pkg_srcrefs_df.md) : Create a data.frame of
+  package srcref objects
+
+- [`srcref_expr()`](srcref_expr.md) : Parse the expression associated
+  with a srcref
+
+- [`srcref_str()`](srcref_str.md) : Convert a srcref into a string
+
+- [`srcrefs()`](srcrefs.md) :
+
+  Retrieve `srcref`s
+
+- [`test_description()`](test_description.md) : Parse a test description
+  from the calling expression
+
+- [`test_description_test_that()`](test_description_test_that.md) :
+
+  Parse the test description from a `test_that` call
+
+- [`test_description_test_that_describe()`](test_description_test_that_describe.md)
+  :
+
+  Parse the test description from a `describe` call
+
+- [`test_description_test_that_describe_it()`](test_description_test_that_describe_it.md)
+  :
+
+  Parse the test description from a `it` call
+
+- [`test_srcrefs()`](test_srcrefs.md) : Extract test srcref objects
+
+- [`test_srcrefs_df()`](test_srcrefs_df.md) : Create a data.frame of
+  coverage test srcref objects
+
+- [`test_trace_df()`](test_trace_df.md) : Build a traceability matrix
+  that links documented behaviors to unit tests
+
+- [`test_trace_mapping()`](test_trace_mapping.md) : Create a data.frame
+  mapping tests to coverage traces
+
+- [`trace_srcrefs()`](trace_srcrefs.md) : Extract srcref objects from
+  coverage object traces
+
+- [`trace_srcrefs_df()`](trace_srcrefs_df.md) : Create a data.frame of
+  coverage trace srcref objects
+
+- [`with_pseudo_srcref()`](with_pseudo_srcref.md) : For consistency,
+  stub calls with srcref-like attributes
+
+# Articles
+
+### All vignettes
+
+- [Combining srcref Data](combining_srcref_data.md):
+- [Plotting Test Paths](plotting_test_paths.md):
+- [Working with srcrefs](working_with_srcrefs.md):

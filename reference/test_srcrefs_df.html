@@ -15,7 +15,7 @@ each expression executed within a testing suite."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">covtracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,8 +92,8 @@ used for the test name</p></dd>
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>srcrefs test_trace_mapping</p>
 <p>Other srcrefs_df:
-<code><a href="pkg_srcrefs_df.html">pkg_srcrefs_df</a>()</code>,
-<code><a href="trace_srcrefs_df.html">trace_srcrefs_df</a>()</code></p></div>
+<code><a href="pkg_srcrefs_df.html">pkg_srcrefs_df()</a></code>,
+<code><a href="trace_srcrefs_df.html">trace_srcrefs_df()</a></code></p></div>
     </div>
 
     <div class="section level2">
@@ -107,53 +107,35 @@ used for the test name</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2               Calling a deeply nested series of functions.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3             Calling a function halfway through call stack.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4                                               symbol: desc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                                               symbol: desc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                                               symbol: desc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7                                               symbol: desc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8                                               symbol: desc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9                                               symbol: desc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10                                              symbol: desc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11                                              symbol: desc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12                                              symbol: desc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13                                              symbol: desc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14                        hypotenuse is calculated correctly</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 hypotenuse is calculated correctly; with negative lengths</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16        Example R6 Accumulator class constructor is traced</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17           Example R6 Accumulator class methods are traced</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18           Example R6 Accumulator class methods are traced</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19         Example R6 Person class public methods are traced</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20         Example R6 Person class public methods are traced</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21  Example R6 Rando class active field functions are traced</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22              s3_example_func works using default dispatch</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23                 s3_example_func works using list dispatch</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24                              S4Example names method works</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25                  S4Example increment generic method works</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                         hypotenuse is calculated correctly</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  hypotenuse is calculated correctly; with negative lengths</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7         Example R6 Accumulator class constructor is traced</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8            Example R6 Accumulator class methods are traced</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9            Example R6 Accumulator class methods are traced</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10         Example R6 Person class public methods are traced</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11         Example R6 Person class public methods are traced</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  Example R6 Rando class active field functions are traced</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13              s3_example_func works using default dispatch</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14                 s3_example_func works using list dispatch</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15                              S4Example names method works</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16                  S4Example increment generic method works</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             srcref     type</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                             &lt;NA&gt;     call</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2    test-complex-calls.R:2:3:2:50 testthat</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3    test-complex-calls.R:6:3:6:54 testthat</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4  test-complex-calls.R:15:7:15:54 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  test-complex-calls.R:15:7:15:54 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  test-complex-calls.R:15:7:15:54 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  test-complex-calls.R:15:7:15:54 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  test-complex-calls.R:15:7:15:54 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  test-complex-calls.R:15:7:15:54 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 test-complex-calls.R:15:7:15:54 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 test-complex-calls.R:15:7:15:54 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 test-complex-calls.R:15:7:15:54 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 test-complex-calls.R:15:7:15:54 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14      test-hypotenuse.R:2:3:2:35 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15      test-hypotenuse.R:5:5:5:39 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16      test-r6-example.R:2:3:2:43 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17      test-r6-example.R:7:3:7:43 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18      test-r6-example.R:8:3:8:36 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19    test-r6-example.R:12:3:12:40 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20    test-r6-example.R:13:3:13:26 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21    test-r6-example.R:18:3:18:38 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22      test-s3-example.R:2:3:2:46 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23      test-s3-example.R:6:3:6:54 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24      test-s4-example.R:3:3:3:40 testthat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25      test-s4-example.R:7:3:7:31 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       test-hypotenuse.R:2:3:2:35 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       test-hypotenuse.R:5:5:5:39 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       test-r6-example.R:2:3:2:43 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       test-r6-example.R:7:3:7:43 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       test-r6-example.R:8:3:8:36 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    test-r6-example.R:12:3:12:40 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    test-r6-example.R:13:3:13:26 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    test-r6-example.R:18:3:18:38 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13      test-s3-example.R:2:3:2:46 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14      test-s3-example.R:6:3:6:54 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15      test-s4-example.R:3:3:3:40 testthat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16      test-s4-example.R:7:3:7:31 testthat</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -166,7 +148,7 @@ used for the test name</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
