@@ -54,8 +54,12 @@ Rd_df <- function(x) {
   
   if (!is.null(ns)) {
     traceable_aliases <- traceable_aliases(x$package, ns)
-    is_traceable <- 
-      vlapply(aliases, is_alias_traceable, ns = ns) | aliases %in% traceable_aliases # nolint
+    is_traceable <- vlapply(
+      aliases,
+      is_alias_traceable,
+      ns = ns,
+      traceable_aliases = traceable_aliases
+    )
   }  
 
   data.frame(

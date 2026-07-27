@@ -1,10 +1,6 @@
 # Set of helpers used by Rd_df to determine if an alias is covr-traceable
 
-traceable_aliases <- function(package, ns = NULL) {
-  if (is.null(ns)) {
-    getNamespace(package)
-  }
-  
+traceable_aliases <- function(package, ns = getNamespace(package)) {
   srcs <- srcrefs(ns)
   direct <- vlapply(
     srcs, function(src) {
@@ -34,7 +30,7 @@ is_covr_traceable <- function(x) {
   regular || supported_container
 }
 
-is_alias_traceable <- function(alias, ns) {
+is_alias_traceable <- function(alias, ns, traceable_aliases) {
   # S4 naming convention support
   if (grepl("-class$", alias)) {
     unique(alias <- c(
@@ -43,13 +39,15 @@ is_alias_traceable <- function(alias, ns) {
     ))
   }
   
-  alias_exists <- vlapply(alias, exists, envir = ns, inherits = FALSE)
-  alias <- alias[alias_exists]
-  
   is_traceable <- vlapply(alias, function(a) {
-    obj <- get(a, envir = ns, inherits = FALSE)
-    is_covr_traceable(obj)
+    if (exists(a, envir = ns, inherits = FALSE)) {
+      obj <- get(a, envir = ns, inherits = FALSE)
+      is_covr_traceable(obj)
+    } else {
+      a %in% traceable_aliases
+    }
   })
 
   any(is_traceable)
 }
+
