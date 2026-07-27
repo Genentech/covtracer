@@ -19,8 +19,8 @@ Test whether the coverage object has expected fields produced when coverage
 was captured with \code{option(covr.record_tests = TRUE)}.
 }
 \seealso{
-Other coverage_tests: 
-\code{\link{coverage_check_has_recorded_tests}()},
-\code{\link{coverage_get_tests}()}
+Other coverage_tests:
+\code{\link[=coverage_check_has_recorded_tests]{coverage_check_has_recorded_tests()}},
+\code{\link[=coverage_get_tests]{coverage_get_tests()}}
 }
 \concept{coverage_tests}

@@ -8,6 +8,7 @@ getSrcFilepath <- function(x) {
 }
 
 #' @importFrom utils getSrcFilename getSrcref
+#' @export
 getSrcFilepath.default <- function(x) {
   path <- getSrcFilename(x, full.names = TRUE)
   wd <- attr(getSrcref(x), "srcfile")$wd
@@ -19,6 +20,7 @@ getSrcFilepath.default <- function(x) {
 }
 
 #' @importFrom utils getSrcref
+#' @export
 getSrcFilepath.list_of_srcref <- function(x) {
   paths <- rep_len(NA_character_, length(x))
   wds <- lapply(x, function(i) attr(getSrcref(i), "srcfile")$wd)

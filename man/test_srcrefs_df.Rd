@@ -47,8 +47,8 @@ test_srcrefs_df(cov)
 \seealso{
 srcrefs test_trace_mapping
 
-Other srcrefs_df: 
-\code{\link{pkg_srcrefs_df}()},
-\code{\link{trace_srcrefs_df}()}
+Other srcrefs_df:
+\code{\link[=pkg_srcrefs_df]{pkg_srcrefs_df()}},
+\code{\link[=trace_srcrefs_df]{trace_srcrefs_df()}}
 }
 \concept{srcrefs_df}

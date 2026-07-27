@@ -7,7 +7,14 @@ is_srcref <- function(x) {
   inherits(x, "srcref")
 }
 
-
+#' Get namespace of the \code{srcref} object
+#'
+#' @param srcref object
+#' @return A `character` namespace name
+#'
+srcref_namespace <- function(srcref) {
+  attr(srcref, "namespace", exact = TRUE)
+}
 
 #' Retrieve \code{srcref}s
 #'

@@ -9,12 +9,14 @@ as_list_of_srcref <- function(x) {
 }
 
 #' @rdname as_list_of_srcref
+#' @export
 as_list_of_srcref.environment <- function(x) {
   l <- as.list(x)
   as_list_of_srcref(l)
 }
 
 #' @rdname as_list_of_srcref
+#' @export
 as_list_of_srcref.list <- function(x) {
   structure(x, class = c("list_of_srcref", class(x)))
 }

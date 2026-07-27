@@ -17,8 +17,8 @@ Assumes the coverage object was produced while
 \code{option(covr.record_tests = TRUE)}.
 }
 \seealso{
-Other coverage_tests: 
-\code{\link{coverage_check_has_recorded_tests}()},
-\code{\link{coverage_has_recorded_tests}()}
+Other coverage_tests:
+\code{\link[=coverage_check_has_recorded_tests]{coverage_check_has_recorded_tests()}},
+\code{\link[=coverage_has_recorded_tests]{coverage_has_recorded_tests()}}
 }
 \concept{coverage_tests}

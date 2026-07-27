@@ -28,6 +28,13 @@ Rd_df <- function(x) {
   x <- as.package(x)
   db <- tools::Rd_db(dir = x$path)
   exports <- parseNamespaceFile(basename(x$path), dirname(x$path))$exports
+  # tryCatch in case package is not installed
+  ns <- tryCatch(
+    getNamespace(x$package),
+    error = function(e) {
+      NULL
+    }
+  )
 
   # as suggested in ?tools::Rd_db examples
   aliases <- lapply(db, .tools$.Rd_get_metadata, "alias")
@@ -43,12 +50,20 @@ Rd_df <- function(x) {
   doctype <- rep(doctype, times = naliases)
   filepaths <- file.path(normalizePath(x$path), "man", files)
   aliases <- unlist(aliases, use.names = FALSE)
+  is_traceable <- rep(NA, times = sum(naliases))
+  
+  if (!is.null(ns)) {
+    traceable_aliases <- traceable_aliases(x$package, ns)
+    is_traceable <- 
+      vlapply(aliases, is_alias_traceable, ns = ns) | aliases %in% traceable_aliases # nolint
+  }  
 
   data.frame(
     file = files %||% character(0L),
     filepath = filepaths %||% character(0L),
     alias = aliases %||% character(0L),
     is_exported = aliases %in% exports,
+    is_traceable = is_traceable,
     doctype = doctype %||% character(0L),
     stringsAsFactors = FALSE
   )

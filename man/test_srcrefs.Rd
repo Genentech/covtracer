@@ -29,8 +29,8 @@ test_srcrefs(cov)
 \seealso{
 as.data.frame.list_of_srcref
 
-Other srcrefs: 
-\code{\link{pkg_srcrefs}()},
-\code{\link{trace_srcrefs}()}
+Other srcrefs:
+\code{\link[=pkg_srcrefs]{pkg_srcrefs()}},
+\code{\link[=trace_srcrefs]{trace_srcrefs()}}
 }
 \concept{srcrefs}
