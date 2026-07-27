@@ -1,4 +1,4 @@
-test_that("match_containing_srcrefs matches tests to appropriate code by file", {
+test_that("match_containing_srcrefs matches tests to appropriate code by file", { # nolint
   traces <- trace_srcrefs_df(examplepkg_cov)
   pkgsrcs <- pkg_srcrefs_df("examplepkg")
 
@@ -22,20 +22,23 @@ test_that("match_containing_srcrefs matches tests to appropriate code by file", 
 
       # trace begins at or after beginning of srcref region
       (trace_beg_line > pkgsrc_beg_line ||
-        trace_beg_line == pkgsrc_beg_line && trace_beg_byte >= pkgsrc_beg_byte) &&
+         trace_beg_line == pkgsrc_beg_line &&
+           trace_beg_byte >= pkgsrc_beg_byte) &&
 
         # and trace ends at or before end of srcref region
         (trace_end_line < pkgsrc_end_line ||
-          trace_end_line == pkgsrc_end_line && trace_end_byte <= pkgsrc_end_byte)
+           trace_end_line == pkgsrc_end_line &&
+             trace_end_byte <= pkgsrc_end_byte)
     }
   )))
 })
 
-test_that("match_containing_srcrefs matches tests even when some objects have no srcrefs", {
+test_that("match_containing_srcrefs matches tests even when some objects have no srcrefs", { # nolint
   # may be the case for reexports from packages built --without-keep.source"
 
   traces <- as_list_of_srcref.list(list(
-    "a" = srcref(srcfile = srcfile("a"), c(1, 0, 1, 10, 0, 10, 0, 0)), # from a file not in the package
+    # from a file not in the package
+    "a" = srcref(srcfile = srcfile("a"), c(1, 0, 1, 10, 0, 10, 0, 0)),
     "c" = srcref(srcfile = srcfile("c"), c(2, 0, 2, 10, 0, 10, 0, 0))
   ))
 

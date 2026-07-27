@@ -6,7 +6,7 @@
   }
 }
 
-
+vlapply <- function(...) vapply(..., FUN.VALUE = logical(1L))
 
 #' Get namespace exports, filtering methods tables and definitions
 #'

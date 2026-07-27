@@ -6,8 +6,8 @@
 #'
 #' \describe{
 #'   \item{\code{testthat}}{If the test used \code{\link[testthat]{test_that}},
-#'     then the description (\code{desc} parameter) is extracted and evaluated if
-#'     need be to produce a descriptive string. Nested calls to
+#'     then the description (\code{desc} parameter) is extracted and evaluated
+#'     if need be to produce a descriptive string. Nested calls to
 #'     \code{\link[testthat]{test_that}} currently return the outermost test
 #'     description, although this behavior is subject to change.
 #'   }
@@ -201,7 +201,7 @@ srcref_str <- function(ref) {
 #'
 expr_str <- function(ref) {
   # used when description of the test is given by a variable
-  # (see: inst/examplepkg/tests/testthat/test-complex-calls.R)
+  # (see: inst/examplepkg/tests/testthat/test-complex-calls.R) # nolint
   if (is.symbol(ref)) {
     return(paste0("symbol: ", as.character(ref)))
   }

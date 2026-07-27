@@ -86,7 +86,9 @@ test_trace_df.coverage <- function(
         aggregate_by
       )
     }
-    test_mat[, "direct"] <- ifelse(test_mat[, "direct", drop = FALSE] > 0L, 1L, 0L)
+    test_mat[, "direct"] <- ifelse(
+      test_mat[, "direct", drop = FALSE] > 0L, 1L, 0L
+    )
   }
 
   # II.1 merge traces against namespace srcrefs to link objects and docs
@@ -165,11 +167,11 @@ coverage_has_recorded_tests <- function(coverage) {
   ))
 
   if (has_tests_attr || has_trace_tests) {
-    return(TRUE)
+    TRUE
   } else if (!has_r_dir_traces) {
-    return(NA)
+    NA
   } else {
-    return(FALSE)
+    FALSE
   }
 }
 

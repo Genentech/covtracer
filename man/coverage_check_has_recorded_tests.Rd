@@ -24,8 +24,8 @@ was captured with \code{option(covr.record_tests = TRUE)}, throwing an error
 if it was not.
 }
 \seealso{
-Other coverage_tests: 
-\code{\link{coverage_get_tests}()},
-\code{\link{coverage_has_recorded_tests}()}
+Other coverage_tests:
+\code{\link[=coverage_get_tests]{coverage_get_tests()}},
+\code{\link[=coverage_has_recorded_tests]{coverage_has_recorded_tests()}}
 }
 \concept{coverage_tests}

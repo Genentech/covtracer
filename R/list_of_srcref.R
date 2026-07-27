@@ -9,12 +9,14 @@ as_list_of_srcref <- function(x) {
 }
 
 #' @rdname as_list_of_srcref
+#' @export
 as_list_of_srcref.environment <- function(x) {
   l <- as.list(x)
   as_list_of_srcref(l)
 }
 
 #' @rdname as_list_of_srcref
+#' @export
 as_list_of_srcref.list <- function(x) {
   structure(x, class = c("list_of_srcref", class(x)))
 }
@@ -45,7 +47,12 @@ as_list_of_srcref.list <- function(x) {
 #' @return A `character` vector of formatted strings
 #'
 #' @export
-format.list_of_srcref <- function(x, ..., full.names = FALSE, full.num = FALSE) {
+format.list_of_srcref <- function(
+  x,
+  ...,
+  full.names = FALSE,
+  full.num = FALSE
+) {
   out <- rep_len(NA_character_, length(x))
   if (!length(x)) {
     return(out)
@@ -56,7 +63,11 @@ format.list_of_srcref <- function(x, ..., full.names = FALSE, full.num = FALSE) 
   if (all(isnull)) {
     return(out)
   }
-  fps <- if (full.names) getSrcFilepath(x[!isnull]) else vapply(x[!isnull], getSrcFilename, character(1L))
+  fps <- if (full.names) {
+    getSrcFilepath(x[!isnull])
+  } else {
+    vapply(x[!isnull], getSrcFilename, character(1L))
+  }
   srcref_num_rep_len <- length(as.numeric(x[!isnull][[1]]))
   nums <- t(vapply(x[!isnull], as.numeric, numeric(srcref_num_rep_len)))
   cols <- c(1L, 5L, 3L, 6L)

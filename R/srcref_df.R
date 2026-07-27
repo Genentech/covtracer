@@ -306,8 +306,11 @@ match_containing_srcrefs <- function(l, r) {
 
   while (li <= nrow(ldf) && ri <= nrow(rdf)) {
     # if filenames don't match, jump to filename
-    if (!identical(t <- basename(ldf[[li, "srcfile"]]), basename(rdf[[ri, "srcfile"]]))) {
-      p <- Position(function(i) identical(i, t), basename(rdf[ri:nrow(rdf), "srcfile"]))
+    if (!identical(t <- basename(ldf[[li, "srcfile"]]), basename(rdf[[ri, "srcfile"]]))) { # nolint
+      p <- Position(
+        function(i) identical(i, t),
+        basename(rdf[ri:nrow(rdf), "srcfile"])
+      )
       if (is.na(p)) {
         # no srcrefs from the same file, no chance of being contained, iterate
         idx[[li]] <- NA_integer_
@@ -321,19 +324,21 @@ match_containing_srcrefs <- function(l, r) {
 
     l_start_gte_r_start <- (ldf[[li, "line1"]] > rdf[[ri, "line1"]]) ||
       (ldf[[li, "line1"]] == rdf[[ri, "line1"]] &&
-        ldf[[li, "col1"]] >= rdf[[ri, "col1"]])
+         ldf[[li, "col1"]] >= rdf[[ri, "col1"]])
 
     l_end_lte_r_end <- (ldf[[li, "line2"]] < rdf[[ri, "line2"]]) ||
       (ldf[[li, "line2"]] == rdf[[ri, "line2"]] &&
-        ldf[[li, "col2"]] <= rdf[[ri, "col2"]])
+         ldf[[li, "col2"]] <= rdf[[ri, "col2"]])
 
     if (!is.na(l_start_gte_r_start) && l_start_gte_r_start) {
       if (!is.na(l_end_lte_r_end) && l_end_lte_r_end) {
-        # left starts after and ends before right - is contained entirely within right
+        # left starts after and ends before right
+        # is contained entirely within right
         idx[[li]] <- ri
         li <- li + 1L
       } else {
-        # left starts after right, but ends after right also - not contained within right
+        # left starts after right
+        # but ends after right also - not contained within right
         ri <- ri + 1L
       }
     } else {

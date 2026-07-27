@@ -22,8 +22,8 @@ Extract srcref objects from coverage object traces
 \seealso{
 as.data.frame.list_of_srcref
 
-Other srcrefs: 
-\code{\link{pkg_srcrefs}()},
-\code{\link{test_srcrefs}()}
+Other srcrefs:
+\code{\link[=pkg_srcrefs]{pkg_srcrefs()}},
+\code{\link[=test_srcrefs]{test_srcrefs()}}
 }
 \concept{srcrefs}

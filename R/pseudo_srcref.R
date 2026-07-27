@@ -16,7 +16,11 @@
 #'
 with_pseudo_srcref <- function(call, file, lloc) {
   if (!is.null(srcfile) && !is.null(lloc)) {
-    attr(call, "srcref") <- structure(lloc, srcfile = srcfile(file), class = "pseudo_srcref")
+    attr(call, "srcref") <- structure(
+      lloc,
+      srcfile = srcfile(file),
+      class = "pseudo_srcref"
+    )
   }
   structure(call, class = c("with_pseudo_srcref", class(call)))
 }
