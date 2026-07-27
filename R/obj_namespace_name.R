@@ -58,4 +58,4 @@ obj_namespace_name.standardGeneric <- function(x, ns) {
 }
 
 #' @exportS3Method
-obj_namespace_name.nonstandardGenericFunction <- obj_namespace_name.standardGeneric
+obj_namespace_name.nonstandardGenericFunction <- obj_namespace_name.standardGeneric # nolint

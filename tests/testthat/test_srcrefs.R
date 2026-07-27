@@ -30,7 +30,8 @@ test_that("srcrefs can process S4 methods tables", {
 
 
 test_that("srcrefs can process R6 public class methods & fields", {
-  # extract Accumulator R6 object, which contains top level public methods & fields
+  # extract Accumulator R6 object
+  # which contains top level public methods & fields
   objs <- as.list(examplepkg_ns, all.names = TRUE)
   expect_true("Accumulator" %in% names(objs))
   r6_objs_env <- as.environment(objs["Accumulator"])
@@ -49,7 +50,8 @@ test_that("srcrefs can process R6 public class methods & fields", {
 
 
 test_that("srcrefs can process R6 private class methods & fields", {
-  # extract Accumulator R6 object, which contains top level public methods & fields
+  # extract Accumulator R6 object
+  # which contains top level public methods & fields
   objs <- as.list(examplepkg_ns, all.names = TRUE)
   expect_true("Person" %in% names(objs))
   r6_objs_env <- as.environment(objs["Person"])
@@ -68,7 +70,8 @@ test_that("srcrefs can process R6 private class methods & fields", {
 
 
 test_that("srcrefs can process R6 active fields", {
-  # extract Accumulator R6 object, which contains top level public methods & fields
+  # extract Accumulator R6 object
+  # which contains top level public methods & fields
   objs <- as.list(examplepkg_ns, all.names = TRUE)
   expect_true("Rando" %in% names(objs))
   r6_objs_env <- as.environment(objs["Rando"])
@@ -85,15 +88,18 @@ test_that("srcrefs can process R6 active fields", {
 })
 
 
-test_that("srcrefs return lists uses names which can be linked to object docs", {
+test_that("srcrefs return lists uses names which can be linked to object docs", { # nolint
   srcs <- srcrefs(examplepkg_ns)
   srcnames <- names(as.list(srcs))
-  aliases <- unlist(lapply(tools::Rd_db("examplepkg"), tools:::.Rd_get_metadata, "alias"))
+  aliases <- unlist(
+    lapply(tools::Rd_db("examplepkg"), tools:::.Rd_get_metadata, "alias")
+  )
 
   # most object names should be retained (some class objects may not)
   expect_true(any(names(srcs) %in% names(as.list(getNamespace("examplepkg")))))
 
-  # all objects should map to a documented alias (only true if methods redirect to generic)
+  # all objects should map to a documented alias
+  # (only true if methods redirect to generic)
   expect_true(all(names(srcs) %in% aliases))
 })
 

@@ -15,7 +15,9 @@ test_that("test trace mapping", {
       expect_type(ttmat, "integer")
       expect_true(length(dim(ttmat)) == 2L)
       expect_true(ncol(ttmat) == ncol(examplepkg_cov[[1L]]$tests) + 1L)
-      expect_true(all(colnames(ttmat) == c(colnames(examplepkg_cov[[1L]]$tests), "trace")))
+      expect_true(
+        all(colnames(ttmat) == c(colnames(examplepkg_cov[[1L]]$tests), "trace"))
+      )
     })
   }
 })

@@ -27,7 +27,8 @@ getSrcFilepath.list_of_srcref <- function(x) {
   fns <- lapply(x, function(i) attr(getSrcref(i), "srcfile")$filename)
   has_wd <- !vapply(wds, is.null, logical(1L))
   has_fp <- !vapply(fns, is.null, logical(1L))
-  paths[has_wd & has_fp] <- file.path(wds[has_wd & has_fp], fns[has_wd & has_fp])
+  paths[has_wd & has_fp] <-
+    file.path(wds[has_wd & has_fp], fns[has_wd & has_fp])
   paths[!has_wd & has_fp] <- as.character(fns[!has_wd & has_fp])
   paths
 }

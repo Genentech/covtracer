@@ -7,5 +7,7 @@ linters:
 	)
 exclusions:
     list(
-        "tests/testthat/data"
+        "tests/testthat/packages",
+        "inst/examplepkg",
+        "vignettes"
     )

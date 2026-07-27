@@ -14,7 +14,7 @@ traceable_aliases <- function(package, ns = getNamespace(package)) {
 
 is_covr_traceable <- function(x) {
   regular <- is.function(x) && !is.primitive(x)
-  
+
   # Based on:
   # https://github.com/r-lib/covr/blob/f1866d296c00884d1f085ff245669de01bc864c4/R/covr.R#L90-L102 # nolint
   supported_container <-
@@ -26,7 +26,7 @@ is_covr_traceable <- function(x) {
                "S7_class"
              )) ||
     inherits(attr(x, "spec", exact = TRUE), "box$mod_spec")
-  
+
   regular || supported_container
 }
 
@@ -38,7 +38,7 @@ is_alias_traceable <- function(alias, ns, traceable_aliases) {
       sub("-class$", "", alias)
     ))
   }
-  
+
   is_traceable <- vlapply(alias, function(a) {
     if (exists(a, envir = ns, inherits = FALSE)) {
       obj <- get(a, envir = ns, inherits = FALSE)
@@ -50,4 +50,3 @@ is_alias_traceable <- function(alias, ns, traceable_aliases) {
 
   any(is_traceable)
 }
-

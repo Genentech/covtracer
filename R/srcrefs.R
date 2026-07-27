@@ -67,7 +67,12 @@ srcrefs <- function(x, ...) {
 #' @exportS3Method
 #' @importFrom utils getSrcref
 #' @rdname srcrefs
-srcrefs.default <- function(x, ..., srcref_names = NULL, breadcrumbs = character()) {
+srcrefs.default <- function(
+  x,
+  ...,
+  srcref_names = NULL,
+  breadcrumbs = character()
+) {
   sr <- getSrcref(x)
 
   if (!is.null(sr) && !is_srcref(sr) && !identical(sr, x)) {
@@ -87,7 +92,12 @@ srcrefs.default <- function(x, ..., srcref_names = NULL, breadcrumbs = character
 
 #' @exportS3Method
 #' @rdname srcrefs
-srcrefs.list <- function(x, ..., srcref_names = NULL, breadcrumbs = character()) {
+srcrefs.list <- function(
+  x,
+  ...,
+  srcref_names = NULL,
+  breadcrumbs = character()
+) {
   # The method is designed to handle lists and is later passed to the mapper
   # However if the object has other classes than list with set .[[ methods
   # it could lead to unexpected results returned by the mapper. Thus, if
@@ -194,7 +204,9 @@ srcrefs.MethodDefinition <- function(x, ..., srcref_names = NULL) {
     signatures <- x@generic
   } else {
     # as produced by `methods:::.methods_info`
-    signatures <- paste0(x@generic, ",", paste0(x@defined, collapse = ","), "-method")
+    signatures <- paste0(
+      x@generic, ",", paste0(x@defined, collapse = ","), "-method"
+    )
   }
 
   signatures <- signatures[!duplicated(signatures)]
@@ -330,7 +342,7 @@ package_check_has_keep_source <- function(env) {
   obj_has_srcref <- vapply(env, has_srcref, logical(1L))
   if (length(obj_has_srcref) > 0L && !any(obj_has_srcref)) {
     stop(
-      "Package was not installed using `--with-keep.source`. Reinstall using:\n\n",
+      "Package was not installed using `--with-keep.source`. Reinstall using:\n\n", # nolint
       "    `R_KEEP_PKG_SOURCE=yes` environment variable or \n",
       "    `R CMD INSTALL --with-keep.source ... `  or \n",
       "    `install.packages(..., INSTALL_opts = \"--with-keep.source\")`\n\n"

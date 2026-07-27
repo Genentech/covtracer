@@ -5,6 +5,7 @@
 ^README\.(Rmd|html)$
 ^LICENSE\.md$
 ^\.github$
+^\.lintr$
 ^doc$
 ^Meta$
 ^cran-comments\.md$
