@@ -1,6 +1,7 @@
 # Combining srcref Data
 
 ``` r
+
 library(covtracer)
 ```
 
@@ -14,6 +15,7 @@ Before we begin, we’ll set up a demo coverage object and package
 namespace that we can use to showcase these relationships:
 
 ``` r
+
 library(withr)
 library(covr)
 
@@ -53,6 +55,7 @@ To associate `srcref`s by this relation, we provide a special joining
 function to combine `data.frames` by `srcref` columns.
 
 ``` r
+
 traces_df <- trace_srcrefs_df(examplepkg_cov)
 pkg_ns_df <- pkg_srcrefs_df(examplepkg_ns)
 ```
@@ -61,6 +64,7 @@ Just looking at these two `data.frames`, we can use the first trace and
 package object to illustrate the relationship:
 
 ``` r
+
 cat("pkg  : ", format(pkg_ns_df$srcref["s3_example_func.list"]), "\n")
 #> pkg  :  s3_example.R:20:25:22:1
 cat("trace: ", format(traces_df$srcref[1L]), "\n")
@@ -73,6 +77,7 @@ the coverage trace lies in line 20. With this information, we can couple
 each package object with the coverage traces contained within each.
 
 ``` r
+
 head(join_on_containing_srcrefs(traces_df, pkg_ns_df))
 #>                                 name.x                srcref.x                  name.y                 srcref.y
 #> 1 r6_example.R:63:7:63:24:7:24:100:100 r6_example.R:63:7:63:24                  Person  r6_example.R:60:18:64:5
@@ -104,6 +109,7 @@ function is provided which will reshape a `covr` object (produced using
 all `covr` traces:
 
 ``` r
+
 head(test_trace_mapping(examplepkg_cov))
 #>      test call depth i trace
 #> [1,]    1    1     1 1     9
@@ -144,36 +150,37 @@ function to associate any available source code with a documentation
 file.
 
 ``` r
+
 # filter for interesting columns for display
 cols <- c("file", "alias", "doctype")
 Rd_df(examplepkg_source_path)[, cols]
-#>                          file                   alias doctype
-#> 1              Accumulator.Rd             Accumulator    <NA>
-#> 2                    adder.Rd                   adder    <NA>
-#> 3       complex_call_stack.Rd      complex_call_stack    <NA>
-#> 4   deeper_nested_function.Rd  deeper_nested_function    <NA>
-#> 5               hypotenuse.Rd              hypotenuse    <NA>
-#> 6                increment.Rd               increment    <NA>
-#> 7   names-S4Example-method.Rd  names,S4Example-method    <NA>
-#> 8  names-S4Example2-method.Rd names,S4Example2-method    <NA>
-#> 9          nested_function.Rd         nested_function    <NA>
-#> 10                  Person.Rd                  Person    <NA>
-#> 11             PersonPrime.Rd             PersonPrime    data
-#> 12                   Rando.Rd                   Rando    <NA>
-#> 13         rd_data_sampler.Rd         rd_data_sampler    data
-#> 14              rd_sampler.Rd              rd_sampler    <NA>
-#> 15      recursive_function.Rd      recursive_function    <NA>
-#> 16        reexport_example.Rd        reexport_example    <NA>
-#> 17               reexports.Rd               reexports  import
-#> 18               reexports.Rd                    help  import
-#> 19         s3_example_func.Rd         s3_example_func    <NA>
-#> 20         s3_example_func.Rd s3_example_func.default    <NA>
-#> 21         s3_example_func.Rd    s3_example_func.list    <NA>
-#> 22         S4Example-class.Rd         S4Example-class   class
-#> 23         S4Example-class.Rd               S4Example   class
-#> 24        S4Example2-class.Rd        S4Example2-class   class
-#> 25        S4Example2-class.Rd              S4Example2   class
-#> 26   show-S4Example-method.Rd   show,S4Example-method    <NA>
+#>                                               file                   alias doctype
+#> Accumulator                         Accumulator.Rd             Accumulator    <NA>
+#> adder                                     adder.Rd                   adder    <NA>
+#> complex_call_stack           complex_call_stack.Rd      complex_call_stack    <NA>
+#> deeper_nested_function   deeper_nested_function.Rd  deeper_nested_function    <NA>
+#> hypotenuse                           hypotenuse.Rd              hypotenuse    <NA>
+#> increment                             increment.Rd               increment    <NA>
+#> names,S4Example-method   names-S4Example-method.Rd  names,S4Example-method    <NA>
+#> names,S4Example2-method names-S4Example2-method.Rd names,S4Example2-method    <NA>
+#> nested_function                 nested_function.Rd         nested_function    <NA>
+#> Person                                   Person.Rd                  Person    <NA>
+#> PersonPrime                         PersonPrime.Rd             PersonPrime    data
+#> Rando                                     Rando.Rd                   Rando    <NA>
+#> rd_data_sampler                 rd_data_sampler.Rd         rd_data_sampler    data
+#> rd_sampler                           rd_sampler.Rd              rd_sampler    <NA>
+#> recursive_function           recursive_function.Rd      recursive_function    <NA>
+#> reexport_example               reexport_example.Rd        reexport_example    <NA>
+#> reexports                             reexports.Rd               reexports  import
+#> help                                  reexports.Rd                    help  import
+#> s3_example_func                 s3_example_func.Rd         s3_example_func    <NA>
+#> s3_example_func.default         s3_example_func.Rd s3_example_func.default    <NA>
+#> s3_example_func.list            s3_example_func.Rd    s3_example_func.list    <NA>
+#> S4Example-class                 S4Example-class.Rd         S4Example-class   class
+#> S4Example                       S4Example-class.Rd               S4Example   class
+#> S4Example2-class               S4Example2-class.Rd        S4Example2-class   class
+#> S4Example2                     S4Example2-class.Rd              S4Example2   class
+#> show,S4Example-method     show-S4Example-method.Rd   show,S4Example-method    <NA>
 ```
 
 These aliases are also used when we use
@@ -181,6 +188,7 @@ These aliases are also used when we use
 associate `srcrefs` with `.Rd` files.
 
 ``` r
+
 pkg_srcrefs_df(examplepkg_ns)
 #>                       name                          srcref  namespace
 #> 1          nested_function  complex_call_stack.R:9:20:11:1 examplepkg

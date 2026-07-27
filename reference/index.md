@@ -107,6 +107,10 @@ Everthing that happens behind-the-scenes.
 - [`srcref_expr()`](srcref_expr.md) : Parse the expression associated
   with a srcref
 
+- [`srcref_namespace()`](srcref_namespace.md) :
+
+  Get namespace of the `srcref` object
+
 - [`srcref_str()`](srcref_str.md) : Convert a srcref into a string
 
 - [`srcrefs()`](srcrefs.md) :

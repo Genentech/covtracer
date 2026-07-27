@@ -1,6 +1,14 @@
 # Changelog
 
+## covtracer 0.0.3
+
+- Add is_traceable variable to the [`Rd_df()`](../reference/Rd_df.md)
+  function which is a heuristic that identifies if an object is
+  covr-traceable within the package namespace.
+
 ## covtracer 0.0.2
+
+CRAN release: 2026-01-30
 
 - Fix [`test_trace_df()`](../reference/test_trace_df.md) when recorded
   tests were unable to discover `srcref`s

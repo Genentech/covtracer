@@ -20,6 +20,7 @@ Functionality hinges heavily on coverage objects prepared using `covr`
 install with `dependencies = TRUE` (satisfy all dependencies).
 
 ``` r
+
 # will install covr >= v3.5.1.9003 for examples
 remotes::install_github("Genentech/covtracer", dependencies = TRUE)
 ```
@@ -46,6 +47,7 @@ That’s a lot to configure, but if you’re in a position where this test
 data is valuable hopefully it’s worth the setup.
 
 ``` r
+
 library(covtracer)
 
 # additional demo packages
@@ -82,6 +84,7 @@ to evaluated, documented objects.
 > package is built.
 
 ``` r
+
 traceability_matrix <- ttdf %>%
   filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
   select(test_name, file) %>%
@@ -127,6 +130,7 @@ Perhaps the most immediate use case is to map unit tests to documented
 behaviors.
 
 ``` r
+
 ttdf %>%
   filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
   select(test_name, file) %>%
@@ -162,6 +166,7 @@ Once we can map unit testing to documentation, we can filter down to
 only documentation that is not covered by any test.
 
 ``` r
+
 ttdf %>%
   filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
   select(test_name, count, alias, file) %>%
@@ -189,6 +194,7 @@ a unit test. You may consider only the coverage of directly tested
 functions.
 
 ``` r
+
 ttdf %>%
   filter(!doctype %in% c("data", "class")) %>% # ignore objects without testable code
   select(direct, alias) %>%

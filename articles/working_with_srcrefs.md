@@ -1,17 +1,19 @@
 # Working with srcrefs
 
 ``` r
+
 library(covtracer)
 ```
 
 ## What are `srcref` objects?
 
 ``` r
+
 print(examplepkg_ns$hypotenuse)
 #> function(a, b) {
 #>   return(sqrt(a^2 + b^2))
 #> }
-#> <bytecode: 0x56163bb892c0>
+#> <bytecode: 0x563e89cf8358>
 #> <environment: namespace:examplepkg>
 ```
 
@@ -31,16 +33,19 @@ start and end of the source code.
 Lets see it in action:
 
 ``` r
+
 getSrcref(covtracer::test_trace_df)
 ```
 
 ``` r
+
 # get line and column ranges (for details see ?srcref)
 as.numeric(getSrcref(covtracer::test_trace_df))
 #> numeric(0)
 ```
 
 ``` r
+
 getSrcFilename(covtracer::test_trace_df)
 #> character(0)
 ```
@@ -63,6 +68,7 @@ for the sake of example, but this is only necessary when we want to
 avoid installing the package into our working library.
 
 ``` r
+
 library(withr)
 library(covr)
 
@@ -99,12 +105,14 @@ provided for improved introspection and readability.
 Getting a `list` of `srcref`s
 
 ``` r
+
 pkg_srcrefs(examplepkg_ns)["test_description.character"]
 ```
 
 Viewing results as a `data.frame`
 
 ``` r
+
 head(pkg_srcrefs_df(examplepkg_ns))
 #>                   name                          srcref  namespace
 #> 1      nested_function  complex_call_stack.R:9:20:11:1 examplepkg
@@ -118,6 +126,7 @@ head(pkg_srcrefs_df(examplepkg_ns))
 Extracing individual `srcref`s from the resulting `data.frame`
 
 ``` r
+
 df <- pkg_srcrefs_df(examplepkg_ns)
 df$srcref[[1L]]
 #> function(x) {
@@ -140,6 +149,7 @@ this, test “srcrefs” are actually `call` objects with a
 consistency.
 
 ``` r
+
 examplepkg_test_srcrefs <- test_srcrefs(examplepkg_cov)
 ```
 
@@ -147,6 +157,7 @@ Despite not having a valid `srcfile`, we can still use all of our
 favorite `srcref` functions because of the `with_pseudo_scref` subclass:
 
 ``` r
+
 getSrcFilename(examplepkg_test_srcrefs[[1]])
 ```
 
@@ -156,23 +167,24 @@ And finally, there is a corresponding `*_df` function to make this
 information easier to see at a glance:
 
 ``` r
+
 head(examplepkg_test_srcrefs)
 #> [[1]]
 #> show(<myS4Example>)
 #> 
-#> $`/tmp/RtmpqDLhS0/R_LIBS25713191d242/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`
+#> $`/tmp/Rtmpa15B1f/R_LIBS23723d31df22/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`
 #> complex_call_stack("test")
 #> 
-#> $`/tmp/RtmpqDLhS0/R_LIBS25713191d242/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:6:3:6:54:3:54:6:6`
+#> $`/tmp/Rtmpa15B1f/R_LIBS23723d31df22/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:6:3:6:54:3:54:6:6`
 #> deeper_nested_function("test")
 #> 
-#> $`/tmp/RtmpqDLhS0/R_LIBS25713191d242/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:15:7:15:54:7:54:15:15`
+#> $`/tmp/Rtmpa15B1f/R_LIBS23723d31df22/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:15:7:15:54:7:54:15:15`
 #> complex_call_stack("test")
 #> 
-#> $`/tmp/RtmpqDLhS0/R_LIBS25713191d242/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:2:3:2:35:3:35:2:2`
+#> $`/tmp/Rtmpa15B1f/R_LIBS23723d31df22/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:2:3:2:35:3:35:2:2`
 #> hypotenuse(3, 4)
 #> 
-#> $`/tmp/RtmpqDLhS0/R_LIBS25713191d242/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:5:5:5:39:5:39:5:5`
+#> $`/tmp/Rtmpa15B1f/R_LIBS23723d31df22/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:5:5:5:39:5:39:5:5`
 #> hypotenuse(-3, -4)
 ```
 
@@ -184,6 +196,7 @@ coverage object. Even without any helper functions, you can find this
 information by indexing into a coverage object to explore for yourself.
 
 ``` r
+
 examplepkg_cov[[1]]$srcref
 #> private$age <- age
 ```
@@ -192,6 +205,7 @@ Nevertheless, we provide simple alternatives for restructuring this data
 into something more consistent with the rest of the pacakge.
 
 ``` r
+
 examplepkg_trace_srcrefs <- trace_srcrefs(examplepkg_cov)
 examplepkg_trace_srcrefs[1]
 #> $`r6_example.R:63:7:63:24:7:24:100:100`
@@ -209,6 +223,7 @@ And just like the other functions in the family, this too comes with a
 `*_df` companion function.
 
 ``` r
+
 head(trace_srcrefs_df(examplepkg_cov))
 #>                                   name                  srcref
 #> 1 r6_example.R:63:7:63:24:7:24:100:100 r6_example.R:63:7:63:24

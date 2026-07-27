@@ -7,6 +7,7 @@ traces of a package. Below is an example where a package is installed
 with the necessary flags such that the coverage traces can be collected.
 
 ``` r
+
 library(covtracer)
 
 library(withr)
@@ -14,6 +15,7 @@ library(covr)
 ```
 
 ``` r
+
 options(keep.source = TRUE, keep.source.pkg = TRUE, covr.record_tests = TRUE)
 examplepkg_source_path <- system.file("examplepkg", package = "covtracer")
 
@@ -34,6 +36,7 @@ ttdf <- covtracer::test_trace_df(examplepkg_cov, aggregate_by = NULL)
 As well, for this analysis we will use a few supporting packages.
 
 ``` r
+
 library(dplyr)
 #> 
 #> Attaching package: 'dplyr'
@@ -64,6 +67,7 @@ untested records and filtering out untestable objects like S4 class
 definitions.
 
 ``` r
+
 ttdf <- ttdf %>%
   filter(!is.na(test_name)) %>%
   filter(is.na(doctype) | !doctype %in% "class") %>%
@@ -91,6 +95,7 @@ a test linking to a trace with an index, each jump in the test path
 should link from the calling expression to the evaluated expression.
 
 ``` r
+
 edges_df <- ttdf %>%
   split(.$test_name) %>%
   lapply(function(sdf) {
@@ -117,6 +122,7 @@ vertex in this context can be either a test or a trace, we have some
 data that is captured differently for each class of vertex.
 
 ``` r
+
 test_names <- Filter(Negate(is.na), unique(ttdf$test_name))
 obj_names <- Filter(Negate(is.na), unique(ttdf$alias))
 
@@ -152,6 +158,7 @@ vertices_df %>%
 Finally, we can plot this network of test executions:
 
 ``` r
+
 g <- igraph::graph_from_data_frame(edges_df, vertices = vertices_df)
 
 par(mai = rep(0, 4), omi = rep(0, 4L))

@@ -17,13 +17,13 @@ Source:
 [`DESCRIPTION`](https://github.com/genentech/covtracer/blob/main/DESCRIPTION)
 
 Kelkhoff D, Maksymiuk S, McNeil A (2026). *covtracer: Contextualizing
-Tests*. R package version 0.0.2,
+Tests*. R package version 0.0.3,
 <https://github.com/genentech/covtracer>.
 
     @Manual{,
       title = {covtracer: Contextualizing Tests},
       author = {Doug Kelkhoff and Szymon Maksymiuk and Andrew McNeil},
       year = {2026},
-      note = {R package version 0.0.2},
+      note = {R package version 0.0.3},
       url = {https://github.com/genentech/covtracer},
     }

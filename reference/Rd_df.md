@@ -106,31 +106,31 @@ Rd_df(package_source_dir)
 #> 24         /home/runner/work/_temp/Library/covtracer/examplepkg/man/s3_example_func.Rd
 #> 25         /home/runner/work/_temp/Library/covtracer/examplepkg/man/s3_example_func.Rd
 #> 26   /home/runner/work/_temp/Library/covtracer/examplepkg/man/show-S4Example-method.Rd
-#>                      alias is_exported doctype
-#> 1              Accumulator        TRUE    <NA>
-#> 2                   Person        TRUE    <NA>
-#> 3              PersonPrime        TRUE    data
-#> 4                    Rando        TRUE    <NA>
-#> 5          S4Example-class       FALSE   class
-#> 6                S4Example        TRUE   class
-#> 7         S4Example2-class       FALSE   class
-#> 8               S4Example2        TRUE   class
-#> 9                    adder       FALSE    <NA>
-#> 10      complex_call_stack        TRUE    <NA>
-#> 11  deeper_nested_function        TRUE    <NA>
-#> 12              hypotenuse        TRUE    <NA>
-#> 13               increment        TRUE    <NA>
-#> 14  names,S4Example-method       FALSE    <NA>
-#> 15 names,S4Example2-method       FALSE    <NA>
-#> 16         nested_function       FALSE    <NA>
-#> 17         rd_data_sampler        TRUE    data
-#> 18              rd_sampler        TRUE    <NA>
-#> 19      recursive_function       FALSE    <NA>
-#> 20        reexport_example        TRUE    <NA>
-#> 21               reexports       FALSE  import
-#> 22                    help        TRUE  import
-#> 23         s3_example_func        TRUE    <NA>
-#> 24 s3_example_func.default       FALSE    <NA>
-#> 25    s3_example_func.list       FALSE    <NA>
-#> 26   show,S4Example-method       FALSE    <NA>
+#>                      alias is_exported is_traceable doctype
+#> 1              Accumulator        TRUE           NA    <NA>
+#> 2                   Person        TRUE           NA    <NA>
+#> 3              PersonPrime        TRUE           NA    data
+#> 4                    Rando        TRUE           NA    <NA>
+#> 5          S4Example-class       FALSE           NA   class
+#> 6                S4Example        TRUE           NA   class
+#> 7         S4Example2-class       FALSE           NA   class
+#> 8               S4Example2        TRUE           NA   class
+#> 9                    adder       FALSE           NA    <NA>
+#> 10      complex_call_stack        TRUE           NA    <NA>
+#> 11  deeper_nested_function        TRUE           NA    <NA>
+#> 12              hypotenuse        TRUE           NA    <NA>
+#> 13               increment        TRUE           NA    <NA>
+#> 14  names,S4Example-method       FALSE           NA    <NA>
+#> 15 names,S4Example2-method       FALSE           NA    <NA>
+#> 16         nested_function       FALSE           NA    <NA>
+#> 17         rd_data_sampler        TRUE           NA    data
+#> 18              rd_sampler        TRUE           NA    <NA>
+#> 19      recursive_function       FALSE           NA    <NA>
+#> 20        reexport_example        TRUE           NA    <NA>
+#> 21               reexports       FALSE           NA  import
+#> 22                    help        TRUE           NA  import
+#> 23         s3_example_func        TRUE           NA    <NA>
+#> 24 s3_example_func.default       FALSE           NA    <NA>
+#> 25    s3_example_func.list       FALSE           NA    <NA>
+#> 26   show,S4Example-method       FALSE           NA    <NA>
 ```
