@@ -1,4 +1,4 @@
-# covtracer (development version)
+# covtracer 0.0.4
 
 * `test_trace_df()` now links tests to every object that shares the same code.
 
