@@ -376,13 +376,25 @@ match_containing_srcrefs <- function(l, r) {
 #' @return A `data.frame` of `x` joined on `y` by spanning `srcref`
 #'
 #' @export
-join_on_containing_srcrefs <- function(x, y, by = c("srcref" = "srcref")) {
+join_on_containing_srcrefs <- function(
+    x, y, by = c("srcref" = "srcref")) {
   by <- by[1L]
+
   if (!names(by) %in% names(x) || !by %in% names(y)) {
     stop("joining columns defined in `by` not found in provided data.frames")
   }
 
   idx <- match_containing_srcrefs(x[[names(by)[[1L]]]], y[[by[[1L]]]])
+
+  # every record of y with the same span as the one that was matched
+  span <- srcref_span_key(y[[by[[1L]]]])
+  matches <- lapply(idx, function(i) {
+    if (is.na(i)) NA_integer_ else which(span == span[[i]])
+  })
+  x <- x[rep(seq_len(nrow(x)), lengths(matches)), , drop = FALSE]
+  rownames(x) <- NULL
+  idx <- as.integer(unlist(matches, use.names = FALSE))
+
   if (any(names(y) %in% names(x))) {
     names(x) <- paste(names(x), "x", sep = ".")
     names(y) <- paste(names(y), "y", sep = ".")
@@ -390,4 +402,24 @@ join_on_containing_srcrefs <- function(x, y, by = c("srcref" = "srcref")) {
 
   x[names(y)] <- y[idx, ]
   x
+}
+
+
+
+#' Identify the span of each srcref
+#'
+#' @param x A `list_of_srcref` object
+#' @return A `character` vector with the file name, first line, first column,
+#'   last line and last column of each `srcref`, or `NA` for elements that are
+#'   not `srcref`s. Equal values mean exactly the same span of code.
+#'
+srcref_span_key <- function(x) {
+  if (!length(x)) return(character(0L))
+  df <- as.data.frame(x, use.names = FALSE, expand.srcref = TRUE)
+  key <- paste(
+    basename(df$srcfile), df$line1, df$col1, df$line2, df$col2,
+    sep = ":"
+  )
+  key[is.na(df$line1)] <- NA_character_
+  key
 }

@@ -1,3 +1,16 @@
+# covtracer (development version)
+
+* `test_trace_df()` now links tests to every object that shares the same code.
+  Previously, when objects had identical `srcref`s (for example after
+  `a <- b`), traces were linked to whichever of them came first, and the
+  others were listed without tests. This includes objects that only hold the
+  function, such as a list containing it; `Rd_df()`'s `is_traceable` still
+  marks those.
+
+* `join_on_containing_srcrefs()` gains `ties`, to join every record of `y`
+  with an identical `srcref` span (`ties = "all"`) instead of only the first
+  (`ties = "first"`, the default).
+
 # covtracer 0.0.3
 
 * Add is_traceable variable to the `Rd_df()` function which is a heuristic
