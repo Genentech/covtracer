@@ -31,9 +31,8 @@
 #' as.data.frame(pkg_srcrefs("examplepkg"))
 #' @export
 as.data.frame.list_of_srcref <- function(
-  x, ..., use.names = TRUE,
-  expand.srcref = FALSE, row.names = NULL) {
-
+    x, ..., use.names = TRUE,
+    expand.srcref = FALSE, row.names = NULL) {
   if (expand.srcref) {
     df <- data.frame(
       srcfile = getSrcFilepath(x),
@@ -218,6 +217,7 @@ test_srcrefs_df.coverage <- function(x) {
 }
 
 
+
 #' Create a data.frame mapping tests to coverage traces
 #'
 #' Extract a matrix used to relate test code to the traces that each test
@@ -270,6 +270,7 @@ test_trace_mapping <- function(x) {
   mat <- mat[order(mat[, "test"], mat[, "i"]), , drop = FALSE]
   mat
 }
+
 
 
 #' Match srcrefs against srcrefs that contain them
@@ -353,6 +354,7 @@ match_containing_srcrefs <- function(l, r) {
 }
 
 
+
 #' Join srcref data.frames by intersection of srcref spans
 #'
 #' References to source code are defined by the source code line and column span
@@ -367,21 +369,20 @@ match_containing_srcrefs <- function(l, r) {
 #' @param y A `data.frame`, as produced by `as.data.frame` applied to a
 #'   `list_of_srcref`, joining data from srcrefs data which encompasses srcrefs
 #'   from `x`.
+#' @param by A named `character` `vector` of column names to use for the merge.
+#'   The name should be the name of the column from the left `data.frame`
+#'   containing a `list_of_srcref` column, and the value should be the name of a
+#'   column from the right `data.frame` containing a `list_of_srcref` column.
 #' @return A `data.frame` of `x` joined on `y` by spanning `srcref`
 #'
 #' @export
-join_on_containing_srcrefs <- function(x, y) {
-  idx <- match_containing_srcrefs(x[["srcref"]], y[["srcref"]])
+join_on_containing_srcrefs <- function(x, y, by = c("srcref" = "srcref")) {
+  by <- by[1L]
+  if (!names(by) %in% names(x) || !by %in% names(y)) {
+    stop("joining columns defined in `by` not found in provided data.frames")
+  }
 
-  # every record of y with the same span as the one that was matched
-  span <- srcref_span_key(y[["srcref"]])
-  matches <- lapply(idx, function(i) {
-    if (is.na(i)) NA_integer_ else which(span == span[[i]])
-  })
-  x <- x[rep(seq_len(nrow(x)), lengths(matches)), , drop = FALSE]
-  rownames(x) <- NULL
-  idx <- as.integer(unlist(matches, use.names = FALSE))
-
+  idx <- match_containing_srcrefs(x[[names(by)[[1L]]]], y[[by[[1L]]]])
   if (any(names(y) %in% names(x))) {
     names(x) <- paste(names(x), "x", sep = ".")
     names(y) <- paste(names(y), "y", sep = ".")
@@ -389,23 +390,4 @@ join_on_containing_srcrefs <- function(x, y) {
 
   x[names(y)] <- y[idx, ]
   x
-}
-
-
-#' Identify the span of each srcref
-#'
-#' @param x A `list_of_srcref` object
-#' @return A `character` vector with the file name, first line, first column,
-#'   last line and last column of each `srcref`, or `NA` for elements that are
-#'   not `srcref`s. Equal values mean exactly the same span of code.
-#'
-srcref_span_key <- function(x) {
-  if (!length(x)) return(character(0L))
-  df <- as.data.frame(x, use.names = FALSE, expand.srcref = TRUE)
-  key <- paste(
-    basename(df$srcfile), df$line1, df$col1, df$line2, df$col2,
-    sep = ":"
-  )
-  key[is.na(df$line1)] <- NA_character_
-  key
 }

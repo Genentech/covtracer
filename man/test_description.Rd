@@ -22,8 +22,8 @@ descriptive information can be extracted:
 \details{
 \describe{
 \item{\code{testthat}}{If the test used \code{\link[testthat]{test_that}},
-then the description (\code{desc} parameter) is extracted and evaluated
-if need be to produce a descriptive string. Nested calls to
+then the description (\code{desc} parameter) is extracted and evaluated if
+need be to produce a descriptive string. Nested calls to
 \code{\link[testthat]{test_that}} currently return the outermost test
 description, although this behavior is subject to change.
 }
