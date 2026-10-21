@@ -53,3 +53,25 @@ test_that("match_containing_srcrefs matches tests even when some objects have no
   expect_silent(m <- match_containing_srcrefs(traces, pkgsrcs))
   expect_equal(m, c(NA, 3))
 })
+
+test_that("join_on_containing_srcrefs joins all records with the same span when", { # nolint
+  sr <- function(line1, line2) {
+    srcref(srcfile("f"), c(line1, 1, line2, 10, 1, 10, line1, line2))
+  }
+
+  traces <- as.data.frame(as_list_of_srcref.list(list(
+    "t1" = sr(2, 2),
+    "t2" = sr(9, 9)
+  )))
+
+  # "b" and "a" share a span, as after `a <- b`
+  pkgsrcs <- as.data.frame(as_list_of_srcref.list(list(
+    "b" = sr(1, 3),
+    "a" = sr(1, 3),
+    "c" = sr(5, 6)
+  )))
+
+  joined <- join_on_containing_srcrefs(traces, pkgsrcs)
+  expect_equal(joined$name.x, c("t1", "t1", "t2"))
+  expect_equal(joined$name.y, c("b", "a", NA))
+})

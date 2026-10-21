@@ -14,7 +14,8 @@ A \code{data.frame} of documented object information with variables:
 \describe{
 \item{index}{A \code{numeric} index of documentation files associated with
 documentation objects}
-\item{file}{A \code{character} filename of the Rd file in the "man" directory}
+\item{file}{A \code{character} filename of the Rd file in the
+"man" directory}
 \item{filepath}{A \code{character} file path of the Rd file in the "man"
 directory}
 \item{alias}{\code{character} object names which are aliases for the

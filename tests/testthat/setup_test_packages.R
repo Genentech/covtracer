@@ -27,6 +27,7 @@ dir.create(lib <- tempfile("ct_"), recursive = TRUE)
 tests <- normalizePath(testthat::test_path())
 pkg_dirs <- Filter(Negate(is.null), list(
   system.file("examplepkg", package = "covtracer"),
+  file.path(tests, "packages", "alias.fn"),
   file.path(tests, "packages", "list.obj"),
   file.path(tests, "packages", "no.evaluable.code"),
   file.path(tests, "packages", "no.exports"),

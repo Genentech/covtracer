@@ -1,3 +1,13 @@
+# covtracer 0.0.4
+
+* `test_trace_df()` now links tests to every object that shares the same code.
+
+* `pkg_srcrefs()` gives wrappers such as `Vectorize(f)` or
+  `memoise::memoise(f)` the `srcref`s of the package functions they wrap.
+
+* `join_on_containing_srcrefs()`joins every record of `y`
+  with an identical `srcref` span instead of only the first.
+
 # covtracer 0.0.3
 
 * Add is_traceable variable to the `Rd_df()` function which is a heuristic
