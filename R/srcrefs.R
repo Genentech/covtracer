@@ -301,7 +301,8 @@ pkg_srcrefs.environment <- function(x) {
   srcs <- srcrefs(x)
 
   if (isNamespace(x)) {
-    srcs <- c(srcs, wrapper_srcrefs(x, exclude = names(srcs)))
+    wrappers <- wrapper_srcrefs(x, exclude = names(srcs))
+    if (length(wrappers)) srcs <- c(srcs, wrappers)
     srcs[setdiff(get_namespace_object_names(x), names(srcs))] <- NA
   }
 
