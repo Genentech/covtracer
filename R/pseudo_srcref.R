@@ -32,7 +32,7 @@ as.double.with_pseudo_srcref <- function(x, ...) {
 
 #' @export
 format.with_pseudo_srcref <- function(x, ...) {
-  if (inherits(x[[1]], "standardGeneric")) {
+  if (inherits(x[[1]], "genericFunction")) {
     return(format_standardGeneric_call(x))
   }
 

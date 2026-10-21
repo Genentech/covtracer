@@ -131,7 +131,7 @@ test_that("test descriptions can be extracted from implicit generic calls", {
   # expect that we have a test for a standardGeneric
   expect_silent({
     s4generic_test <- Find(
-      function(i) class(i[[1]][[1]]) == "standardGeneric",
+      function(i) inherits(i[[1]][[1]], "genericFunction"),
       attr(examplepkg_cov, "tests")
     )
 

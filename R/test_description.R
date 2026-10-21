@@ -206,7 +206,7 @@ expr_str <- function(ref) {
     return(paste0("symbol: ", as.character(ref)))
   }
   # special case naked generic calls (see: inst/examplepkg/tests/non-testthat.R)
-  if (inherits(ref[[1]], "standardGeneric")) {
+  if (inherits(ref[[1]], "genericFunction")) {
     return(paste0("S4 Generic Call: ", format_standardGeneric_call(ref)))
   }
 
