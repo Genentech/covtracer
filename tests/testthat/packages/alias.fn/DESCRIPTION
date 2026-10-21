@@ -7,8 +7,8 @@ Authors@R:
       email = "author.mcauthor@example.com"
     )
 Description: 
-    A package which exports a function and an alias of it (`a <- b`), so both
-    names share the same code and srcref.
+    A package which exports a function, an alias of it (`a <- b`) and a
+    wrapper of it (`v <- Vectorize(b)`), so all three names run the same code.
 License:
     Inheritted From Parent Package
 Encoding: UTF-8

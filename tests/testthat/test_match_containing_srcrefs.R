@@ -54,7 +54,7 @@ test_that("match_containing_srcrefs matches tests even when some objects have no
   expect_equal(m, c(NA, 3))
 })
 
-test_that("join_on_containing_srcrefs joins all records with the same span", { # nolint
+test_that("join_on_containing_srcrefs joins all records with the same span when ties = 'all'", { # nolint
   sr <- function(line1, line2) {
     srcref(srcfile("f"), c(line1, 1, line2, 10, 1, 10, line1, line2))
   }
@@ -74,7 +74,7 @@ test_that("join_on_containing_srcrefs joins all records with the same span", { #
   first <- join_on_containing_srcrefs(traces, pkgsrcs)
   expect_equal(first$name.y, c("b", NA))
 
-  joined <- join_on_containing_srcrefs(traces, pkgsrcs)
+  joined <- join_on_containing_srcrefs(traces, pkgsrcs, ties = "all")
   expect_equal(joined$name.x, c("t1", "t1", "t2"))
   expect_equal(joined$name.y, c("b", "a", NA))
 })

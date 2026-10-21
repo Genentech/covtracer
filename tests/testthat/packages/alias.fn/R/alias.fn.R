@@ -10,3 +10,7 @@ b <- function(x) {
 #' @rdname b
 #' @export
 a <- b
+
+#' @rdname b
+#' @export
+v <- Vectorize(b)

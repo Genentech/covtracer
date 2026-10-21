@@ -3,11 +3,14 @@
 \name{b}
 \alias{b}
 \alias{a}
+\alias{v}
 \title{Add one}
 \usage{
 b(x)
 
 a(x)
+
+v(x)
 }
 \arguments{
 \item{x}{A number.}
