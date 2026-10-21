@@ -151,8 +151,9 @@ srcrefs.environment <- function(x, ..., breadcrumbs = character()) {
 #' @exportS3Method
 #' @rdname srcrefs
 srcrefs.R6ClassGenerator <- function(
-    x, ..., srcref_names = NULL,
-    breadcrumbs = character()) {
+  x, ..., srcref_names = NULL,
+  breadcrumbs = character()) {
+
   objs <- c(list(x$new), x$public_methods, x$private_methods, x$active)
   names(objs) <- rep_len(srcref_names, length(objs))
   flat_map_srcrefs(

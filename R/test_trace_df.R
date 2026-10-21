@@ -28,9 +28,10 @@ test_trace_df <- function(x, ...) {
 #' @export
 #' @rdname test_trace_df
 test_trace_df.coverage <- function(
-    x, ...,
-    pkg = as.package(attr(x, "package")$path),
-    aggregate_by = sum) {
+  x, ...,
+  pkg = as.package(attr(x, "package")$path),
+  aggregate_by = sum) {
+
   coverage_check_has_recorded_tests(x)
   pkgname <- pkg$package
 
@@ -91,14 +92,19 @@ test_trace_df.coverage <- function(
     )
   }
 
-  # II.1 merge traces against namespace srcrefs to link objects and docs
+  # II.1 merge traces against namespace srcrefs to link objects and docs.
+  #   Traces are numbered first, because a trace in code shared by several
+  #   objects (such as `a <- b`) is joined to each of them. Each object is
+  #   listed once per span, so code found twice under one name (for example
+  #   an S3 method that is also in the S3 methods table) isn't joined twice.
+  trace_df$trace <- seq_len(nrow(trace_df))
+  pkg_join_df <- pkg_df[, setdiff(names(pkg_df), "namespace"), drop = FALSE]
+  pkg_join_key <- paste(pkg_join_df$alias, srcref_span_key(pkg_join_df$srcref))
+  pkg_join_df <- pkg_join_df[!duplicated(pkg_join_key), , drop = FALSE]
   trace_df <- join_on_containing_srcrefs(
     trace_df,
-    pkg_df[, setdiff(names(pkg_df), "namespace"), drop = FALSE],
-    by = c("trace_srcref" = "srcref")
+    pkg_join_df
   )
-
-  trace_df$trace <- seq_len(nrow(trace_df))
 
   # II.2 merge tests against traces to link test num, hash and description to
   # trace
@@ -140,7 +146,6 @@ coverage_get_tests <- function(coverage) {
 }
 
 
-
 #' Test that the coverage object retains testing information
 #'
 #' Test whether the coverage object has expected fields produced when coverage
@@ -174,7 +179,6 @@ coverage_has_recorded_tests <- function(coverage) {
     FALSE
   }
 }
-
 
 
 #' Check that the coverage object retains testing information

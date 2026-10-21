@@ -4,7 +4,7 @@
 \alias{join_on_containing_srcrefs}
 \title{Join srcref data.frames by intersection of srcref spans}
 \usage{
-join_on_containing_srcrefs(x, y, by = c(srcref = "srcref"))
+join_on_containing_srcrefs(x, y)
 }
 \arguments{
 \item{x}{A \code{data.frame}, as produced by \code{as.data.frame} applied to a
@@ -13,11 +13,6 @@ join_on_containing_srcrefs(x, y, by = c(srcref = "srcref"))
 \item{y}{A \code{data.frame}, as produced by \code{as.data.frame} applied to a
 \code{list_of_srcref}, joining data from srcrefs data which encompasses srcrefs
 from \code{x}.}
-
-\item{by}{A named \code{character} \code{vector} of column names to use for the merge.
-The name should be the name of the column from the left \code{data.frame}
-containing a \code{list_of_srcref} column, and the value should be the name of a
-column from the right \code{data.frame} containing a \code{list_of_srcref} column.}
 }
 \value{
 A \code{data.frame} of \code{x} joined on \code{y} by spanning \code{srcref}
