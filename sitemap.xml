@@ -23,6 +23,7 @@
 <url><loc>/reference/getSrcFilepath.html</loc></url>
 <url><loc>/reference/get_namespace_object_names.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/is_shared_env.html</loc></url>
 <url><loc>/reference/is_srcref.html</loc></url>
 <url><loc>/reference/join_on_containing_srcrefs.html</loc></url>
 <url><loc>/reference/match_containing_srcrefs.html</loc></url>
@@ -33,6 +34,7 @@
 <url><loc>/reference/pkg_srcrefs_df.html</loc></url>
 <url><loc>/reference/srcref_expr.html</loc></url>
 <url><loc>/reference/srcref_namespace.html</loc></url>
+<url><loc>/reference/srcref_span_key.html</loc></url>
 <url><loc>/reference/srcref_str.html</loc></url>
 <url><loc>/reference/srcrefs.html</loc></url>
 <url><loc>/reference/test_description.html</loc></url>
@@ -46,5 +48,7 @@
 <url><loc>/reference/trace_srcrefs.html</loc></url>
 <url><loc>/reference/trace_srcrefs_df.html</loc></url>
 <url><loc>/reference/with_pseudo_srcref.html</loc></url>
+<url><loc>/reference/wrapped_srcrefs.html</loc></url>
+<url><loc>/reference/wrapper_srcrefs.html</loc></url>
 </urlset>
 

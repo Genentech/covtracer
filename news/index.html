@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">covtracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,12 @@
       <small>Source: <a href="https://github.com/genentech/covtracer/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.0.4" id="covtracer-004">covtracer 0.0.4<a class="anchor" aria-label="anchor" href="#covtracer-004"></a></h2>
+<ul><li><p><code><a href="../reference/test_trace_df.html">test_trace_df()</a></code> now links tests to every object that shares the same code.</p></li>
+<li><p><code><a href="../reference/pkg_srcrefs.html">pkg_srcrefs()</a></code> gives wrappers such as <code>Vectorize(f)</code> or <code>memoise::memoise(f)</code> the <code>srcref</code>s of the package functions they wrap.</p></li>
+<li><p><code><a href="../reference/join_on_containing_srcrefs.html">join_on_containing_srcrefs()</a></code>joins every record of <code>y</code> with an identical <code>srcref</code> span instead of only the first.</p></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.3" id="covtracer-003">covtracer 0.0.3<a class="anchor" aria-label="anchor" href="#covtracer-003"></a></h2><p class="text-muted">CRAN release: 2026-07-28</p>
 <ul><li>Add is_traceable variable to the <code><a href="../reference/Rd_df.html">Rd_df()</a></code> function which is a heuristic that identifies if an object is covr-traceable within the package namespace.</li>

@@ -79,6 +79,9 @@ Everthing that happens behind-the-scenes.
 - [`get_namespace_object_names()`](get_namespace_object_names.md) : Get
   namespace exports, filtering methods tables and definitions
 
+- [`is_shared_env()`](is_shared_env.md) : Test whether an environment is
+  shared by many objects
+
 - [`is_srcref()`](is_srcref.md) :
 
   Test whether an object is a `srcref` object
@@ -110,6 +113,9 @@ Everthing that happens behind-the-scenes.
 - [`srcref_namespace()`](srcref_namespace.md) :
 
   Get namespace of the `srcref` object
+
+- [`srcref_span_key()`](srcref_span_key.md) : Identify the span of each
+  srcref
 
 - [`srcref_str()`](srcref_str.md) : Convert a srcref into a string
 
@@ -153,3 +159,9 @@ Everthing that happens behind-the-scenes.
 
 - [`with_pseudo_srcref()`](with_pseudo_srcref.md) : For consistency,
   stub calls with srcref-like attributes
+
+- [`wrapped_srcrefs()`](wrapped_srcrefs.md) : Collect srcrefs of the
+  functions a wrapper keeps in its environment
+
+- [`wrapper_srcrefs()`](wrapper_srcrefs.md) : Find srcrefs for namespace
+  objects that wrap package functions
