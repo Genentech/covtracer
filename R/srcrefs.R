@@ -301,10 +301,110 @@ pkg_srcrefs.environment <- function(x) {
   srcs <- srcrefs(x)
 
   if (isNamespace(x)) {
+    srcs <- c(srcs, wrapper_srcrefs(x, exclude = names(srcs)))
     srcs[setdiff(get_namespace_object_names(x), names(srcs))] <- NA
   }
 
   as_list_of_srcref(srcs)
+}
+
+
+
+#' Find srcrefs for namespace objects that wrap package functions
+#'
+#' Wrappers such as `Vectorize(f)` or `memoise::memoise(f)` have no `srcref`
+#' of their own, but keep the function they wrap in their environment. Each
+#' namespace object without a `srcref` is searched this way, and given the
+#' `srcref`s of the wrapped functions that belong to the same namespace. Code
+#' from other packages, such as helpers a wrapper uses internally, is left
+#' out.
+#'
+#' @param ns A package namespace environment
+#' @param exclude A `character` vector of object names that already have
+#'   `srcref`s
+#' @return A `list` of `srcref`s, named by the wrapper they belong to
+#'
+wrapper_srcrefs <- function(ns, exclude = character()) {
+  pkg <- env_ns_name(ns)
+  obj_names <- setdiff(ls(ns, all.names = TRUE), exclude)
+
+  srcs <- lapply(obj_names, function(name) {
+    obj <- get0(name, envir = ns, inherits = FALSE)
+    if (!is.function(obj) || is.primitive(obj) || !is.null(getSrcref(obj))) {
+      return(list())
+    }
+
+    found <- wrapped_srcrefs(obj)
+    found <- Filter(function(sr) identical(srcref_namespace(sr), pkg), found)
+    found[!duplicated(srcref_span_key(as_list_of_srcref(found)))]
+  })
+
+  found_names <- rep(obj_names, lengths(srcs))
+  if (!length(found_names)) {
+    return(list())
+  }
+
+  srcs <- unlist(srcs, recursive = FALSE, use.names = FALSE)
+  names(srcs) <- found_names
+  srcs
+}
+
+
+
+#' Collect srcrefs of the functions a wrapper keeps in its environment
+#'
+#' Functions with a `srcref` are collected. Functions without one may be
+#' wrappers themselves, and are searched in turn. Environments shared by many
+#' functions (namespaces, the global and base environments, attached
+#' packages) are never searched, nor is any environment searched twice.
+#'
+#' @param f A function without a `srcref`
+#' @param seen A `list` of environments already searched
+#' @return A `list` of `srcref`s, each with a `"namespace"` attribute of the
+#'   namespace of the function it came from
+#'
+wrapped_srcrefs <- function(f, seen = list()) {
+  env <- environment(f)
+  if (is_shared_env(env) || any(vapply(seen, identical, logical(1L), env))) {
+    return(list())
+  }
+  seen <- c(seen, env)
+
+  out <- list()
+  for (name in ls(env, all.names = TRUE)) {
+    obj <- tryCatch(
+      get(name, envir = env, inherits = FALSE),
+      error = function(e) NULL
+    )
+    if (!is.function(obj) || is.primitive(obj)) next
+
+    sr <- getSrcref(obj)
+    if (is_srcref(sr)) {
+      attr(sr, "namespace") <- env_ns_name(environment(obj))
+      out <- c(out, list(sr))
+    } else {
+      out <- c(out, wrapped_srcrefs(obj, seen))
+    }
+  }
+
+  out
+}
+
+
+
+#' Test whether an environment is shared by many objects
+#'
+#' @param env An environment, or `NULL`
+#' @return `TRUE` for `NULL`, namespaces, attached package environments and
+#'   the global, base and empty environments
+#'
+is_shared_env <- function(env) {
+  is.null(env) ||
+    isNamespace(env) ||
+    !is.null(attr(env, "name")) ||
+    identical(env, globalenv()) ||
+    identical(env, baseenv()) ||
+    identical(env, emptyenv())
 }
 
 #' @param x A \code{character} package name, which can be used with

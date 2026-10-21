@@ -379,7 +379,6 @@ match_containing_srcrefs <- function(l, r) {
 join_on_containing_srcrefs <- function(
     x, y, by = c("srcref" = "srcref")) {
   by <- by[1L]
-
   if (!names(by) %in% names(x) || !by %in% names(y)) {
     stop("joining columns defined in `by` not found in provided data.frames")
   }
@@ -394,7 +393,7 @@ join_on_containing_srcrefs <- function(
   x <- x[rep(seq_len(nrow(x)), lengths(matches)), , drop = FALSE]
   rownames(x) <- NULL
   idx <- as.integer(unlist(matches, use.names = FALSE))
-
+  
   if (any(names(y) %in% names(x))) {
     names(x) <- paste(names(x), "x", sep = ".")
     names(y) <- paste(names(y), "y", sep = ".")

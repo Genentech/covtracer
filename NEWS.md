@@ -7,9 +7,9 @@
   function, such as a list containing it; `Rd_df()`'s `is_traceable` still
   marks those.
 
-* `join_on_containing_srcrefs()` gains `ties`, to join every record of `y`
-  with an identical `srcref` span (`ties = "all"`) instead of only the first
-  (`ties = "first"`, the default).
+* `join_on_containing_srcrefs()`joins every record of `y`
+  with an identical `srcref` span instead of only the first
+
 
 # covtracer 0.0.3
 
