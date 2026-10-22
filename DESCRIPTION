@@ -1,6 +1,6 @@
 Package: covtracer
 Title: Contextualizing Tests
-Version: 0.0.4
+Version: 0.0.5
 Authors@R:
     c(
       person(
