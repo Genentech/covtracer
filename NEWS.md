@@ -1,3 +1,8 @@
+# covtracer 0.0.5
+
+* `pkg_srcrefs()` gives functions copied from another one, for example by
+  changing default arguments with `formals<-`, the `srcref` of the original.
+
 # covtracer 0.0.4
 
 * `test_trace_df()` now links tests to every object that shares the same code.

@@ -301,12 +301,80 @@ pkg_srcrefs.environment <- function(x) {
   srcs <- srcrefs(x)
 
   if (isNamespace(x)) {
-    wrappers <- wrapper_srcrefs(x, exclude = names(srcs))
-    if (length(wrappers)) srcs <- c(srcs, wrappers)
+    derived <- c(
+      copied_srcrefs(x, exclude = names(srcs)),
+      wrapper_srcrefs(x, exclude = names(srcs))
+    )
+    if (length(derived)) srcs <- c(srcs, derived)
     srcs[setdiff(get_namespace_object_names(x), names(srcs))] <- NA
   }
 
   as_list_of_srcref(srcs)
+}
+
+
+
+#' Find srcrefs for namespace functions copied from another function
+#'
+#' A function rebuilt from another one, for example by changing its default
+#' arguments with `formals<-`, loses its own `srcref` but keeps the original
+#' body, along with the body's `srcref`s. Such a function is given the
+#' `srcref` of the namespace function whose body has exactly the same
+#' `srcref`s, so both share code and tests, as an alias (`a <- b`) does.
+#'
+#' Only bodies in braces carry `srcref`s, so a copy of a function like
+#' `function(x) x + 1` can't be matched this way.
+#'
+#' @inheritParams wrapper_srcrefs
+#' @return A `list` of `srcref`s, named by the copy they belong to
+#'
+copied_srcrefs <- function(ns, exclude = character()) {
+  pkg <- env_ns_name(ns)
+  fns <- Filter(
+    function(f) is.function(f) && !is.primitive(f),
+    mget(ls(ns, all.names = TRUE), envir = ns)
+  )
+
+  has_own <- vapply(fns, function(f) is_srcref(attr(f, "srcref")), logical(1L))
+  in_ns <- vapply(
+    fns,
+    function(f) identical(env_ns_name(environment(f)), pkg),
+    logical(1L)
+  )
+  originals <- fns[has_own & in_ns]
+  copies <- fns[!has_own & !names(fns) %in% exclude]
+  if (length(originals) == 0 || length(copies) == 0) return(list())
+
+  original_keys <- vapply(originals, body_srcref_key, character(1L))
+  srcs <- lapply(copies, function(f) {
+    key <- body_srcref_key(f)
+    if (is.na(key)) return(NULL)
+    i <- match(key, original_keys)
+    if (is.na(i)) return(NULL)
+    sr <- attr(originals[[i]], "srcref")
+    attr(sr, "namespace") <- pkg
+    sr
+  })
+
+  Filter(Negate(is.null), srcs)
+}
+
+
+
+#' Identify a function body by the spans of its srcrefs
+#'
+#' @param f A function
+#' @return A `character` value combining the spans of the `srcref`s attached
+#'   to the body of `f`, or `NA` if the body has none. Equal values mean the
+#'   bodies come from exactly the same code.
+#'
+body_srcref_key <- function(f) {
+  srcs <- attr(body(f), "srcref")
+  srcrefs <- vapply(srcs, is_srcref, logical(1L))
+  if (!is.list(srcs) || length(srcs) == 0 || !all(srcrefs)) {
+    return(NA_character_)
+  }
+  paste(srcref_span_key(as_list_of_srcref(srcs)), collapse = ";")
 }
 
 

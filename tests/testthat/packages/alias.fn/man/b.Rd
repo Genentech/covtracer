@@ -4,6 +4,7 @@
 \alias{b}
 \alias{a}
 \alias{v}
+\alias{b1}
 \title{Add one}
 \usage{
 b(x)
@@ -11,6 +12,8 @@ b(x)
 a(x)
 
 v(x)
+
+b1(x = 1)
 }
 \arguments{
 \item{x}{A number.}

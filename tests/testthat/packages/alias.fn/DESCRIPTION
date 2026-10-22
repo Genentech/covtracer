@@ -7,8 +7,9 @@ Authors@R:
       email = "author.mcauthor@example.com"
     )
 Description: 
-    A package which exports a function, an alias of it (`a <- b`) and a
-    wrapper of it (`v <- Vectorize(b)`), so all three names run the same code.
+    A package which exports a function, an alias of it (`a <- b`), a wrapper
+    of it (`v <- Vectorize(b)`) and a copy of it with a different default
+    argument (`b1`), so all four names run the same code.
 License:
     Inheritted From Parent Package
 Encoding: UTF-8
