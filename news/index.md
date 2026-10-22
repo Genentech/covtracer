@@ -1,5 +1,11 @@
 # Changelog
 
+## covtracer 0.0.5
+
+- [`pkg_srcrefs()`](../reference/pkg_srcrefs.md) gives functions copied
+  from another one, for example by changing default arguments with
+  `formals<-`, the `srcref` of the original.
+
 ## covtracer 0.0.4
 
 - [`test_trace_df()`](../reference/test_trace_df.md) now links tests to

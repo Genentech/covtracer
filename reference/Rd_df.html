@@ -11,7 +11,7 @@ multiple objects alias to the same documentation file."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">covtracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,87 +94,114 @@ is exported from the package namespace</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">package_source_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examplepkg"</span>, package <span class="op">=</span> <span class="st">"covtracer"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">Rd_df</span><span class="op">(</span><span class="va">package_source_dir</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                          file</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1              Accumulator.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                   Person.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3              PersonPrime.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                    Rando.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5          S4Example-class.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6          S4Example-class.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7         S4Example2-class.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8         S4Example2-class.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9                    adder.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      complex_call_stack.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11  deeper_nested_function.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12              hypotenuse.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13               increment.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14  names-S4Example-method.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 names-S4Example2-method.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16         nested_function.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17         rd_data_sampler.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18              rd_sampler.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19      recursive_function.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20        reexport_example.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21               reexports.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22               reexports.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23         s3_example_func.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24         s3_example_func.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25         s3_example_func.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26   show-S4Example-method.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                               filepath</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1              /home/runner/work/_temp/Library/covtracer/examplepkg/man/Accumulator.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                   /home/runner/work/_temp/Library/covtracer/examplepkg/man/Person.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3              /home/runner/work/_temp/Library/covtracer/examplepkg/man/PersonPrime.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                    /home/runner/work/_temp/Library/covtracer/examplepkg/man/Rando.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5          /home/runner/work/_temp/Library/covtracer/examplepkg/man/S4Example-class.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6          /home/runner/work/_temp/Library/covtracer/examplepkg/man/S4Example-class.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7         /home/runner/work/_temp/Library/covtracer/examplepkg/man/S4Example2-class.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8         /home/runner/work/_temp/Library/covtracer/examplepkg/man/S4Example2-class.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9                    /home/runner/work/_temp/Library/covtracer/examplepkg/man/adder.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      /home/runner/work/_temp/Library/covtracer/examplepkg/man/complex_call_stack.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11  /home/runner/work/_temp/Library/covtracer/examplepkg/man/deeper_nested_function.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12              /home/runner/work/_temp/Library/covtracer/examplepkg/man/hypotenuse.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13               /home/runner/work/_temp/Library/covtracer/examplepkg/man/increment.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14  /home/runner/work/_temp/Library/covtracer/examplepkg/man/names-S4Example-method.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 /home/runner/work/_temp/Library/covtracer/examplepkg/man/names-S4Example2-method.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16         /home/runner/work/_temp/Library/covtracer/examplepkg/man/nested_function.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17         /home/runner/work/_temp/Library/covtracer/examplepkg/man/rd_data_sampler.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18              /home/runner/work/_temp/Library/covtracer/examplepkg/man/rd_sampler.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19      /home/runner/work/_temp/Library/covtracer/examplepkg/man/recursive_function.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20        /home/runner/work/_temp/Library/covtracer/examplepkg/man/reexport_example.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21               /home/runner/work/_temp/Library/covtracer/examplepkg/man/reexports.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22               /home/runner/work/_temp/Library/covtracer/examplepkg/man/reexports.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23         /home/runner/work/_temp/Library/covtracer/examplepkg/man/s3_example_func.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24         /home/runner/work/_temp/Library/covtracer/examplepkg/man/s3_example_func.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25         /home/runner/work/_temp/Library/covtracer/examplepkg/man/s3_example_func.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26   /home/runner/work/_temp/Library/covtracer/examplepkg/man/show-S4Example-method.Rd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      alias is_exported is_traceable doctype</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1              Accumulator        TRUE           NA    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                   Person        TRUE           NA    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3              PersonPrime        TRUE           NA    data</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                    Rando        TRUE           NA    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5          S4Example-class       FALSE           NA   class</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                S4Example        TRUE           NA   class</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7         S4Example2-class       FALSE           NA   class</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8               S4Example2        TRUE           NA   class</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9                    adder       FALSE           NA    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      complex_call_stack        TRUE           NA    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11  deeper_nested_function        TRUE           NA    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12              hypotenuse        TRUE           NA    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13               increment        TRUE           NA    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14  names,S4Example-method       FALSE           NA    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 names,S4Example2-method       FALSE           NA    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16         nested_function       FALSE           NA    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17         rd_data_sampler        TRUE           NA    data</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18              rd_sampler        TRUE           NA    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19      recursive_function       FALSE           NA    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20        reexport_example        TRUE           NA    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21               reexports       FALSE           NA  import</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22                    help        TRUE           NA  import</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23         s3_example_func        TRUE           NA    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24 s3_example_func.default       FALSE           NA    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25    s3_example_func.list       FALSE           NA    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26   show,S4Example-method       FALSE           NA    &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               file</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Accumulator                         Accumulator.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Person                                   Person.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PersonPrime                         PersonPrime.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rando                                     Rando.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> S4Example-class                 S4Example-class.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> S4Example                       S4Example-class.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> S4Example2-class               S4Example2-class.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> S4Example2                     S4Example2-class.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> adder                                     adder.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> complex_call_stack           complex_call_stack.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> deeper_nested_function   deeper_nested_function.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hypotenuse                           hypotenuse.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> increment                             increment.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> names,S4Example-method   names-S4Example-method.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> names,S4Example2-method names-S4Example2-method.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> nested_function                 nested_function.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rd_data_sampler                 rd_data_sampler.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rd_sampler                           rd_sampler.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> recursive_function           recursive_function.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> reexport_example               reexport_example.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> reexports                             reexports.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> help                                  reexports.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> s3_example_func                 s3_example_func.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> s3_example_func.default         s3_example_func.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> s3_example_func.list            s3_example_func.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> show,S4Example-method     show-S4Example-method.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                    filepath</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Accumulator                         /home/runner/work/_temp/Library/covtracer/examplepkg/man/Accumulator.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Person                                   /home/runner/work/_temp/Library/covtracer/examplepkg/man/Person.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PersonPrime                         /home/runner/work/_temp/Library/covtracer/examplepkg/man/PersonPrime.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rando                                     /home/runner/work/_temp/Library/covtracer/examplepkg/man/Rando.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> S4Example-class                 /home/runner/work/_temp/Library/covtracer/examplepkg/man/S4Example-class.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> S4Example                       /home/runner/work/_temp/Library/covtracer/examplepkg/man/S4Example-class.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> S4Example2-class               /home/runner/work/_temp/Library/covtracer/examplepkg/man/S4Example2-class.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> S4Example2                     /home/runner/work/_temp/Library/covtracer/examplepkg/man/S4Example2-class.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> adder                                     /home/runner/work/_temp/Library/covtracer/examplepkg/man/adder.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> complex_call_stack           /home/runner/work/_temp/Library/covtracer/examplepkg/man/complex_call_stack.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> deeper_nested_function   /home/runner/work/_temp/Library/covtracer/examplepkg/man/deeper_nested_function.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hypotenuse                           /home/runner/work/_temp/Library/covtracer/examplepkg/man/hypotenuse.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> increment                             /home/runner/work/_temp/Library/covtracer/examplepkg/man/increment.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> names,S4Example-method   /home/runner/work/_temp/Library/covtracer/examplepkg/man/names-S4Example-method.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> names,S4Example2-method /home/runner/work/_temp/Library/covtracer/examplepkg/man/names-S4Example2-method.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> nested_function                 /home/runner/work/_temp/Library/covtracer/examplepkg/man/nested_function.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rd_data_sampler                 /home/runner/work/_temp/Library/covtracer/examplepkg/man/rd_data_sampler.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rd_sampler                           /home/runner/work/_temp/Library/covtracer/examplepkg/man/rd_sampler.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> recursive_function           /home/runner/work/_temp/Library/covtracer/examplepkg/man/recursive_function.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> reexport_example               /home/runner/work/_temp/Library/covtracer/examplepkg/man/reexport_example.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> reexports                             /home/runner/work/_temp/Library/covtracer/examplepkg/man/reexports.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> help                                  /home/runner/work/_temp/Library/covtracer/examplepkg/man/reexports.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> s3_example_func                 /home/runner/work/_temp/Library/covtracer/examplepkg/man/s3_example_func.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> s3_example_func.default         /home/runner/work/_temp/Library/covtracer/examplepkg/man/s3_example_func.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> s3_example_func.list            /home/runner/work/_temp/Library/covtracer/examplepkg/man/s3_example_func.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> show,S4Example-method     /home/runner/work/_temp/Library/covtracer/examplepkg/man/show-S4Example-method.Rd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                           alias is_exported is_traceable</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Accumulator                         Accumulator        TRUE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Person                                   Person        TRUE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PersonPrime                         PersonPrime        TRUE        FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rando                                     Rando        TRUE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> S4Example-class                 S4Example-class       FALSE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> S4Example                             S4Example        TRUE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> S4Example2-class               S4Example2-class       FALSE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> S4Example2                           S4Example2        TRUE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> adder                                     adder       FALSE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> complex_call_stack           complex_call_stack        TRUE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> deeper_nested_function   deeper_nested_function        TRUE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hypotenuse                           hypotenuse        TRUE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> increment                             increment        TRUE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> names,S4Example-method   names,S4Example-method       FALSE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> names,S4Example2-method names,S4Example2-method       FALSE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> nested_function                 nested_function       FALSE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rd_data_sampler                 rd_data_sampler        TRUE        FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rd_sampler                           rd_sampler        TRUE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> recursive_function           recursive_function       FALSE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> reexport_example               reexport_example        TRUE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> reexports                             reexports       FALSE        FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> help                                       help        TRUE        FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> s3_example_func                 s3_example_func        TRUE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> s3_example_func.default s3_example_func.default       FALSE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> s3_example_func.list       s3_example_func.list       FALSE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> show,S4Example-method     show,S4Example-method       FALSE         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         doctype</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Accumulator                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Person                     &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PersonPrime                data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rando                      &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> S4Example-class           class</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> S4Example                 class</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> S4Example2-class          class</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> S4Example2                class</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> adder                      &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> complex_call_stack         &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> deeper_nested_function     &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hypotenuse                 &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> increment                  &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> names,S4Example-method     &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> names,S4Example2-method    &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> nested_function            &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rd_data_sampler            data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rd_sampler                 &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> recursive_function         &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> reexport_example           &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> reexports                import</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> help                     import</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> s3_example_func            &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> s3_example_func.default    &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> s3_example_func.list       &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> show,S4Example-method      &lt;NA&gt;</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

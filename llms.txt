@@ -268,6 +268,12 @@ Everthing that happens behind-the-scenes.
   [`as_testthat_desc()`](as_test_desc.md) : Wrap object in test
   description derivation data
 
+- [`body_srcref_key()`](body_srcref_key.md) : Identify a function body
+  by the spans of its srcrefs
+
+- [`copied_srcrefs()`](copied_srcrefs.md) : Find srcrefs for namespace
+  functions copied from another function
+
 - [`coverage_check_has_recorded_tests()`](coverage_check_has_recorded_tests.md)
   : Check that the coverage object retains testing information
 

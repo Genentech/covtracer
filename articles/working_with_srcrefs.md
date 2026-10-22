@@ -13,7 +13,7 @@ print(examplepkg_ns$hypotenuse)
 #> function(a, b) {
 #>   return(sqrt(a^2 + b^2))
 #> }
-#> <bytecode: 0x565476466088>
+#> <bytecode: 0x55658a76cad8>
 #> <environment: namespace:examplepkg>
 ```
 
@@ -172,19 +172,19 @@ head(examplepkg_test_srcrefs)
 #> [[1]]
 #> show(<myS4Example>)
 #> 
-#> $`/tmp/RtmpsY3Ryp/R_LIBS251c5fb434ec/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`
+#> $`/tmp/RtmpiSJiHV/R_LIBS243d64f0fd7/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:2:3:2:50:3:50:2:2`
 #> complex_call_stack("test")
 #> 
-#> $`/tmp/RtmpsY3Ryp/R_LIBS251c5fb434ec/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:6:3:6:54:3:54:6:6`
+#> $`/tmp/RtmpiSJiHV/R_LIBS243d64f0fd7/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:6:3:6:54:3:54:6:6`
 #> deeper_nested_function("test")
 #> 
-#> $`/tmp/RtmpsY3Ryp/R_LIBS251c5fb434ec/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:15:7:15:54:7:54:15:15`
+#> $`/tmp/RtmpiSJiHV/R_LIBS243d64f0fd7/examplepkg/examplepkg-tests/testthat/test-complex-calls.R:15:7:15:54:7:54:15:15`
 #> complex_call_stack("test")
 #> 
-#> $`/tmp/RtmpsY3Ryp/R_LIBS251c5fb434ec/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:2:3:2:35:3:35:2:2`
+#> $`/tmp/RtmpiSJiHV/R_LIBS243d64f0fd7/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:2:3:2:35:3:35:2:2`
 #> hypotenuse(3, 4)
 #> 
-#> $`/tmp/RtmpsY3Ryp/R_LIBS251c5fb434ec/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:5:5:5:39:5:39:5:5`
+#> $`/tmp/RtmpiSJiHV/R_LIBS243d64f0fd7/examplepkg/examplepkg-tests/testthat/test-hypotenuse.R:5:5:5:39:5:39:5:5`
 #> hypotenuse(-3, -4)
 ```
 

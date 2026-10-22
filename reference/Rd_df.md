@@ -52,85 +52,112 @@ A `data.frame` of documented object information with variables:
 ``` r
 package_source_dir <- system.file("examplepkg", package = "covtracer")
 Rd_df(package_source_dir)
-#>                          file
-#> 1              Accumulator.Rd
-#> 2                   Person.Rd
-#> 3              PersonPrime.Rd
-#> 4                    Rando.Rd
-#> 5          S4Example-class.Rd
-#> 6          S4Example-class.Rd
-#> 7         S4Example2-class.Rd
-#> 8         S4Example2-class.Rd
-#> 9                    adder.Rd
-#> 10      complex_call_stack.Rd
-#> 11  deeper_nested_function.Rd
-#> 12              hypotenuse.Rd
-#> 13               increment.Rd
-#> 14  names-S4Example-method.Rd
-#> 15 names-S4Example2-method.Rd
-#> 16         nested_function.Rd
-#> 17         rd_data_sampler.Rd
-#> 18              rd_sampler.Rd
-#> 19      recursive_function.Rd
-#> 20        reexport_example.Rd
-#> 21               reexports.Rd
-#> 22               reexports.Rd
-#> 23         s3_example_func.Rd
-#> 24         s3_example_func.Rd
-#> 25         s3_example_func.Rd
-#> 26   show-S4Example-method.Rd
-#>                                                                               filepath
-#> 1              /home/runner/work/_temp/Library/covtracer/examplepkg/man/Accumulator.Rd
-#> 2                   /home/runner/work/_temp/Library/covtracer/examplepkg/man/Person.Rd
-#> 3              /home/runner/work/_temp/Library/covtracer/examplepkg/man/PersonPrime.Rd
-#> 4                    /home/runner/work/_temp/Library/covtracer/examplepkg/man/Rando.Rd
-#> 5          /home/runner/work/_temp/Library/covtracer/examplepkg/man/S4Example-class.Rd
-#> 6          /home/runner/work/_temp/Library/covtracer/examplepkg/man/S4Example-class.Rd
-#> 7         /home/runner/work/_temp/Library/covtracer/examplepkg/man/S4Example2-class.Rd
-#> 8         /home/runner/work/_temp/Library/covtracer/examplepkg/man/S4Example2-class.Rd
-#> 9                    /home/runner/work/_temp/Library/covtracer/examplepkg/man/adder.Rd
-#> 10      /home/runner/work/_temp/Library/covtracer/examplepkg/man/complex_call_stack.Rd
-#> 11  /home/runner/work/_temp/Library/covtracer/examplepkg/man/deeper_nested_function.Rd
-#> 12              /home/runner/work/_temp/Library/covtracer/examplepkg/man/hypotenuse.Rd
-#> 13               /home/runner/work/_temp/Library/covtracer/examplepkg/man/increment.Rd
-#> 14  /home/runner/work/_temp/Library/covtracer/examplepkg/man/names-S4Example-method.Rd
-#> 15 /home/runner/work/_temp/Library/covtracer/examplepkg/man/names-S4Example2-method.Rd
-#> 16         /home/runner/work/_temp/Library/covtracer/examplepkg/man/nested_function.Rd
-#> 17         /home/runner/work/_temp/Library/covtracer/examplepkg/man/rd_data_sampler.Rd
-#> 18              /home/runner/work/_temp/Library/covtracer/examplepkg/man/rd_sampler.Rd
-#> 19      /home/runner/work/_temp/Library/covtracer/examplepkg/man/recursive_function.Rd
-#> 20        /home/runner/work/_temp/Library/covtracer/examplepkg/man/reexport_example.Rd
-#> 21               /home/runner/work/_temp/Library/covtracer/examplepkg/man/reexports.Rd
-#> 22               /home/runner/work/_temp/Library/covtracer/examplepkg/man/reexports.Rd
-#> 23         /home/runner/work/_temp/Library/covtracer/examplepkg/man/s3_example_func.Rd
-#> 24         /home/runner/work/_temp/Library/covtracer/examplepkg/man/s3_example_func.Rd
-#> 25         /home/runner/work/_temp/Library/covtracer/examplepkg/man/s3_example_func.Rd
-#> 26   /home/runner/work/_temp/Library/covtracer/examplepkg/man/show-S4Example-method.Rd
-#>                      alias is_exported is_traceable doctype
-#> 1              Accumulator        TRUE           NA    <NA>
-#> 2                   Person        TRUE           NA    <NA>
-#> 3              PersonPrime        TRUE           NA    data
-#> 4                    Rando        TRUE           NA    <NA>
-#> 5          S4Example-class       FALSE           NA   class
-#> 6                S4Example        TRUE           NA   class
-#> 7         S4Example2-class       FALSE           NA   class
-#> 8               S4Example2        TRUE           NA   class
-#> 9                    adder       FALSE           NA    <NA>
-#> 10      complex_call_stack        TRUE           NA    <NA>
-#> 11  deeper_nested_function        TRUE           NA    <NA>
-#> 12              hypotenuse        TRUE           NA    <NA>
-#> 13               increment        TRUE           NA    <NA>
-#> 14  names,S4Example-method       FALSE           NA    <NA>
-#> 15 names,S4Example2-method       FALSE           NA    <NA>
-#> 16         nested_function       FALSE           NA    <NA>
-#> 17         rd_data_sampler        TRUE           NA    data
-#> 18              rd_sampler        TRUE           NA    <NA>
-#> 19      recursive_function       FALSE           NA    <NA>
-#> 20        reexport_example        TRUE           NA    <NA>
-#> 21               reexports       FALSE           NA  import
-#> 22                    help        TRUE           NA  import
-#> 23         s3_example_func        TRUE           NA    <NA>
-#> 24 s3_example_func.default       FALSE           NA    <NA>
-#> 25    s3_example_func.list       FALSE           NA    <NA>
-#> 26   show,S4Example-method       FALSE           NA    <NA>
+#>                                               file
+#> Accumulator                         Accumulator.Rd
+#> Person                                   Person.Rd
+#> PersonPrime                         PersonPrime.Rd
+#> Rando                                     Rando.Rd
+#> S4Example-class                 S4Example-class.Rd
+#> S4Example                       S4Example-class.Rd
+#> S4Example2-class               S4Example2-class.Rd
+#> S4Example2                     S4Example2-class.Rd
+#> adder                                     adder.Rd
+#> complex_call_stack           complex_call_stack.Rd
+#> deeper_nested_function   deeper_nested_function.Rd
+#> hypotenuse                           hypotenuse.Rd
+#> increment                             increment.Rd
+#> names,S4Example-method   names-S4Example-method.Rd
+#> names,S4Example2-method names-S4Example2-method.Rd
+#> nested_function                 nested_function.Rd
+#> rd_data_sampler                 rd_data_sampler.Rd
+#> rd_sampler                           rd_sampler.Rd
+#> recursive_function           recursive_function.Rd
+#> reexport_example               reexport_example.Rd
+#> reexports                             reexports.Rd
+#> help                                  reexports.Rd
+#> s3_example_func                 s3_example_func.Rd
+#> s3_example_func.default         s3_example_func.Rd
+#> s3_example_func.list            s3_example_func.Rd
+#> show,S4Example-method     show-S4Example-method.Rd
+#>                                                                                                    filepath
+#> Accumulator                         /home/runner/work/_temp/Library/covtracer/examplepkg/man/Accumulator.Rd
+#> Person                                   /home/runner/work/_temp/Library/covtracer/examplepkg/man/Person.Rd
+#> PersonPrime                         /home/runner/work/_temp/Library/covtracer/examplepkg/man/PersonPrime.Rd
+#> Rando                                     /home/runner/work/_temp/Library/covtracer/examplepkg/man/Rando.Rd
+#> S4Example-class                 /home/runner/work/_temp/Library/covtracer/examplepkg/man/S4Example-class.Rd
+#> S4Example                       /home/runner/work/_temp/Library/covtracer/examplepkg/man/S4Example-class.Rd
+#> S4Example2-class               /home/runner/work/_temp/Library/covtracer/examplepkg/man/S4Example2-class.Rd
+#> S4Example2                     /home/runner/work/_temp/Library/covtracer/examplepkg/man/S4Example2-class.Rd
+#> adder                                     /home/runner/work/_temp/Library/covtracer/examplepkg/man/adder.Rd
+#> complex_call_stack           /home/runner/work/_temp/Library/covtracer/examplepkg/man/complex_call_stack.Rd
+#> deeper_nested_function   /home/runner/work/_temp/Library/covtracer/examplepkg/man/deeper_nested_function.Rd
+#> hypotenuse                           /home/runner/work/_temp/Library/covtracer/examplepkg/man/hypotenuse.Rd
+#> increment                             /home/runner/work/_temp/Library/covtracer/examplepkg/man/increment.Rd
+#> names,S4Example-method   /home/runner/work/_temp/Library/covtracer/examplepkg/man/names-S4Example-method.Rd
+#> names,S4Example2-method /home/runner/work/_temp/Library/covtracer/examplepkg/man/names-S4Example2-method.Rd
+#> nested_function                 /home/runner/work/_temp/Library/covtracer/examplepkg/man/nested_function.Rd
+#> rd_data_sampler                 /home/runner/work/_temp/Library/covtracer/examplepkg/man/rd_data_sampler.Rd
+#> rd_sampler                           /home/runner/work/_temp/Library/covtracer/examplepkg/man/rd_sampler.Rd
+#> recursive_function           /home/runner/work/_temp/Library/covtracer/examplepkg/man/recursive_function.Rd
+#> reexport_example               /home/runner/work/_temp/Library/covtracer/examplepkg/man/reexport_example.Rd
+#> reexports                             /home/runner/work/_temp/Library/covtracer/examplepkg/man/reexports.Rd
+#> help                                  /home/runner/work/_temp/Library/covtracer/examplepkg/man/reexports.Rd
+#> s3_example_func                 /home/runner/work/_temp/Library/covtracer/examplepkg/man/s3_example_func.Rd
+#> s3_example_func.default         /home/runner/work/_temp/Library/covtracer/examplepkg/man/s3_example_func.Rd
+#> s3_example_func.list            /home/runner/work/_temp/Library/covtracer/examplepkg/man/s3_example_func.Rd
+#> show,S4Example-method     /home/runner/work/_temp/Library/covtracer/examplepkg/man/show-S4Example-method.Rd
+#>                                           alias is_exported is_traceable
+#> Accumulator                         Accumulator        TRUE         TRUE
+#> Person                                   Person        TRUE         TRUE
+#> PersonPrime                         PersonPrime        TRUE        FALSE
+#> Rando                                     Rando        TRUE         TRUE
+#> S4Example-class                 S4Example-class       FALSE         TRUE
+#> S4Example                             S4Example        TRUE         TRUE
+#> S4Example2-class               S4Example2-class       FALSE         TRUE
+#> S4Example2                           S4Example2        TRUE         TRUE
+#> adder                                     adder       FALSE         TRUE
+#> complex_call_stack           complex_call_stack        TRUE         TRUE
+#> deeper_nested_function   deeper_nested_function        TRUE         TRUE
+#> hypotenuse                           hypotenuse        TRUE         TRUE
+#> increment                             increment        TRUE         TRUE
+#> names,S4Example-method   names,S4Example-method       FALSE         TRUE
+#> names,S4Example2-method names,S4Example2-method       FALSE         TRUE
+#> nested_function                 nested_function       FALSE         TRUE
+#> rd_data_sampler                 rd_data_sampler        TRUE        FALSE
+#> rd_sampler                           rd_sampler        TRUE         TRUE
+#> recursive_function           recursive_function       FALSE         TRUE
+#> reexport_example               reexport_example        TRUE         TRUE
+#> reexports                             reexports       FALSE        FALSE
+#> help                                       help        TRUE        FALSE
+#> s3_example_func                 s3_example_func        TRUE         TRUE
+#> s3_example_func.default s3_example_func.default       FALSE         TRUE
+#> s3_example_func.list       s3_example_func.list       FALSE         TRUE
+#> show,S4Example-method     show,S4Example-method       FALSE         TRUE
+#>                         doctype
+#> Accumulator                <NA>
+#> Person                     <NA>
+#> PersonPrime                data
+#> Rando                      <NA>
+#> S4Example-class           class
+#> S4Example                 class
+#> S4Example2-class          class
+#> S4Example2                class
+#> adder                      <NA>
+#> complex_call_stack         <NA>
+#> deeper_nested_function     <NA>
+#> hypotenuse                 <NA>
+#> increment                  <NA>
+#> names,S4Example-method     <NA>
+#> names,S4Example2-method    <NA>
+#> nested_function            <NA>
+#> rd_data_sampler            data
+#> rd_sampler                 <NA>
+#> recursive_function         <NA>
+#> reexport_example           <NA>
+#> reexports                import
+#> help                     import
+#> s3_example_func            <NA>
+#> s3_example_func.default    <NA>
+#> s3_example_func.list       <NA>
+#> show,S4Example-method      <NA>
 ```
